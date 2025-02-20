@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "bodyguide-23d04"
+  },
+  "targets": {},
+  "etags": {
+    "bodyguide-23d04": {
+      "extensionInstances": {}
+    }
+  },
+  "dataconnectEmulatorConfig": {}
+}
