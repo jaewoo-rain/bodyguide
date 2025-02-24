@@ -35,12 +35,11 @@ class MyBloc extends Bloc<MyEvent, MyState> {
           ApiRequestManager(dio: Dio(), tokenManager: TokenManager());
 
       final results = await apiManager.multiGetRequest(
-        url: 'api.bodyguide.co.kr',
         paths: [
           'user/profile',
           'activity/profile',
           'exercise/performance',
-          // 'exp/profile'
+          'exp/profile'
         ],
         params: [
           {},
@@ -60,7 +59,7 @@ class MyBloc extends Bloc<MyEvent, MyState> {
           activityProfile: results['activity/profile'] as Map<String, dynamic>,
           exercisePerformance:
               results['exercise/performance'] as Map<String, dynamic>,
-          // expProfile: results['exp/profile'] as Map<String, dynamic>,
+          expProfile: results['exp/profile'] as Map<String, dynamic>,
         ));
         debugPrint('마이페이지 불러오기: $results', wrapWidth: 1024);
       }

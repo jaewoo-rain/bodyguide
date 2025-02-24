@@ -29,31 +29,39 @@ class IdleBloc extends Bloc<IdleEvent, IdleState> {
 
       print('홈화면 데이터 불러오기');
 
-      final results = await apiManager.multiGetRequest(
-          url: 'api.bodyguide.co.kr',
-          paths: [
-            'exercise/volume/daily',
-            'weight/record',
-          ],
-          params: [
-            {"page": 0, "size": 1},
-            {"page": 0, "size": 1}
-          ],
-          failRoute: Routes.sign.path);
-      print(
-          'volume : ${results['exercise/volume/daily']['volumes'][0]['volume']}');
-      print(
-          'weight : ${results['weight/record']['weightRecordList'][0]['weight']}');
+      final results = await apiManager.multiGetRequest(paths: [
+        'exercise/volume/daily',
+        'weight/record',
+      ], params: [
+        {"page": 0, "size": 1},
+        {"page": 0, "size": 1}
+      ], failRoute: Routes.sign.path);
+      // print(
+      //     'volume : ${results['exercise/volume/daily']['volumes'][0]['volume']}');
+      // print(
+      //     'weight : ${results['weight/record']['weightRecordList'][0]['weight']}');
       if (results.containsKey('error')) {
         print('API 호출 실패: ${results['message']}');
       } else {
+        print("idle");
+
         // results에서 필요한 값을 추출하여 state 업데이트
+        final weightRecordList = results['weight/record']?['weightRecordList'];
+        final volumeList = results['exercise/volume/daily']?['volumes'];
+
+        final double weight =
+            (weightRecordList is List && weightRecordList.isNotEmpty)
+                ? (weightRecordList[0]['weight'] as double)
+                : 0.0;
+        final double volume = (volumeList is List && volumeList.isNotEmpty)
+            ? (volumeList[0]['volume'] as double)
+            : 0.0;
+
         emit(state.copyWith(
-          weight: results['weight/record']['weightRecordList'][0]['weight']
-              as double,
-          volume: results['exercise/volume/daily']['volumes'][0]['volume']
-              as double,
+          weight: weight,
+          volume: volume,
         ));
+
         debugPrint('Idle 불러오기: $results', wrapWidth: 1024);
       }
     } catch (e, stackTrace) {

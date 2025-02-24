@@ -92,7 +92,6 @@ class PracticeRecordHistoryBloc
           ApiRequestManager(dio: Dio(), tokenManager: TokenManager());
 
       final result = await apiManager.getRequest(
-        url: 'api.bodyguide.co.kr',
         path: 'exercise/record/month',
         params: {'year': year, 'month': month, 'page': 0, 'size': 10},
         // successRoute: Routes.practiceRecordHistory.path,

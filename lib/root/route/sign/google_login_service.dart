@@ -123,10 +123,10 @@ class GoogleLoginService {
 
             // 로그인 성공 처리 및 화면 이동
             if (!_loginCompleter.isCompleted) {
-              _loginCompleter.complete('Login Successful!');
               if (decoded['role'] == 'ROLE_GUEST') {
                 App.instance.navigator.go(Routes.onboard.path);
               } else if (decoded['role'] == 'ROLE_USER') {
+                _loginCompleter.complete('Login Successful!');
                 App.instance.navigator.go(Routes.home.path);
               } else {
                 App.instance.navigator.go(Routes.sign.path);

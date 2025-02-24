@@ -38,7 +38,8 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
       await event.map(
         delete: (record) async {
           print(record.record.historyId);
-          print("state.records.first.id: ${state.records.first.historyId}");
+          print(
+              "state.records.first.id: ${state.records.first.historyId ?? 1}");
 
           try {
             final apiManager =
@@ -47,7 +48,6 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
             print('${record.record.historyId}번 몸무게 삭제 호출');
 
             final result = await apiManager.deleteRequest(
-              url: 'api.bodyguide.co.kr',
               path: 'weight/record',
               params: {'historyId': record.record.historyId.toInt()},
               failRoute: Routes.sign.path,
@@ -95,7 +95,6 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
 
               // 요청 실행
               await apiManager.postRequest(
-                url: 'api.bodyguide.co.kr',
                 body: requestBody,
                 path: 'weight/record',
                 successRoute: "",
@@ -116,6 +115,9 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
               print('알 수 없는 오류 발생: $e');
             }
 
+            final newHistoryId = state.records.isNotEmpty
+                ? state.records.first.historyId + 1
+                : 1;
             emit(
               state.copyWith(
                 records: List.of(
@@ -127,7 +129,7 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
                           state.input.replaceAll('kg', ''),
                         ),
                         date: DateTime.now(),
-                        historyId: state.records.first.historyId + 1),
+                        historyId: newHistoryId),
                   ),
                 input: '',
               ),
@@ -207,7 +209,6 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
 
       while (hasNext) {
         final result = await apiManager.getRequest(
-          url: 'api.bodyguide.co.kr',
           path: 'weight/record',
           params: {'page': page, 'size': 10},
           failRoute: Routes.sign.path,

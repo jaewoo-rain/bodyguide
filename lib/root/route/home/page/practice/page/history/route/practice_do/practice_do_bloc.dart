@@ -98,7 +98,6 @@ class PracticeDoBloc extends Bloc<PracticeDoEvent, PracticeDoState> {
 
             // 요청 실행
             await apiManager.postRequest(
-              url: 'api.bodyguide.co.kr',
               body: requestBody,
               path: 'exercise/record',
               successRoute: Routes.home.path,

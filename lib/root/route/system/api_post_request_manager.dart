@@ -5,6 +5,7 @@ import 'package:app/app/core/navigator_core.dart';
 import 'package:app/root/route/system/secure_storage_manager.dart';
 import 'package:app/root/route/system/token_manager.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiRequestManager {
   final Dio dio;
@@ -15,9 +16,11 @@ class ApiRequestManager {
     required this.tokenManager,
   });
 
+  String base_Url = dotenv.env['BASE_URL'] ?? 'base_url';
+
   /// API post 요청 함수
   Future<void> postRequest({
-    required String url, // API URL
+    // required String url, // API URL
     required Map<String, dynamic> body, // 요청 바디
     required String path, // API 엔드포인트
     required String successRoute, // 성공 시 이동할 경로
@@ -31,7 +34,7 @@ class ApiRequestManager {
 
       try {
         final response = await dio.post(
-          'https://$url/$path',
+          'https://$base_Url/$path',
           options: Options(headers: {
             'authorization': 'Bearer $validAccessToken',
             'Content-Type': 'application/json',
@@ -55,6 +58,7 @@ class ApiRequestManager {
         }
 
         // 실패 시 경로로 이동
+        print('$path 오류');
         App.instance.navigator.go(failRoute);
       }
     } else {
@@ -66,7 +70,7 @@ class ApiRequestManager {
   }
 
   Future<Map<String, dynamic>> getRequest({
-    required String url, // API URL
+    // required String url, // API URL
     required String path, // API 엔드포인트
     required Map<String, dynamic> params, // 쿼리 파라미터
     // required String successRoute, // 성공 시 이동할 경로
@@ -82,7 +86,7 @@ class ApiRequestManager {
         // GET 요청 수행
         print('getRequest 시도하기');
         final response = await dio.get(
-          'https://$url/$path',
+          'https://$base_Url/$path',
           options: Options(headers: {
             'authorization': 'Bearer $validAccessToken',
             'Content-Type': 'application/json',
@@ -107,6 +111,7 @@ class ApiRequestManager {
         }
 
         // 실패 시 경로로 이동
+        print('$path 오류');
         App.instance.navigator.go(failRoute);
 
         // 빈 Map 반환
@@ -124,7 +129,7 @@ class ApiRequestManager {
   }
 
   Future<Map<String, dynamic>> multiGetRequest({
-    required String url, // API URL
+    // required String url, // API URL
     required List<String> paths, // API 엔드포인트 리스트
     required List<Map<String, dynamic>> params, // 각 API 요청의 쿼리 파라미터 리스트
     // required String successRoute, // 성공 시 이동할 경로 (원한다면 추가)
@@ -146,7 +151,7 @@ class ApiRequestManager {
 
           futures.add(
             dio.get(
-              'https://$url/${paths[i]}',
+              'https://$base_Url/${paths[i]}',
               options: Options(headers: {
                 'authorization': 'Bearer $validAccessToken',
                 'Content-Type': 'application/json',
@@ -179,8 +184,11 @@ class ApiRequestManager {
           print('알 수 없는 오류: $e');
         }
         // 실패 시 경로로 이동
+        print('$paths 오류');
         App.instance.navigator.go(failRoute);
+        // App.instance.navigator.go(Routes.onboard.path);
 
+        print("'error': 'API 요청 실패', 'message': ${e.toString()}");
         return {'error': 'API 요청 실패', 'message': e.toString()};
       }
     } else {
@@ -191,7 +199,7 @@ class ApiRequestManager {
   }
 
   Future<Map<String, dynamic>> deleteRequest({
-    required String url,
+    // required String url,
     required String path,
     Map<String, dynamic>? params,
     required String failRoute,
@@ -199,12 +207,12 @@ class ApiRequestManager {
     final validAccessToken = await tokenManager.getValidAccessToken();
 
     if (validAccessToken != null) {
-      print('✅ 유효한 Access Token: $validAccessToken');
+      print('유효한 Access Token: $validAccessToken');
 
       try {
         print('📡 deleteRequest 시도 중...');
         final response = await dio.delete(
-          'https://$url/$path',
+          'https://$base_Url/$path',
           options: Options(headers: {
             'Authorization': 'Bearer $validAccessToken',
             'Content-Type': 'application/json',
@@ -223,14 +231,14 @@ class ApiRequestManager {
           }
         }
 
-        print('✅ 응답 데이터: $responseData');
+        print('응답 데이터: $responseData');
         return responseData as Map<String, dynamic>;
       } on DioException catch (e) {
-        print('❌ API 요청 실패: ${e.message}');
+        print('API 요청 실패: ${e.message}');
 
         if (e.response != null) {
-          print('📡 서버 응답 코드: ${e.response?.statusCode}');
-          print('📡 서버 응답 데이터: ${e.response?.data}');
+          print('서버 응답 코드: ${e.response?.statusCode}');
+          print('서버 응답 데이터: ${e.response?.data}');
 
           dynamic errorData = e.response?.data;
           if (errorData is String) {
@@ -247,7 +255,7 @@ class ApiRequestManager {
         return {'error': true, 'message': e.toString()};
       }
     } else {
-      print('🔒 로그인이 필요합니다.');
+      print('로그인이 필요합니다.');
       App.instance.navigator.go(Routes.sign.path);
       return {'error': true, 'message': '로그인이 필요합니다.'};
     }

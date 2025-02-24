@@ -51,58 +51,61 @@ class PracticeHistoryBloc
 
       print('운동기록 페이지 호출');
       final result = await apiManager.getRequest(
-        url: 'api.bodyguide.co.kr',
         path: 'exercise/record/recentDay',
         params: {'days': 7, 'page': 0, 'size': 10},
         // successRoute: Routes.practiceRecordHistory.path,
         failRoute: Routes.sign.path,
       );
-      // print('요청 받은데이터 : $result');
-      // App.instance.navigator.go(Routes.home.path);
+
+      if (result != null) {
+        // print('요청 받은데이터 : $result');
+        // App.instance.navigator.go(Routes.home.path);
 // 정렬하기
-      List<dynamic> recordGroupList = result['recordGroupList'];
+        List<dynamic> recordGroupList = result['recordGroupList'];
 // exerciseDate를 기준으로 내림차순 정렬
-      recordGroupList.sort((a, b) {
-        DateTime dateA = DateTime.parse(a["exerciseDate"]);
-        DateTime dateB = DateTime.parse(b["exerciseDate"]);
-        return dateB.compareTo(dateA); // 내림차순 정렬
-      });
+        recordGroupList.sort((a, b) {
+          DateTime dateA = DateTime.parse(a["exerciseDate"]);
+          DateTime dateB = DateTime.parse(b["exerciseDate"]);
+          return dateB.compareTo(dateA); // 내림차순 정렬
+        });
 
-      final initialState = PracticeHistoryState(
-        currentTime: DateTime.now(),
-        currentPage: result['currentPage'] as int,
-        pageSize: result['pageSize'] as int,
-        hasNext: result['hasNext'] as bool,
-        recordGroupList: (result['recordGroupList'] as List).map((group) {
-          return RecordGroupList(
-            groupId: group['groupId'] as int,
-            exerciseDate: DateTime.parse(group['exerciseDate'] as String),
-            exercises: (group['exercises'] as List).map((exercise) {
-              return Exercise(
-                exerciseId: exercise['exerciseId'] as int,
-                prevBestWeight: (exercise['prevBestWeight'] as num).toDouble(),
-                prevBestReps: exercise['prevBestReps'] as int,
-                sets: (exercise['sets'] as List).map((set) {
-                  return Sets(
-                    set: set['set'] as int,
-                    weight: (set['weight'] as num).toDouble(),
-                    reps: set['reps'] as int,
-                    score: (set['score'] as num).toDouble(),
-                    strength: (set['strength'] as num).toDouble(),
-                  );
-                }).toList(),
-              );
-            }).toList(),
-          );
-        }).toList(),
-      );
-
-      if (result.containsKey('error')) {
-        print('API 호출 실패: ${result['message']}');
-      } else {
-        // print('API 호출 성공: $result');
-        emit(initialState);
-        debugPrint('7일 불러오기: $result', wrapWidth: 1024); // wrapWidth로 출력 길이 설정
+        final initialState = PracticeHistoryState(
+          currentTime: DateTime.now(),
+          currentPage: result['currentPage'] as int,
+          pageSize: result['pageSize'] as int,
+          hasNext: result['hasNext'] as bool,
+          recordGroupList: (result['recordGroupList'] as List).map((group) {
+            return RecordGroupList(
+              groupId: group['groupId'] as int,
+              exerciseDate: DateTime.parse(group['exerciseDate'] as String),
+              exercises: (group['exercises'] as List).map((exercise) {
+                return Exercise(
+                  exerciseId: exercise['exerciseId'] as int,
+                  prevBestWeight:
+                      (exercise['prevBestWeight'] as num).toDouble(),
+                  prevBestReps: exercise['prevBestReps'] as int,
+                  sets: (exercise['sets'] as List).map((set) {
+                    return Sets(
+                      set: set['set'] as int,
+                      weight: (set['weight'] as num).toDouble(),
+                      reps: set['reps'] as int,
+                      score: (set['score'] as num).toDouble(),
+                      strength: (set['strength'] as num).toDouble(),
+                    );
+                  }).toList(),
+                );
+              }).toList(),
+            );
+          }).toList(),
+        );
+        if (result.containsKey('error')) {
+          print('API 호출 실패: ${result['message']}');
+        } else {
+          // print('API 호출 성공: $result');
+          emit(initialState);
+          debugPrint('7일 불러오기: $result',
+              wrapWidth: 1024); // wrapWidth로 출력 길이 설정
+        }
       }
     } catch (e, stackTrace) {
       print('Error: $e');

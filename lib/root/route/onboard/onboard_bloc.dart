@@ -190,6 +190,7 @@ class OnboardBloc extends Bloc<OnboardEvent, OnboardState> {
           App.instance.overlay.cover(
             on: true,
           );
+          print('제출 클릭');
 
           //////////////////////////////////////////////
           final dio = Dio();
@@ -202,23 +203,25 @@ class OnboardBloc extends Bloc<OnboardEvent, OnboardState> {
 
           // 요청 데이터
           final requestBody = {
-            "nickname": "${state.nickName}",
+            "nickname": state.nickName,
             "gender": state.gender == Gender.female ? "F" : "M",
             "height": state.height,
             "weight": state.weight,
-            "birthDate": "${state.year}-${state.month}-${state.day}",
-            "Source": "${state.inflowSource}"
+            "birthDate": "${state.year}-${(state.month ?? 0).toString().padLeft(2, '0')}-${(state.day ?? 0).toString().padLeft(2, '0')}",
+            "Source": state.inflowSource,
           };
+
 
           // 요청 실행
           // bool isTrue =
+          print('온보딩 post 호출');
           await apiManager.postRequest(
-            url: 'api.bodyguide.co.kr',
             body: requestBody,
             path: 'auth/initialize',
             successRoute: Routes.home.path,
-            failRoute: Routes.sign.path,
+            failRoute: Routes.onboard.path,
           );
+          print('온보딩 post 완료');
 
           // if (isTrue) {
           //   App.instance.navigator.go(Routes.home.path);
