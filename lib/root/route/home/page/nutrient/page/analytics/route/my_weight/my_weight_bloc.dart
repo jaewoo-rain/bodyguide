@@ -94,14 +94,16 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
               print(jsonEncode(requestBody));
 
               // 요청 실행
-              await apiManager.postRequest(
+              String result = await apiManager.postRequest(
                 body: requestBody,
                 path: 'weight/record',
-                successRoute: "",
+                // successRoute: "",
                 failRoute: Routes.sign.path,
               );
 
-              print('몸무게 API 요청 성공');
+              if (result.isNotEmpty) {
+                print('몸무게 API 요청 성공');
+              }
             } on DioException catch (e) {
               print('DioException 발생: ${e.message}');
 

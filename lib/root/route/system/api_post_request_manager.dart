@@ -19,11 +19,11 @@ class ApiRequestManager {
   String base_Url = dotenv.env['BASE_URL'] ?? 'base_url';
 
   /// API post 요청 함수
-  Future<void> postRequest({
+  Future<dynamic> postRequest({
     // required String url, // API URL
     required Map<String, dynamic> body, // 요청 바디
     required String path, // API 엔드포인트
-    required String successRoute, // 성공 시 이동할 경로
+    // required String successRoute, // 성공 시 이동할 경로
     required String failRoute, // 실패 시 이동할 경로
   }) async {
     // 토큰 검사
@@ -33,6 +33,7 @@ class ApiRequestManager {
       print('유효한 Access Token: $validAccessToken');
 
       try {
+        print("post $path 시도하기");
         final response = await dio.post(
           'https://$base_Url/$path',
           options: Options(headers: {
@@ -42,13 +43,17 @@ class ApiRequestManager {
           data: body,
         );
 
-        // 통신 성공 처리
-        print('응답 데이터: ${response.data}');
+        if (response.statusCode == 200) {
+          print('응답 데이터: ${response.data}');
+          print("post $path 성공");
+        } else {
+          print('통신 오류: ${response.statusCode}');
+          print('오류 메시지: ${response.data}');
+        }
 
         // 성공 시 경로로 이동
-        if (successRoute.isNotEmpty) {
-          App.instance.navigator.go(successRoute);
-        }
+        return response.data;
+        // }
       } catch (e) {
         if (e is DioError) {
           print('통신 오류: ${e.response?.statusCode}');
@@ -58,7 +63,7 @@ class ApiRequestManager {
         }
 
         // 실패 시 경로로 이동
-        print('$path 오류');
+        print('post $path 오류');
         App.instance.navigator.go(failRoute);
       }
     } else {
@@ -84,7 +89,7 @@ class ApiRequestManager {
 
       try {
         // GET 요청 수행
-        print('getRequest 시도하기');
+        print("get $path 시도하기");
         final response = await dio.get(
           'https://$base_Url/$path',
           options: Options(headers: {
@@ -100,6 +105,8 @@ class ApiRequestManager {
         // 성공 시 경로로 이동
         // App.instance.navigator.go(successRoute);
 
+        print("get $path 성공?");
+
         // 응답 데이터 반환
         return response.data as Map<String, dynamic>;
       } catch (e) {
@@ -111,7 +118,7 @@ class ApiRequestManager {
         }
 
         // 실패 시 경로로 이동
-        print('$path 오류');
+        print('get $path 오류');
         App.instance.navigator.go(failRoute);
 
         // 빈 Map 반환
@@ -142,7 +149,7 @@ class ApiRequestManager {
       print('유효한 Access Token: $validAccessToken');
 
       try {
-        print('multiGetRequest 시도하기');
+        print("multi $paths 시도하기");
 
         // 각 API 호출을 위한 Future들을 리스트에 추가
         final futures = <Future>[];
@@ -159,7 +166,7 @@ class ApiRequestManager {
               queryParameters: params[i],
             ),
           );
-          print('${paths[i]} 호출성공');
+          // print('${paths[i]} 호출중');
         }
 
         // 모든 API 호출을 동시에 실행
@@ -175,6 +182,8 @@ class ApiRequestManager {
         // 성공 시 원하는 동작(예: Navigator 이동)이 있다면 여기서 처리 가능
         // App.instance.navigator.go(successRoute);
 
+        print("multi $paths 성공?");
+
         return results;
       } catch (e) {
         if (e is DioError) {
@@ -184,7 +193,7 @@ class ApiRequestManager {
           print('알 수 없는 오류: $e');
         }
         // 실패 시 경로로 이동
-        print('$paths 오류');
+        print('multi $paths 오류');
         App.instance.navigator.go(failRoute);
         // App.instance.navigator.go(Routes.onboard.path);
 
@@ -210,7 +219,8 @@ class ApiRequestManager {
       print('유효한 Access Token: $validAccessToken');
 
       try {
-        print('📡 deleteRequest 시도 중...');
+        print("delete $path 시도하기");
+
         final response = await dio.delete(
           'https://$base_Url/$path',
           options: Options(headers: {
@@ -220,7 +230,7 @@ class ApiRequestManager {
           queryParameters: params,
         );
 
-        // 🔹 응답이 String이면 JSON 변환 시도
+        // 응답이 String이면 JSON 변환 시도
         dynamic responseData = response.data;
 
         if (responseData is String) {
@@ -232,6 +242,7 @@ class ApiRequestManager {
         }
 
         print('응답 데이터: $responseData');
+        print("delete $path 성공?");
         return responseData as Map<String, dynamic>;
       } on DioException catch (e) {
         print('API 요청 실패: ${e.message}');

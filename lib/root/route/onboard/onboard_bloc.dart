@@ -13,6 +13,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'onboard_event.dart';
@@ -207,21 +208,73 @@ class OnboardBloc extends Bloc<OnboardEvent, OnboardState> {
             "gender": state.gender == Gender.female ? "F" : "M",
             "height": state.height,
             "weight": state.weight,
-            "birthDate": "${state.year}-${(state.month ?? 0).toString().padLeft(2, '0')}-${(state.day ?? 0).toString().padLeft(2, '0')}",
+            "birthDate":
+                "${state.year}-${(state.month ?? 0).toString().padLeft(2, '0')}-${(state.day ?? 0).toString().padLeft(2, '0')}",
             "Source": state.inflowSource,
           };
-
 
           // 요청 실행
           // bool isTrue =
           print('온보딩 post 호출');
-          await apiManager.postRequest(
+          Map<String, dynamic> result = await apiManager.postRequest(
             body: requestBody,
             path: 'auth/initialize',
-            successRoute: Routes.home.path,
+            // successRoute: Routes.home.path,
             failRoute: Routes.onboard.path,
           );
-          print('온보딩 post 완료');
+
+          try {
+            // // 1. Base64 디코딩: Base64로 인코딩된 데이터를 바이트 배열로 변환 후 UTF8 문자열로 디코딩
+            // final decodedString = utf8.decode(base64.decode(result));
+            // debugPrint('Decoded String: $decodedString');
+            // debugPrint('---------------------------');
+            //
+            // // 2. JSON 디코딩: 디코딩한 문자열을 Map<String, dynamic>으로 변환
+            // final Map<String, dynamic> tokenData = jsonDecode(decodedString);
+
+            print('온보딩 토큰 저장하기');
+
+            final accessToken = result['accessToken'];
+            final refreshToken = result['refreshToken'];
+
+            debugPrint('Access Token: $accessToken');
+            debugPrint('Refresh Token: $refreshToken');
+
+            // === JWT 디코딩 예시 ===
+            if (accessToken is String && refreshToken is String) {
+              // Payload 디코딩
+              final decoded = JwtDecoder.decode(accessToken);
+
+              // 만료 여부 확인
+              bool isExpired = JwtDecoder.isExpired(accessToken);
+
+              // 토큰의 만료 시간 (DateTime)
+              DateTime expirationDate =
+                  JwtDecoder.getExpirationDate(accessToken);
+
+              // 토큰 발급 후 지난 시간
+              Duration tokenUsedTime = JwtDecoder.getTokenTime(accessToken);
+
+              debugPrint('Decoded JWT: $decoded');
+              debugPrint('Role: ${decoded['role']}');
+              debugPrint('IsExpired: $isExpired');
+              debugPrint('ExpirationDate: $expirationDate');
+              debugPrint('Token Used Time: $tokenUsedTime');
+
+              // flutter_secure_storage에 토큰 저장
+              final storageManager = SecureStorageManager();
+              await storageManager.saveAccessToken(accessToken);
+              await storageManager.saveRefreshToken(refreshToken);
+
+              // 로그인 성공 처리 및 화면 이동
+              App.instance.navigator.go(Routes.home.path);
+            } else {
+              App.instance.navigator.go(Routes.sign.path);
+            }
+          } catch (e) {
+            debugPrint('Error decoding JSON: $e');
+            App.instance.navigator.go(Routes.sign.path);
+          }
 
           // if (isTrue) {
           //   App.instance.navigator.go(Routes.home.path);

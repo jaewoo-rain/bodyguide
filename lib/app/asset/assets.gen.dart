@@ -224,9 +224,13 @@ class $AssetImageGen {
 class Assets {
   Assets._();
 
+  static const String aEnv = '.env';
   static const $AssetDatabaseGen database = $AssetDatabaseGen();
   static const $AssetIconGen icon = $AssetIconGen();
   static const $AssetImageGen image = $AssetImageGen();
+
+  /// List of all assets
+  static List<String> get values => [aEnv];
 }
 
 class AssetGenImage {

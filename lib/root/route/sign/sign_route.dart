@@ -396,12 +396,9 @@ class SignRoute extends StatelessWidget {
                       ),
                       child: BysonCupertinoButton.outlinedSolid(
                         onPressed: () {
-                          // context.read<SignBloc>().add(
-                          //       const SignEvent.signInWithKakao(),
-                          //     );
-                          // App.instance.navigator.go(Routes.root.path);
-                          App.instance.navigator
-                              .go(Routes.practiceAnalyticsReport.path);
+                          context.read<SignBloc>().add(
+                                SignEvent.signInWithKakao(context: context),
+                              );
                         },
                         color: Colors.white,
                         borderRadius: BorderRadius.all(

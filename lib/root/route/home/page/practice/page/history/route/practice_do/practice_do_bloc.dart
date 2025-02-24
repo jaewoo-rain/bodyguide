@@ -97,14 +97,17 @@ class PracticeDoBloc extends Bloc<PracticeDoEvent, PracticeDoState> {
             print(jsonEncode(requestBody));
 
             // 요청 실행
-            await apiManager.postRequest(
+            String result = await apiManager.postRequest(
               body: requestBody,
               path: 'exercise/record',
-              successRoute: Routes.home.path,
+              // successRoute: Routes.home.path,
               failRoute: Routes.sign.path,
             );
 
-            print('API 요청 성공');
+            if (result.isNotEmpty) {
+              print('API 요청 성공');
+              App.instance.navigator.go(Routes.home.path);
+            }
           } on DioException catch (e) {
             print('DioException 발생: ${e.message}');
 
