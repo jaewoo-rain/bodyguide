@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/app/app.dart';
 import 'package:app/app/core/navigator_core.dart';
 import 'package:app/app/misc/sqlite.dart';
@@ -8,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:path/path.dart';
+import '../system/app_preferences.dart';
+import '../system/secure_storage_manager.dart';
+import '../system/token_manager.dart';
 import 'google_login_service.dart';
 
 part 'sign_event.dart';
@@ -23,7 +28,45 @@ class SignBloc extends Bloc<SignEvent, SignState> {
         ) {
     on<SignEvent>((event, emit) async {
       await event.map(
-        initialize: (event) async {},
+        initialize: (event) async {
+          final AppPreferences appPreferences = AppPreferences();
+          bool isFirstRun = await appPreferences.isFirstRun();
+          final storageManager = SecureStorageManager();
+          final accessToken = await storageManager.getAccessToken();
+
+          if (!isFirstRun) {
+            // 처음실행한것이 아닌경우
+            print('처음실행한것이 아님');
+            if (accessToken == null) {
+              // accessToken 유무 확인
+              print('accessToken Token이 없습니다. 로그인이 필요합니다.');
+            } else {
+              // accessToken Token이 존재
+              if (!await storageManager.isTokenExpired()) {
+                // 기한이 만료 확인
+                // 기한이 만료되지 않음
+                return App.instance.navigator.go(Routes.home.path);
+              }
+              print('기한이 만료됨');
+            }
+          } else {
+            // 처음 실행한 경우
+            print('처음 실행함');
+            if (accessToken == null) {
+              // accessToken 유무 확인
+              print('accessToken Token이 없습니다. 로그인이 필요합니다.');
+            } else {
+              // accessToken Token이 존재
+              if (!await storageManager.isTokenExpired()) {
+                // 기한이 만료 확인
+                // 기한이 만료되지 않음
+                return App.instance.navigator.go(Routes.home.path);
+              }
+              print('기한이 만료됨');
+            }
+            // await _appPreferences.setFirstRunCompleted(); // 실행했다고 말하기
+          }
+        },
         signInWithGoogle: (event) async {
           // 로딩 시작
           emit(state.copyWith(isLoading: true, errorMessage: null));

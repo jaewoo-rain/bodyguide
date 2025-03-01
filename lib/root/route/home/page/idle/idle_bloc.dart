@@ -14,11 +14,21 @@ part 'idle_bloc.freezed.dart';
 
 class IdleBloc extends Bloc<IdleEvent, IdleState> {
   IdleBloc() : super(const IdleState()) {
-    loadState();
+    // loadState();
     on<IdleEvent>((event, emit) async {
       await event.map(
-        mock: (event) async {},
-      );
+          mock: (event) async {},
+          loadState: (event) async {
+            loadState();
+          },
+          updateWeight: (event) async {
+            print('체중 업데이트 감지: ${event.weight}kg');
+
+            // 기존 weight 값과 다를 때만 변경
+            if (state.weight != event.weight) {
+              emit(state.copyWith(weight: event.weight));
+            }
+          });
     });
   }
 
@@ -27,7 +37,7 @@ class IdleBloc extends Bloc<IdleEvent, IdleState> {
       final apiManager =
           ApiRequestManager(dio: Dio(), tokenManager: TokenManager());
 
-      print('홈화면 데이터 불러오기');
+      print('홈화면 데이터 불러오기1');
 
       final results = await apiManager.multiGetRequest(paths: [
         'exercise/volume/daily',

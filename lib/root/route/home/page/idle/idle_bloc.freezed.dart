@@ -19,32 +19,44 @@ mixin _$IdleEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() mock,
+    required TResult Function() loadState,
+    required TResult Function(double weight) updateWeight,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? mock,
+    TResult? Function()? loadState,
+    TResult? Function(double weight)? updateWeight,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? mock,
+    TResult Function()? loadState,
+    TResult Function(double weight)? updateWeight,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_mock value) mock,
+    required TResult Function(_loadState value) loadState,
+    required TResult Function(_UpdateWeight value) updateWeight,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_mock value)? mock,
+    TResult? Function(_loadState value)? loadState,
+    TResult? Function(_UpdateWeight value)? updateWeight,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_mock value)? mock,
+    TResult Function(_loadState value)? loadState,
+    TResult Function(_UpdateWeight value)? updateWeight,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -111,6 +123,8 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() mock,
+    required TResult Function() loadState,
+    required TResult Function(double weight) updateWeight,
   }) {
     return mock();
   }
@@ -119,6 +133,8 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? mock,
+    TResult? Function()? loadState,
+    TResult? Function(double weight)? updateWeight,
   }) {
     return mock?.call();
   }
@@ -127,6 +143,8 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? mock,
+    TResult Function()? loadState,
+    TResult Function(double weight)? updateWeight,
     required TResult orElse(),
   }) {
     if (mock != null) {
@@ -139,6 +157,8 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_mock value) mock,
+    required TResult Function(_loadState value) loadState,
+    required TResult Function(_UpdateWeight value) updateWeight,
   }) {
     return mock(this);
   }
@@ -147,6 +167,8 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_mock value)? mock,
+    TResult? Function(_loadState value)? loadState,
+    TResult? Function(_UpdateWeight value)? updateWeight,
   }) {
     return mock?.call(this);
   }
@@ -155,6 +177,8 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_mock value)? mock,
+    TResult Function(_loadState value)? loadState,
+    TResult Function(_UpdateWeight value)? updateWeight,
     required TResult orElse(),
   }) {
     if (mock != null) {
@@ -166,6 +190,263 @@ class _$mockImpl implements _mock {
 
 abstract class _mock implements IdleEvent {
   const factory _mock() = _$mockImpl;
+}
+
+/// @nodoc
+abstract class _$$loadStateImplCopyWith<$Res> {
+  factory _$$loadStateImplCopyWith(
+          _$loadStateImpl value, $Res Function(_$loadStateImpl) then) =
+      __$$loadStateImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$loadStateImplCopyWithImpl<$Res>
+    extends _$IdleEventCopyWithImpl<$Res, _$loadStateImpl>
+    implements _$$loadStateImplCopyWith<$Res> {
+  __$$loadStateImplCopyWithImpl(
+      _$loadStateImpl _value, $Res Function(_$loadStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of IdleEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$loadStateImpl implements _loadState {
+  const _$loadStateImpl();
+
+  @override
+  String toString() {
+    return 'IdleEvent.loadState()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$loadStateImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() mock,
+    required TResult Function() loadState,
+    required TResult Function(double weight) updateWeight,
+  }) {
+    return loadState();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? mock,
+    TResult? Function()? loadState,
+    TResult? Function(double weight)? updateWeight,
+  }) {
+    return loadState?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? mock,
+    TResult Function()? loadState,
+    TResult Function(double weight)? updateWeight,
+    required TResult orElse(),
+  }) {
+    if (loadState != null) {
+      return loadState();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_mock value) mock,
+    required TResult Function(_loadState value) loadState,
+    required TResult Function(_UpdateWeight value) updateWeight,
+  }) {
+    return loadState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_mock value)? mock,
+    TResult? Function(_loadState value)? loadState,
+    TResult? Function(_UpdateWeight value)? updateWeight,
+  }) {
+    return loadState?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_mock value)? mock,
+    TResult Function(_loadState value)? loadState,
+    TResult Function(_UpdateWeight value)? updateWeight,
+    required TResult orElse(),
+  }) {
+    if (loadState != null) {
+      return loadState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _loadState implements IdleEvent {
+  const factory _loadState() = _$loadStateImpl;
+}
+
+/// @nodoc
+abstract class _$$UpdateWeightImplCopyWith<$Res> {
+  factory _$$UpdateWeightImplCopyWith(
+          _$UpdateWeightImpl value, $Res Function(_$UpdateWeightImpl) then) =
+      __$$UpdateWeightImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({double weight});
+}
+
+/// @nodoc
+class __$$UpdateWeightImplCopyWithImpl<$Res>
+    extends _$IdleEventCopyWithImpl<$Res, _$UpdateWeightImpl>
+    implements _$$UpdateWeightImplCopyWith<$Res> {
+  __$$UpdateWeightImplCopyWithImpl(
+      _$UpdateWeightImpl _value, $Res Function(_$UpdateWeightImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of IdleEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? weight = null,
+  }) {
+    return _then(_$UpdateWeightImpl(
+      null == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UpdateWeightImpl implements _UpdateWeight {
+  const _$UpdateWeightImpl(this.weight);
+
+  @override
+  final double weight;
+
+  @override
+  String toString() {
+    return 'IdleEvent.updateWeight(weight: $weight)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateWeightImpl &&
+            (identical(other.weight, weight) || other.weight == weight));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, weight);
+
+  /// Create a copy of IdleEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateWeightImplCopyWith<_$UpdateWeightImpl> get copyWith =>
+      __$$UpdateWeightImplCopyWithImpl<_$UpdateWeightImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() mock,
+    required TResult Function() loadState,
+    required TResult Function(double weight) updateWeight,
+  }) {
+    return updateWeight(weight);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? mock,
+    TResult? Function()? loadState,
+    TResult? Function(double weight)? updateWeight,
+  }) {
+    return updateWeight?.call(weight);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? mock,
+    TResult Function()? loadState,
+    TResult Function(double weight)? updateWeight,
+    required TResult orElse(),
+  }) {
+    if (updateWeight != null) {
+      return updateWeight(weight);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_mock value) mock,
+    required TResult Function(_loadState value) loadState,
+    required TResult Function(_UpdateWeight value) updateWeight,
+  }) {
+    return updateWeight(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_mock value)? mock,
+    TResult? Function(_loadState value)? loadState,
+    TResult? Function(_UpdateWeight value)? updateWeight,
+  }) {
+    return updateWeight?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_mock value)? mock,
+    TResult Function(_loadState value)? loadState,
+    TResult Function(_UpdateWeight value)? updateWeight,
+    required TResult orElse(),
+  }) {
+    if (updateWeight != null) {
+      return updateWeight(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateWeight implements IdleEvent {
+  const factory _UpdateWeight(final double weight) = _$UpdateWeightImpl;
+
+  double get weight;
+
+  /// Create a copy of IdleEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UpdateWeightImplCopyWith<_$UpdateWeightImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

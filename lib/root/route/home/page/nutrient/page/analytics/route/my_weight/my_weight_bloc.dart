@@ -4,6 +4,7 @@ import 'package:app/app/app.dart';
 import 'package:app/app/core/navigator_core.dart';
 import 'package:app/model/local/practice.dart';
 import 'package:app/model/local/weight_record.dart';
+import 'package:app/root/route/home/page/idle/idle_bloc.dart';
 import 'package:app/root/route/system/api_post_request_manager.dart';
 import 'package:app/root/route/system/token_manager.dart';
 import 'package:collection/collection.dart';
@@ -58,12 +59,12 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
             } else {
               print('API 호출 성공: $result');
 
-              // 🔹 API 성공 시에만 리스트에서 삭제하도록 변경
+              // API 성공 시에만 리스트에서 삭제하도록 변경
               final updatedRecords =
                   state.records.where((r) => r != record).toList();
               emit(state.copyWith(records: updatedRecords));
 
-              debugPrint('🗑 삭제 완료: $result', wrapWidth: 1024);
+              debugPrint('삭제 완료: $result', wrapWidth: 1024);
             }
           } catch (e, stackTrace) {
             print('API 요청 중 오류 발생: $e');
@@ -120,6 +121,7 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
             final newHistoryId = state.records.isNotEmpty
                 ? state.records.first.historyId + 1
                 : 1;
+            // emit(IdleState.copyWith()),
             emit(
               state.copyWith(
                 records: List.of(

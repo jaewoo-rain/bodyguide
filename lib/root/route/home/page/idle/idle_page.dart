@@ -19,7 +19,7 @@ class IdlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => IdleBloc(),
+        create: (context) => IdleBloc()..add(const IdleEvent.loadState()),
         child: Builder(builder: (context) {
           return Scaffold(
             appBar: AppBar(
@@ -250,6 +250,9 @@ class IdlePage extends StatelessWidget {
                                               (previous.weight !=
                                                   current.weight),
                                           builder: (context, state) {
+                                            context.read<IdleBloc>().add(
+                                                IdleEvent.updateWeight(state
+                                                    .weight)); // 체중 75.5kg로 변경
                                             return Text(
                                               '${state.weight}kg',
                                               textAlign: TextAlign.start,

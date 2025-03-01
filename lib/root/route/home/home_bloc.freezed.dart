@@ -16,44 +16,43 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeEvent {
-  HomePage get value => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(BuildContext context) initialize,
     required TResult Function(HomePage value) onPageChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(BuildContext context)? initialize,
     TResult? Function(HomePage value)? onPageChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(BuildContext context)? initialize,
     TResult Function(HomePage value)? onPageChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_initialize value) initialize,
     required TResult Function(_onPageChanged value) onPageChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_initialize value)? initialize,
     TResult? Function(_onPageChanged value)? onPageChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_initialize value)? initialize,
     TResult Function(_onPageChanged value)? onPageChanged,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of HomeEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $HomeEventCopyWith<HomeEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -61,8 +60,6 @@ mixin _$HomeEvent {
 abstract class $HomeEventCopyWith<$Res> {
   factory $HomeEventCopyWith(HomeEvent value, $Res Function(HomeEvent) then) =
       _$HomeEventCopyWithImpl<$Res, HomeEvent>;
-  @useResult
-  $Res call({HomePage value});
 }
 
 /// @nodoc
@@ -77,27 +74,154 @@ class _$HomeEventCopyWithImpl<$Res, $Val extends HomeEvent>
 
   /// Create a copy of HomeEvent
   /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$initializeImplCopyWith<$Res> {
+  factory _$$initializeImplCopyWith(
+          _$initializeImpl value, $Res Function(_$initializeImpl) then) =
+      __$$initializeImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({BuildContext context});
+}
+
+/// @nodoc
+class __$$initializeImplCopyWithImpl<$Res>
+    extends _$HomeEventCopyWithImpl<$Res, _$initializeImpl>
+    implements _$$initializeImplCopyWith<$Res> {
+  __$$initializeImplCopyWithImpl(
+      _$initializeImpl _value, $Res Function(_$initializeImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? value = null,
+    Object? context = null,
   }) {
-    return _then(_value.copyWith(
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as HomePage,
-    ) as $Val);
+    return _then(_$initializeImpl(
+      context: null == context
+          ? _value.context
+          : context // ignore: cast_nullable_to_non_nullable
+              as BuildContext,
+    ));
   }
 }
 
 /// @nodoc
-abstract class _$$onPageChangedImplCopyWith<$Res>
-    implements $HomeEventCopyWith<$Res> {
+
+class _$initializeImpl implements _initialize {
+  const _$initializeImpl({required this.context});
+
+  @override
+  final BuildContext context;
+
+  @override
+  String toString() {
+    return 'HomeEvent.initialize(context: $context)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$initializeImpl &&
+            (identical(other.context, context) || other.context == context));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, context);
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$initializeImplCopyWith<_$initializeImpl> get copyWith =>
+      __$$initializeImplCopyWithImpl<_$initializeImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(BuildContext context) initialize,
+    required TResult Function(HomePage value) onPageChanged,
+  }) {
+    return initialize(context);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(BuildContext context)? initialize,
+    TResult? Function(HomePage value)? onPageChanged,
+  }) {
+    return initialize?.call(context);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(BuildContext context)? initialize,
+    TResult Function(HomePage value)? onPageChanged,
+    required TResult orElse(),
+  }) {
+    if (initialize != null) {
+      return initialize(context);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_initialize value) initialize,
+    required TResult Function(_onPageChanged value) onPageChanged,
+  }) {
+    return initialize(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_initialize value)? initialize,
+    TResult? Function(_onPageChanged value)? onPageChanged,
+  }) {
+    return initialize?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_initialize value)? initialize,
+    TResult Function(_onPageChanged value)? onPageChanged,
+    required TResult orElse(),
+  }) {
+    if (initialize != null) {
+      return initialize(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _initialize implements HomeEvent {
+  const factory _initialize({required final BuildContext context}) =
+      _$initializeImpl;
+
+  BuildContext get context;
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$initializeImplCopyWith<_$initializeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$onPageChangedImplCopyWith<$Res> {
   factory _$$onPageChangedImplCopyWith(
           _$onPageChangedImpl value, $Res Function(_$onPageChangedImpl) then) =
       __$$onPageChangedImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({HomePage value});
 }
@@ -161,6 +285,7 @@ class _$onPageChangedImpl implements _onPageChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(BuildContext context) initialize,
     required TResult Function(HomePage value) onPageChanged,
   }) {
     return onPageChanged(value);
@@ -169,6 +294,7 @@ class _$onPageChangedImpl implements _onPageChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(BuildContext context)? initialize,
     TResult? Function(HomePage value)? onPageChanged,
   }) {
     return onPageChanged?.call(value);
@@ -177,6 +303,7 @@ class _$onPageChangedImpl implements _onPageChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(BuildContext context)? initialize,
     TResult Function(HomePage value)? onPageChanged,
     required TResult orElse(),
   }) {
@@ -189,6 +316,7 @@ class _$onPageChangedImpl implements _onPageChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_initialize value) initialize,
     required TResult Function(_onPageChanged value) onPageChanged,
   }) {
     return onPageChanged(this);
@@ -197,6 +325,7 @@ class _$onPageChangedImpl implements _onPageChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_initialize value)? initialize,
     TResult? Function(_onPageChanged value)? onPageChanged,
   }) {
     return onPageChanged?.call(this);
@@ -205,6 +334,7 @@ class _$onPageChangedImpl implements _onPageChanged {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_initialize value)? initialize,
     TResult Function(_onPageChanged value)? onPageChanged,
     required TResult orElse(),
   }) {
@@ -219,12 +349,10 @@ abstract class _onPageChanged implements HomeEvent {
   const factory _onPageChanged({required final HomePage value}) =
       _$onPageChangedImpl;
 
-  @override
   HomePage get value;
 
   /// Create a copy of HomeEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$onPageChangedImplCopyWith<_$onPageChangedImpl> get copyWith =>
       throw _privateConstructorUsedError;

@@ -724,11 +724,14 @@ class AppSettingRoute extends StatelessWidget {
                     designHeight: 56,
                     builder: (converter) => BysonCupertinoButton.solid(
                       onPressed: () {
-                        App.instance.overlay.cover(
-                          on: true,
-                        );
-
-                        App.instance.auth.signOut();
+                        // App.instance.overlay.cover(
+                        //   on: true,
+                        // );
+                        //
+                        // App.instance.auth.signOut();
+                        context
+                            .read<AppSettingBloc>()
+                            .add(const AppSettingEvent.logout());
                       },
                       color: Colors.white,
                       child: Stack(

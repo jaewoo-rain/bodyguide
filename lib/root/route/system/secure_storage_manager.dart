@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorageManager {
@@ -51,5 +53,46 @@ class SecureStorageManager {
   // 모든 데이터 삭제
   Future<void> clearAll() async {
     await _storage.deleteAll();
+  }
+
+  // JWT 토큰 만료 여부 확인
+  Future<bool> isTokenExpired() async {
+    final String? accessToken = await getAccessToken();
+    if (accessToken == null) return true; // 토큰이 없으면 만료 처리
+
+    try {
+      final parts = accessToken.split('.');
+      if (parts.length != 3) return true;
+
+      final payload = json.decode(
+        utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
+      );
+
+      final exp = payload['exp'];
+      if (exp == null) return true;
+
+      final currentTime = DateTime.now().millisecondsSinceEpoch / 1000;
+      const bufferTime = 10; // 만료 10초 전부터 만료 처리
+
+      // Unix Timestamp를 DateTime으로 변환
+      DateTime currentDateTime =
+          DateTime.fromMillisecondsSinceEpoch((currentTime * 1000).toInt());
+      DateTime expDateTime = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
+      DateTime bufferDateTime =
+          DateTime.fromMillisecondsSinceEpoch((exp - bufferTime) * 1000);
+
+      print('payload : $payload'); // exp : 1740652082
+      print('현재 시간 (Unix): $currentTime');
+      print('현재 시간 (DateTime): $currentDateTime');
+      print('토큰 만료 시간 (Unix): $exp');
+      print('토큰 만료 시간 (DateTime): $expDateTime');
+      print('버퍼 포함 만료 시간 (DateTime): $bufferDateTime');
+      print('결과: ${currentTime > (exp - bufferTime)}');
+
+      return currentTime > (exp - bufferTime);
+    } catch (e) {
+      print('JWT 파싱 오류: $e');
+      return true;
+    }
   }
 }

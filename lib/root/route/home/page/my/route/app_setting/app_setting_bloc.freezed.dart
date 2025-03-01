@@ -20,18 +20,21 @@ mixin _$AppSettingEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() onToggleMyHistoryAlarm,
     required TResult Function() onToggleBodyGuideAlarm,
+    required TResult Function() logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? onToggleMyHistoryAlarm,
     TResult? Function()? onToggleBodyGuideAlarm,
+    TResult? Function()? logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? onToggleMyHistoryAlarm,
     TResult Function()? onToggleBodyGuideAlarm,
+    TResult Function()? logout,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -41,18 +44,21 @@ mixin _$AppSettingEvent {
         onToggleMyHistoryAlarm,
     required TResult Function(_onToggleBodyGuideAlarm value)
         onToggleBodyGuideAlarm,
+    required TResult Function(_logout value) logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_onToggleMyHistoryAlarm value)? onToggleMyHistoryAlarm,
     TResult? Function(_onToggleBodyGuideAlarm value)? onToggleBodyGuideAlarm,
+    TResult? Function(_logout value)? logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_onToggleMyHistoryAlarm value)? onToggleMyHistoryAlarm,
     TResult Function(_onToggleBodyGuideAlarm value)? onToggleBodyGuideAlarm,
+    TResult Function(_logout value)? logout,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -125,6 +131,7 @@ class _$onToggleMyHistoryAlarmImpl implements _onToggleMyHistoryAlarm {
   TResult when<TResult extends Object?>({
     required TResult Function() onToggleMyHistoryAlarm,
     required TResult Function() onToggleBodyGuideAlarm,
+    required TResult Function() logout,
   }) {
     return onToggleMyHistoryAlarm();
   }
@@ -134,6 +141,7 @@ class _$onToggleMyHistoryAlarmImpl implements _onToggleMyHistoryAlarm {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? onToggleMyHistoryAlarm,
     TResult? Function()? onToggleBodyGuideAlarm,
+    TResult? Function()? logout,
   }) {
     return onToggleMyHistoryAlarm?.call();
   }
@@ -143,6 +151,7 @@ class _$onToggleMyHistoryAlarmImpl implements _onToggleMyHistoryAlarm {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? onToggleMyHistoryAlarm,
     TResult Function()? onToggleBodyGuideAlarm,
+    TResult Function()? logout,
     required TResult orElse(),
   }) {
     if (onToggleMyHistoryAlarm != null) {
@@ -158,6 +167,7 @@ class _$onToggleMyHistoryAlarmImpl implements _onToggleMyHistoryAlarm {
         onToggleMyHistoryAlarm,
     required TResult Function(_onToggleBodyGuideAlarm value)
         onToggleBodyGuideAlarm,
+    required TResult Function(_logout value) logout,
   }) {
     return onToggleMyHistoryAlarm(this);
   }
@@ -167,6 +177,7 @@ class _$onToggleMyHistoryAlarmImpl implements _onToggleMyHistoryAlarm {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_onToggleMyHistoryAlarm value)? onToggleMyHistoryAlarm,
     TResult? Function(_onToggleBodyGuideAlarm value)? onToggleBodyGuideAlarm,
+    TResult? Function(_logout value)? logout,
   }) {
     return onToggleMyHistoryAlarm?.call(this);
   }
@@ -176,6 +187,7 @@ class _$onToggleMyHistoryAlarmImpl implements _onToggleMyHistoryAlarm {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_onToggleMyHistoryAlarm value)? onToggleMyHistoryAlarm,
     TResult Function(_onToggleBodyGuideAlarm value)? onToggleBodyGuideAlarm,
+    TResult Function(_logout value)? logout,
     required TResult orElse(),
   }) {
     if (onToggleMyHistoryAlarm != null) {
@@ -235,6 +247,7 @@ class _$onToggleBodyGuideAlarmImpl implements _onToggleBodyGuideAlarm {
   TResult when<TResult extends Object?>({
     required TResult Function() onToggleMyHistoryAlarm,
     required TResult Function() onToggleBodyGuideAlarm,
+    required TResult Function() logout,
   }) {
     return onToggleBodyGuideAlarm();
   }
@@ -244,6 +257,7 @@ class _$onToggleBodyGuideAlarmImpl implements _onToggleBodyGuideAlarm {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? onToggleMyHistoryAlarm,
     TResult? Function()? onToggleBodyGuideAlarm,
+    TResult? Function()? logout,
   }) {
     return onToggleBodyGuideAlarm?.call();
   }
@@ -253,6 +267,7 @@ class _$onToggleBodyGuideAlarmImpl implements _onToggleBodyGuideAlarm {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? onToggleMyHistoryAlarm,
     TResult Function()? onToggleBodyGuideAlarm,
+    TResult Function()? logout,
     required TResult orElse(),
   }) {
     if (onToggleBodyGuideAlarm != null) {
@@ -268,6 +283,7 @@ class _$onToggleBodyGuideAlarmImpl implements _onToggleBodyGuideAlarm {
         onToggleMyHistoryAlarm,
     required TResult Function(_onToggleBodyGuideAlarm value)
         onToggleBodyGuideAlarm,
+    required TResult Function(_logout value) logout,
   }) {
     return onToggleBodyGuideAlarm(this);
   }
@@ -277,6 +293,7 @@ class _$onToggleBodyGuideAlarmImpl implements _onToggleBodyGuideAlarm {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_onToggleMyHistoryAlarm value)? onToggleMyHistoryAlarm,
     TResult? Function(_onToggleBodyGuideAlarm value)? onToggleBodyGuideAlarm,
+    TResult? Function(_logout value)? logout,
   }) {
     return onToggleBodyGuideAlarm?.call(this);
   }
@@ -286,6 +303,7 @@ class _$onToggleBodyGuideAlarmImpl implements _onToggleBodyGuideAlarm {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_onToggleMyHistoryAlarm value)? onToggleMyHistoryAlarm,
     TResult Function(_onToggleBodyGuideAlarm value)? onToggleBodyGuideAlarm,
+    TResult Function(_logout value)? logout,
     required TResult orElse(),
   }) {
     if (onToggleBodyGuideAlarm != null) {
@@ -297,6 +315,119 @@ class _$onToggleBodyGuideAlarmImpl implements _onToggleBodyGuideAlarm {
 
 abstract class _onToggleBodyGuideAlarm implements AppSettingEvent {
   const factory _onToggleBodyGuideAlarm() = _$onToggleBodyGuideAlarmImpl;
+}
+
+/// @nodoc
+abstract class _$$logoutImplCopyWith<$Res> {
+  factory _$$logoutImplCopyWith(
+          _$logoutImpl value, $Res Function(_$logoutImpl) then) =
+      __$$logoutImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$logoutImplCopyWithImpl<$Res>
+    extends _$AppSettingEventCopyWithImpl<$Res, _$logoutImpl>
+    implements _$$logoutImplCopyWith<$Res> {
+  __$$logoutImplCopyWithImpl(
+      _$logoutImpl _value, $Res Function(_$logoutImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of AppSettingEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$logoutImpl implements _logout {
+  const _$logoutImpl();
+
+  @override
+  String toString() {
+    return 'AppSettingEvent.logout()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$logoutImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() onToggleMyHistoryAlarm,
+    required TResult Function() onToggleBodyGuideAlarm,
+    required TResult Function() logout,
+  }) {
+    return logout();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? onToggleMyHistoryAlarm,
+    TResult? Function()? onToggleBodyGuideAlarm,
+    TResult? Function()? logout,
+  }) {
+    return logout?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? onToggleMyHistoryAlarm,
+    TResult Function()? onToggleBodyGuideAlarm,
+    TResult Function()? logout,
+    required TResult orElse(),
+  }) {
+    if (logout != null) {
+      return logout();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_onToggleMyHistoryAlarm value)
+        onToggleMyHistoryAlarm,
+    required TResult Function(_onToggleBodyGuideAlarm value)
+        onToggleBodyGuideAlarm,
+    required TResult Function(_logout value) logout,
+  }) {
+    return logout(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_onToggleMyHistoryAlarm value)? onToggleMyHistoryAlarm,
+    TResult? Function(_onToggleBodyGuideAlarm value)? onToggleBodyGuideAlarm,
+    TResult? Function(_logout value)? logout,
+  }) {
+    return logout?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_onToggleMyHistoryAlarm value)? onToggleMyHistoryAlarm,
+    TResult Function(_onToggleBodyGuideAlarm value)? onToggleBodyGuideAlarm,
+    TResult Function(_logout value)? logout,
+    required TResult orElse(),
+  }) {
+    if (logout != null) {
+      return logout(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _logout implements AppSettingEvent {
+  const factory _logout() = _$logoutImpl;
 }
 
 /// @nodoc

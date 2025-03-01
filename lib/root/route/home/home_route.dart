@@ -34,7 +34,8 @@ class HomeRoute extends StatelessWidget {
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => HomeBloc(),
+            create: (context) =>
+                HomeBloc()..add(HomeEvent.initialize(context: context)),
           ),
           BlocProvider(
             create: (context) => IdleBloc(),
@@ -63,11 +64,14 @@ class HomeRoute extends StatelessWidget {
                 if (page == HomePage.exercise) {
                   context
                       .read<PracticeHistoryBloc>()
-                      .add(const PracticeHistoryEvent.refresh());
+                      .add(const PracticeHistoryEvent.loadPracticeRecord());
                   print("운동탭 클릭됨");
                 } else if (page == HomePage.my) {
-                  context.read<MyBloc>().add(const MyEvent.refresh());
+                  context.read<MyBloc>().add(const MyEvent.mock());
                   print("마이페이지탭 클릭됨");
+                } else if (page == HomePage.idle) {
+                  context.read<IdleBloc>().add(const IdleEvent.loadState());
+                  print("홈탭 클릭됨");
                 }
               },
 

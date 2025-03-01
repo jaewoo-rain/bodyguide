@@ -13,7 +13,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 class KakaoLoginService {
   /// Spring Boot 서버의 카카오 OAuth 시작점
   static const _kakaoLoginUrl =
-      'https://api.bodyguide.co.kr/oauth2/authorization/kako';
+      'https://api.bodyguide.co.kr/oauth2/authorization/kakao';
 
   /// AppLinks 구독 스트림
   StreamSubscription<Uri>? _linkSubscription;
@@ -24,7 +24,6 @@ class KakaoLoginService {
   final _loginCompleter = Completer<String?>();
 
   /// 카카오 로그인을 시작 (Custom Tabs 열기 + 딥링크 수신)
-  ///
   /// 모든 로직이 완료되면 `Future<String?>`로 결과를 반환:
   ///   - `"Login Successful!"` (성공)
   ///   - `null` 또는 에러 메시지 (예: `"Failed to parse JSON Payload"`)

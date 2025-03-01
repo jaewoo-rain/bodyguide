@@ -21,31 +21,31 @@ class TokenManager {
   // API URL
   final String _refreshUrl = 'https://api.bodyguide.co.kr/auth/refresh';
 
-  // Access Token 만료 여부 확인
-  bool isAccessTokenExpired(String? accessToken) {
-    if (accessToken == null) return true;
-
-    try {
-      // JWT 파싱
-      print('Access Token 만료여부 확인');
-      final parts = accessToken.split('.');
-      if (parts.length != 3) return true;
-
-      final payload = json.decode(
-        utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
-      );
-
-      final exp = payload['exp'];
-      if (exp == null) return true;
-
-      final currentTime = DateTime.now().millisecondsSinceEpoch / 1000;
-      const bufferTime = 10; // 만료 시간을 10초 더 여유 있게 설정
-      return currentTime > (exp - bufferTime); // 10초 전에 만료된 것으로 간주
-    } catch (e) {
-      print('JWT 파싱 오류: $e');
-      return true;
-    }
-  }
+  // // Access Token 만료 여부 확인
+  // Future<bool> isAccessTokenExpired(String? accessToken) async {
+  //   if (accessToken == null) return true;
+  //
+  //   try {
+  //     // JWT 파싱
+  //     print('Access Token 만료여부 확인');
+  //     final parts = accessToken.split('.');
+  //     if (parts.length != 3) return true;
+  //
+  //     final payload = json.decode(
+  //       utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
+  //     );
+  //
+  //     final exp = payload['exp'];
+  //     if (exp == null) return true;
+  //
+  //     final currentTime = DateTime.now().millisecondsSinceEpoch / 1000;
+  //     const bufferTime = 10; // 만료 시간을 10초 더 여유 있게 설정
+  //     return currentTime > (exp - bufferTime); // 10초 전에 만료된 것으로 간주
+  //   } catch (e) {
+  //     print('JWT 파싱 오류: $e');
+  //     return true;
+  //   }
+  // }
 
   // Access Token 갱신
   Future<bool> refreshAccessToken() async {
@@ -82,13 +82,13 @@ class TokenManager {
 
   // API 호출 전 Access Token 체크 및 갱신
   Future<String?> getValidAccessToken() async {
-    final accessToken = await storageManager.getAccessToken();
-    if (isAccessTokenExpired(accessToken)) {
-      print('엑세스 토큰 존재함');
+    if (await storageManager.isTokenExpired()) {
+      print('엑세스 토큰 만료되어 갱신함');
       final success = await refreshAccessToken();
       if (!success) return null;
       return await storageManager.getAccessToken();
     }
-    return accessToken;
+    // 만료되지 않아서 그대로 리턴
+    return await storageManager.getAccessToken();
   }
 }
