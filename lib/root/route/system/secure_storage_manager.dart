@@ -1,9 +1,17 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+
+import '../../../app/app.dart';
+import '../../../app/core/navigator_core.dart';
 
 class SecureStorageManager {
   // Singleton 패턴 적용
+  final String _refreshUrl = 'https://api.bodyguide.co.kr/auth/refresh';
+
   static final SecureStorageManager _instance =
       SecureStorageManager._internal();
 
@@ -55,13 +63,18 @@ class SecureStorageManager {
     await _storage.deleteAll();
   }
 
-  // JWT 토큰 만료 여부 확인
-  Future<bool> isTokenExpired() async {
-    final String? accessToken = await getAccessToken();
-    if (accessToken == null) return true; // 토큰이 없으면 만료 처리
+  // AccessToken 만료 여부 확인
+  Future<bool> isTokenExpired(String type) async {
+    String? token;
+    if (type == "access") {
+      token = await getAccessToken();
+    } else if (type == "refresh") {
+      token = await getRefreshToken();
+    }
+    if (token == null) return true; // 토큰이 없으면 만료 처리
 
     try {
-      final parts = accessToken.split('.');
+      final parts = token.split('.');
       if (parts.length != 3) return true;
 
       final payload = json.decode(
@@ -84,8 +97,8 @@ class SecureStorageManager {
       print('payload : $payload'); // exp : 1740652082
       print('현재 시간 (Unix): $currentTime');
       print('현재 시간 (DateTime): $currentDateTime');
-      print('토큰 만료 시간 (Unix): $exp');
-      print('토큰 만료 시간 (DateTime): $expDateTime');
+      print('$type토큰 만료 시간 (Unix): $exp');
+      print('$type토큰 만료 시간 (DateTime): $expDateTime');
       print('버퍼 포함 만료 시간 (DateTime): $bufferDateTime');
       print('결과: ${currentTime > (exp - bufferTime)}');
 
@@ -93,6 +106,40 @@ class SecureStorageManager {
     } catch (e) {
       print('JWT 파싱 오류: $e');
       return true;
+    }
+  }
+
+  // 만약 토큰이 만료되었으면 RefreshToken을 이용하여 갱신 (예제용, 실제 API 필요)
+  // Access Token 갱신
+  Future<bool> refreshAccessToken() async {
+    final refreshToken = await getRefreshToken();
+    if (refreshToken == null) {
+      print('Refresh Token이 없습니다. 로그인이 필요합니다.');
+      App.instance.navigator.go(Routes.sign.path);
+      return false;
+    }
+
+    try {
+      final response = await Dio().post(
+        _refreshUrl,
+        data: {'refreshToken': refreshToken},
+      );
+
+      final newAccessToken = response.data['accessToken'];
+      final newRefreshToken = response.data['refreshToken'];
+
+      await saveAccessToken(newAccessToken);
+      await saveRefreshToken(newRefreshToken);
+
+      // 3. 토큰의 만료 시간 (DateTime)
+      DateTime expirationDate = JwtDecoder.getExpirationDate(newAccessToken);
+      debugPrint('ExpirationDate: $expirationDate');
+
+      print('Access Token 갱신 성공 : $newAccessToken');
+      return true;
+    } catch (e) {
+      print('Access Token 갱신 실패: $e');
+      return false;
     }
   }
 }

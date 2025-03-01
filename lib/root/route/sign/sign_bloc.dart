@@ -32,19 +32,21 @@ class SignBloc extends Bloc<SignEvent, SignState> {
           final AppPreferences appPreferences = AppPreferences();
           bool isFirstRun = await appPreferences.isFirstRun();
           final storageManager = SecureStorageManager();
-          final accessToken = await storageManager.getAccessToken();
+          final TokenManager tokenManager = TokenManager();
+          final validAccessToken = await tokenManager.getValidAccessToken();
 
           if (!isFirstRun) {
             // 처음실행한것이 아닌경우
             print('처음실행한것이 아님');
-            if (accessToken == null) {
+            if (validAccessToken == null) {
               // accessToken 유무 확인
-              print('accessToken Token이 없습니다. 로그인이 필요합니다.');
+              print('Token이 없습니다.');
             } else {
               // accessToken Token이 존재
-              if (!await storageManager.isTokenExpired()) {
+              if (!await storageManager.isTokenExpired("refresh")) {
                 // 기한이 만료 확인
                 // 기한이 만료되지 않음
+                await tokenManager.refreshAccessToken();
                 return App.instance.navigator.go(Routes.home.path);
               }
               print('기한이 만료됨');
@@ -52,14 +54,15 @@ class SignBloc extends Bloc<SignEvent, SignState> {
           } else {
             // 처음 실행한 경우
             print('처음 실행함');
-            if (accessToken == null) {
+            if (validAccessToken == null) {
               // accessToken 유무 확인
-              print('accessToken Token이 없습니다. 로그인이 필요합니다.');
+              print('Token이 없습니다.');
             } else {
-              // accessToken Token이 존재
-              if (!await storageManager.isTokenExpired()) {
+              // accessToken Token이 존재 1740851325
+              if (!await storageManager.isTokenExpired("refresh")) {
                 // 기한이 만료 확인
                 // 기한이 만료되지 않음
+                await tokenManager.refreshAccessToken();
                 return App.instance.navigator.go(Routes.home.path);
               }
               print('기한이 만료됨');

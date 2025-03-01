@@ -165,11 +165,12 @@ class MyPage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                      // 'https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp',
-                                      state.userProfile['profileImg']
-                                          .toString(),
-                                    ),
+                                    image:
+                                        state.userProfile['profileImg'] != null
+                                            ? NetworkImage(
+                                                state.userProfile['profileImg'])
+                                            : AssetImage(
+                                                "asset/icon/ic_profile_circle"),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -217,7 +218,8 @@ class MyPage extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  '2---년 --월 --일 가입',
+                                  '${state.userProfile["registerDate"].split('-')[0]}년 ${state.userProfile["registerDate"].split('-')[1]}월 ${state.userProfile["registerDate"].split('-')[2]}일 가입', // 2025-01-14
+                                  // '2---년 --월 --일 가입',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     height: 1.5,

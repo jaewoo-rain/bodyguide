@@ -55,8 +55,14 @@ class TokenManager {
       App.instance.navigator.go(Routes.sign.path);
       return false;
     }
+    if (await storageManager.isTokenExpired("refresh")) {
+      print("refreshToken 만료");
+      App.instance.navigator.go(Routes.sign.path);
+      return false;
+    }
 
     try {
+      print('토큰갱신');
       final response = await Dio().post(
         _refreshUrl,
         data: {'refreshToken': refreshToken},
@@ -82,7 +88,7 @@ class TokenManager {
 
   // API 호출 전 Access Token 체크 및 갱신
   Future<String?> getValidAccessToken() async {
-    if (await storageManager.isTokenExpired()) {
+    if (await storageManager.isTokenExpired("access")) {
       print('엑세스 토큰 만료되어 갱신함');
       final success = await refreshAccessToken();
       if (!success) return null;

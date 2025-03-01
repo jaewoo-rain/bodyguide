@@ -135,7 +135,7 @@ class IdlePage extends StatelessWidget {
                           itemCount: 99,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) => Container(
-                            color: Colors.red,
+                            // color: Colors.red,
                             child: Assets.image.imgBanner.image(
                               alignment: Alignment.center,
                               width: designWidth,
