@@ -122,6 +122,8 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
                 ? state.records.first.historyId + 1
                 : 1;
             // emit(IdleState.copyWith()),
+            // emit((IdleState.weight = state.input.replaceAll('kg', "")) as MyWeightState);
+
             emit(
               state.copyWith(
                 records: List.of(

@@ -22,16 +22,15 @@ class PracticeAnalyticsReportBloc
         initialize: (event) async {
           await Future.delayed(
             const Duration(
-              seconds: 3,
+              seconds: 1,
             ),
           ).then(
-                (value) async =>
-            await pageController.nextPage(
+            (value) async => await pageController.nextPage(
               duration: defaultAnimationDuration,
               curve: defaultAnimationCurve,
             ),
           );
-          },
+        },
       );
     });
   }

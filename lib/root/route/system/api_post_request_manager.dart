@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:app/app/app.dart';
 import 'package:app/app/core/navigator_core.dart';
-import 'package:app/root/route/system/secure_storage_manager.dart';
 import 'package:app/root/route/system/token_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

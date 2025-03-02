@@ -24,6 +24,7 @@ import 'package:app/root/route/home/page/practice/page/history/route/practice_re
 import 'package:app/root/route/home/route/calendar/calendar_route.dart';
 import 'package:app/root/route/home/route/notification/notification_route.dart';
 import 'package:app/root/route/onboard/onboard_route.dart';
+import 'package:app/root/route/sign/page/login/login_page.dart';
 import 'package:app/root/route/sign/sign_route.dart';
 import 'package:app/root/route/system/error/error_route.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -64,6 +65,11 @@ class Routes {
   static const CustomRoute home = CustomRoute(
     parent: null,
     endpoint: 'home',
+  );
+
+  static const CustomRoute login = CustomRoute(
+    parent: null,
+    endpoint: 'login',
   );
 
   static const CustomRoute notification = CustomRoute(
@@ -206,6 +212,16 @@ class NavigatorCore {
             name: 'onboard',
             key: state.pageKey,
             child: OnboardRoute(
+              key: state.pageKey,
+            ),
+          ),
+        ),
+        GoRoute(
+          path: '/login',
+          pageBuilder: (context, state) => CupertinoPage<void>(
+            name: 'login',
+            key: state.pageKey,
+            child: LoginPage(
               key: state.pageKey,
             ),
           ),

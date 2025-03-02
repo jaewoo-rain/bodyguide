@@ -20,44 +20,32 @@ mixin _$SignEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BuildContext context) initialize,
-    required TResult Function(BuildContext context) signInWithGoogle,
-    required TResult Function(BuildContext context) signInWithKakao,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BuildContext context)? initialize,
-    TResult? Function(BuildContext context)? signInWithGoogle,
-    TResult? Function(BuildContext context)? signInWithKakao,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BuildContext context)? initialize,
-    TResult Function(BuildContext context)? signInWithGoogle,
-    TResult Function(BuildContext context)? signInWithKakao,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initialize value) initialize,
-    required TResult Function(_signInWithGoogle value) signInWithGoogle,
-    required TResult Function(_signInWithKakao value) signInWithKakao,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initialize value)? initialize,
-    TResult? Function(_signInWithGoogle value)? signInWithGoogle,
-    TResult? Function(_signInWithKakao value)? signInWithKakao,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initialize value)? initialize,
-    TResult Function(_signInWithGoogle value)? signInWithGoogle,
-    TResult Function(_signInWithKakao value)? signInWithKakao,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -174,8 +162,6 @@ class _$initializeImpl implements _initialize {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BuildContext context) initialize,
-    required TResult Function(BuildContext context) signInWithGoogle,
-    required TResult Function(BuildContext context) signInWithKakao,
   }) {
     return initialize(context);
   }
@@ -184,8 +170,6 @@ class _$initializeImpl implements _initialize {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(BuildContext context)? initialize,
-    TResult? Function(BuildContext context)? signInWithGoogle,
-    TResult? Function(BuildContext context)? signInWithKakao,
   }) {
     return initialize?.call(context);
   }
@@ -194,8 +178,6 @@ class _$initializeImpl implements _initialize {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(BuildContext context)? initialize,
-    TResult Function(BuildContext context)? signInWithGoogle,
-    TResult Function(BuildContext context)? signInWithKakao,
     required TResult orElse(),
   }) {
     if (initialize != null) {
@@ -208,8 +190,6 @@ class _$initializeImpl implements _initialize {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initialize value) initialize,
-    required TResult Function(_signInWithGoogle value) signInWithGoogle,
-    required TResult Function(_signInWithKakao value) signInWithKakao,
   }) {
     return initialize(this);
   }
@@ -218,8 +198,6 @@ class _$initializeImpl implements _initialize {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initialize value)? initialize,
-    TResult? Function(_signInWithGoogle value)? signInWithGoogle,
-    TResult? Function(_signInWithKakao value)? signInWithKakao,
   }) {
     return initialize?.call(this);
   }
@@ -228,8 +206,6 @@ class _$initializeImpl implements _initialize {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initialize value)? initialize,
-    TResult Function(_signInWithGoogle value)? signInWithGoogle,
-    TResult Function(_signInWithKakao value)? signInWithKakao,
     required TResult orElse(),
   }) {
     if (initialize != null) {
@@ -251,310 +227,6 @@ abstract class _initialize implements SignEvent {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$initializeImplCopyWith<_$initializeImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$signInWithGoogleImplCopyWith<$Res>
-    implements $SignEventCopyWith<$Res> {
-  factory _$$signInWithGoogleImplCopyWith(_$signInWithGoogleImpl value,
-          $Res Function(_$signInWithGoogleImpl) then) =
-      __$$signInWithGoogleImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({BuildContext context});
-}
-
-/// @nodoc
-class __$$signInWithGoogleImplCopyWithImpl<$Res>
-    extends _$SignEventCopyWithImpl<$Res, _$signInWithGoogleImpl>
-    implements _$$signInWithGoogleImplCopyWith<$Res> {
-  __$$signInWithGoogleImplCopyWithImpl(_$signInWithGoogleImpl _value,
-      $Res Function(_$signInWithGoogleImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of SignEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? context = null,
-  }) {
-    return _then(_$signInWithGoogleImpl(
-      context: null == context
-          ? _value.context
-          : context // ignore: cast_nullable_to_non_nullable
-              as BuildContext,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$signInWithGoogleImpl implements _signInWithGoogle {
-  const _$signInWithGoogleImpl({required this.context});
-
-  @override
-  final BuildContext context;
-
-  @override
-  String toString() {
-    return 'SignEvent.signInWithGoogle(context: $context)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$signInWithGoogleImpl &&
-            (identical(other.context, context) || other.context == context));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, context);
-
-  /// Create a copy of SignEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$signInWithGoogleImplCopyWith<_$signInWithGoogleImpl> get copyWith =>
-      __$$signInWithGoogleImplCopyWithImpl<_$signInWithGoogleImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BuildContext context) initialize,
-    required TResult Function(BuildContext context) signInWithGoogle,
-    required TResult Function(BuildContext context) signInWithKakao,
-  }) {
-    return signInWithGoogle(context);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BuildContext context)? initialize,
-    TResult? Function(BuildContext context)? signInWithGoogle,
-    TResult? Function(BuildContext context)? signInWithKakao,
-  }) {
-    return signInWithGoogle?.call(context);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BuildContext context)? initialize,
-    TResult Function(BuildContext context)? signInWithGoogle,
-    TResult Function(BuildContext context)? signInWithKakao,
-    required TResult orElse(),
-  }) {
-    if (signInWithGoogle != null) {
-      return signInWithGoogle(context);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_initialize value) initialize,
-    required TResult Function(_signInWithGoogle value) signInWithGoogle,
-    required TResult Function(_signInWithKakao value) signInWithKakao,
-  }) {
-    return signInWithGoogle(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_initialize value)? initialize,
-    TResult? Function(_signInWithGoogle value)? signInWithGoogle,
-    TResult? Function(_signInWithKakao value)? signInWithKakao,
-  }) {
-    return signInWithGoogle?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_initialize value)? initialize,
-    TResult Function(_signInWithGoogle value)? signInWithGoogle,
-    TResult Function(_signInWithKakao value)? signInWithKakao,
-    required TResult orElse(),
-  }) {
-    if (signInWithGoogle != null) {
-      return signInWithGoogle(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _signInWithGoogle implements SignEvent {
-  const factory _signInWithGoogle({required final BuildContext context}) =
-      _$signInWithGoogleImpl;
-
-  @override
-  BuildContext get context;
-
-  /// Create a copy of SignEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$signInWithGoogleImplCopyWith<_$signInWithGoogleImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$signInWithKakaoImplCopyWith<$Res>
-    implements $SignEventCopyWith<$Res> {
-  factory _$$signInWithKakaoImplCopyWith(_$signInWithKakaoImpl value,
-          $Res Function(_$signInWithKakaoImpl) then) =
-      __$$signInWithKakaoImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({BuildContext context});
-}
-
-/// @nodoc
-class __$$signInWithKakaoImplCopyWithImpl<$Res>
-    extends _$SignEventCopyWithImpl<$Res, _$signInWithKakaoImpl>
-    implements _$$signInWithKakaoImplCopyWith<$Res> {
-  __$$signInWithKakaoImplCopyWithImpl(
-      _$signInWithKakaoImpl _value, $Res Function(_$signInWithKakaoImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of SignEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? context = null,
-  }) {
-    return _then(_$signInWithKakaoImpl(
-      context: null == context
-          ? _value.context
-          : context // ignore: cast_nullable_to_non_nullable
-              as BuildContext,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$signInWithKakaoImpl implements _signInWithKakao {
-  const _$signInWithKakaoImpl({required this.context});
-
-  @override
-  final BuildContext context;
-
-  @override
-  String toString() {
-    return 'SignEvent.signInWithKakao(context: $context)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$signInWithKakaoImpl &&
-            (identical(other.context, context) || other.context == context));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, context);
-
-  /// Create a copy of SignEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$signInWithKakaoImplCopyWith<_$signInWithKakaoImpl> get copyWith =>
-      __$$signInWithKakaoImplCopyWithImpl<_$signInWithKakaoImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BuildContext context) initialize,
-    required TResult Function(BuildContext context) signInWithGoogle,
-    required TResult Function(BuildContext context) signInWithKakao,
-  }) {
-    return signInWithKakao(context);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BuildContext context)? initialize,
-    TResult? Function(BuildContext context)? signInWithGoogle,
-    TResult? Function(BuildContext context)? signInWithKakao,
-  }) {
-    return signInWithKakao?.call(context);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BuildContext context)? initialize,
-    TResult Function(BuildContext context)? signInWithGoogle,
-    TResult Function(BuildContext context)? signInWithKakao,
-    required TResult orElse(),
-  }) {
-    if (signInWithKakao != null) {
-      return signInWithKakao(context);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_initialize value) initialize,
-    required TResult Function(_signInWithGoogle value) signInWithGoogle,
-    required TResult Function(_signInWithKakao value) signInWithKakao,
-  }) {
-    return signInWithKakao(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_initialize value)? initialize,
-    TResult? Function(_signInWithGoogle value)? signInWithGoogle,
-    TResult? Function(_signInWithKakao value)? signInWithKakao,
-  }) {
-    return signInWithKakao?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_initialize value)? initialize,
-    TResult Function(_signInWithGoogle value)? signInWithGoogle,
-    TResult Function(_signInWithKakao value)? signInWithKakao,
-    required TResult orElse(),
-  }) {
-    if (signInWithKakao != null) {
-      return signInWithKakao(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _signInWithKakao implements SignEvent {
-  const factory _signInWithKakao({required final BuildContext context}) =
-      _$signInWithKakaoImpl;
-
-  @override
-  BuildContext get context;
-
-  /// Create a copy of SignEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$signInWithKakaoImplCopyWith<_$signInWithKakaoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
