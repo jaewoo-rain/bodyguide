@@ -6,10 +6,10 @@
 // import 'package:flutter/material.dart';
 // import 'package:iconsax_plus/iconsax_plus.dart';
 //
-// import 'route/exercise_page.dart';
-// import 'route/exercise_threshold_type.dart';
-// import 'route/exercise_type_page.dart';
-// import 'route/muscle_page.dart';
+// import 'page/exercise_page.dart';
+// import 'page/exercise_threshold_type.dart';
+// import 'page/exercise_type_page.dart';
+// import 'page/muscle_page.dart';
 //
 // class SQLitePage extends StatelessWidget {
 //   const SQLitePage({super.key});

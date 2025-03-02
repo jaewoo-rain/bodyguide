@@ -1,5 +1,5 @@
-import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/route/volume_chart/volume_chart_event.dart';
-import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/route/volume_chart/volume_chart_state.dart';
+import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/page/volume_chart/volume_chart_event.dart';
+import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/page/volume_chart/volume_chart_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VolumeChartBloc extends Bloc<VolumeChartEvent, VolumeChartState> {
