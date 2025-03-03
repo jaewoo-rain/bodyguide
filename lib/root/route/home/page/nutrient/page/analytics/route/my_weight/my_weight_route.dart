@@ -4,6 +4,7 @@ import 'package:app/app/constant/system.dart';
 import 'package:app/app/constant/values.dart';
 import 'package:app/app/core/navigator_core.dart';
 import 'package:app/model/local/practice.dart';
+import 'package:app/root/route/home/page/idle/idle_bloc.dart';
 import 'package:app/root/route/home/page/nutrient/page/analytics/route/my_weight/my_weight_bloc.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/recommendation/recommendation_bloc.dart';
 import 'package:app/root/route/home/page/practice/page/history/route/practice_do/practice_do_bloc.dart';
@@ -25,8 +26,15 @@ class MyWeightRoute extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) => MyWeightBloc(),
+  Widget build(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => MyWeightBloc(),
+          ),
+          BlocProvider(
+            create: (context) => IdleBloc(),
+          )
+        ],
         child: Builder(
           builder: (context) => Scaffold(
             appBar: AppBar(
@@ -334,6 +342,11 @@ class MyWeightRoute extends StatelessWidget {
                                           context.read<MyWeightBloc>().add(
                                                 const MyWeightEvent.submit(),
                                               );
+                                          // const double value = double.parse(
+                                          //     state.input.replaceAll('kg', ''));
+                                          // context.read<IdleBloc>().add(
+                                          //     const IdleEvent.updateWeight(
+                                          //         value));
                                         },
                                         child: Icon(
                                           Icons.check,

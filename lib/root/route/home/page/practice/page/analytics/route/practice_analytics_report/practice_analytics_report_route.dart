@@ -25,6 +25,7 @@ class PracticeAnalyticsReportRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
+        // lazy: false,
         create: (context) => PracticeAnalyticsReportBloc()
           ..add(
             const PracticeAnalyticsReportEvent.initialize(),

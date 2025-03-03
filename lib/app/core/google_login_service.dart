@@ -118,17 +118,17 @@ class GoogleLoginService {
             debugPrint('ExpirationDate: $expirationDate');
             debugPrint('Token Used Time: $tokenUsedTime');
 
-            // flutter_secure_storage에 토큰 저장
-            final storageManager = SecureStorageManager();
-            await storageManager.saveAccessToken(accessToken);
-            await storageManager.saveRefreshToken(refreshToken);
-
             // 로그인 성공 처리 및 화면 이동
             if (!_loginCompleter.isCompleted) {
               if (decoded['role'] == 'ROLE_GUEST') {
                 App.instance.navigator.go(Routes.onboard.path);
               } else if (decoded['role'] == 'ROLE_USER') {
                 _loginCompleter.complete('Login Successful!');
+                // flutter_secure_storage에 토큰 저장
+                final storageManager = SecureStorageManager();
+                await storageManager.saveAccessToken(accessToken);
+                await storageManager.saveRefreshToken(refreshToken);
+
                 App.instance.navigator.go(Routes.home.path);
               } else {
                 App.instance.navigator.go(Routes.sign.path);
