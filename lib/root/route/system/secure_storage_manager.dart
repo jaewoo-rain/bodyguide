@@ -109,37 +109,37 @@ class SecureStorageManager {
     }
   }
 
-  // 만약 토큰이 만료되었으면 RefreshToken을 이용하여 갱신 (예제용, 실제 API 필요)
-  // Access Token 갱신
-  Future<bool> refreshAccessToken() async {
-    final refreshToken = await getRefreshToken();
-    if (refreshToken == null) {
-      print('Refresh Token이 없습니다. 로그인이 필요합니다.');
-      App.instance.navigator.go(Routes.sign.path);
-      return false;
-    }
-
-    try {
-      final response = await Dio().post(
-        _refreshUrl,
-        data: {'refreshToken': refreshToken},
-      );
-
-      final newAccessToken = response.data['accessToken'];
-      final newRefreshToken = response.data['refreshToken'];
-
-      await saveAccessToken(newAccessToken);
-      await saveRefreshToken(newRefreshToken);
-
-      // 3. 토큰의 만료 시간 (DateTime)
-      DateTime expirationDate = JwtDecoder.getExpirationDate(newAccessToken);
-      debugPrint('ExpirationDate: $expirationDate');
-
-      print('Access Token 갱신 성공 : $newAccessToken');
-      return true;
-    } catch (e) {
-      print('Access Token 갱신 실패: $e');
-      return false;
-    }
-  }
+  // // 만약 토큰이 만료되었으면 RefreshToken을 이용하여 갱신 (예제용, 실제 API 필요)
+  // // Access Token 갱신
+  // Future<bool> refreshAccessToken() async {
+  //   final refreshToken = await getRefreshToken();
+  //   if (refreshToken == null) {
+  //     print('Refresh Token이 없습니다. 로그인이 필요합니다.');
+  //     App.instance.navigator.go(Routes.sign.path);
+  //     return false;
+  //   }
+  //
+  //   try {
+  //     final response = await Dio().post(
+  //       _refreshUrl,
+  //       data: {'refreshToken': refreshToken},
+  //     );
+  //
+  //     final newAccessToken = response.data['accessToken'];
+  //     final newRefreshToken = response.data['refreshToken'];
+  //
+  //     await saveAccessToken(newAccessToken);
+  //     await saveRefreshToken(newRefreshToken);
+  //
+  //     // 3. 토큰의 만료 시간 (DateTime)
+  //     DateTime expirationDate = JwtDecoder.getExpirationDate(newAccessToken);
+  //     debugPrint('ExpirationDate: $expirationDate');
+  //
+  //     print('Access Token 갱신 성공 : $newAccessToken');
+  //     return true;
+  //   } catch (e) {
+  //     print('Access Token 갱신 실패: $e');
+  //     return false;
+  //   }
+  // }
 }

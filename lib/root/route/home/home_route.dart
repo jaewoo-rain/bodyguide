@@ -34,8 +34,7 @@ class HomeRoute extends StatelessWidget {
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) =>
-                HomeBloc()..add(HomeEvent.initialize(context: context)),
+            create: (context) => HomeBloc(),
           ),
           BlocProvider(
             create: (context) => IdleBloc(),

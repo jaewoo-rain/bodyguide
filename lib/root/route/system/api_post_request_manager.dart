@@ -63,7 +63,7 @@ class ApiRequestManager {
 
         // 실패 시 경로로 이동
         print('post $path 오류');
-        App.instance.navigator.go(failRoute);
+        App.instance.navigator.go(Routes.home.path);
       }
     } else {
       print('로그인이 필요합니다.');
@@ -118,7 +118,7 @@ class ApiRequestManager {
 
         // 실패 시 경로로 이동
         print('get $path 오류');
-        App.instance.navigator.go(failRoute);
+        App.instance.navigator.go(Routes.home.path);
 
         // 빈 Map 반환
         return {'error': 'API 요청 실패', 'message': e.toString()};
@@ -193,7 +193,7 @@ class ApiRequestManager {
         }
         // 실패 시 경로로 이동
         print('multi $paths 오류');
-        App.instance.navigator.go(failRoute);
+        App.instance.navigator.go(Routes.home.path);
         // App.instance.navigator.go(Routes.onboard.path);
 
         print("'error': 'API 요청 실패', 'message': ${e.toString()}");

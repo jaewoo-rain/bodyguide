@@ -42,7 +42,7 @@ class SignBloc extends Bloc<SignEvent, SignState> {
               if (!await storageManager.isTokenExpired("refresh")) {
                 // 기한이 만료 확인
                 // 기한이 만료되지 않음
-                await tokenManager.refreshAccessToken();
+                // await tokenManager.refreshAccessToken();
                 return App.instance.navigator.go(Routes.home.path);
               }
               print('기한이 만료됨');

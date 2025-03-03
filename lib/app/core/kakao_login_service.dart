@@ -7,13 +7,12 @@ import 'package:app/root/route/system/secure_storage_manager.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 /// 카카오 OAuth 및 딥링크 처리를 담당하는 서비스
 class KakaoLoginService {
-  /// Spring Boot 서버의 카카오 OAuth 시작점
-  static const _kakaoLoginUrl =
-      'https://api.bodyguide.co.kr/oauth2/authorization/kakao';
+  String base_Url = dotenv.env['BASE_URL'] ?? 'base_url';
 
   /// AppLinks 구독 스트림
   StreamSubscription<Uri>? _linkSubscription;
@@ -28,6 +27,9 @@ class KakaoLoginService {
   ///   - `"Login Successful!"` (성공)
   ///   - `null` 또는 에러 메시지 (예: `"Failed to parse JSON Payload"`)
   Future<String?> startKakaoLogin(BuildContext context) async {
+    /// Spring Boot 서버의 카카오 OAuth 시작점
+    final kakaoLoginUrl = 'https://$base_Url/oauth2/authorization/kakao';
+
     // 1) AppLinks 초기화 및 딥링크 스트림 구독
     final appLinks = AppLinks();
     _linkSubscription = appLinks.uriLinkStream.listen(
@@ -43,7 +45,7 @@ class KakaoLoginService {
     // 2) Custom Tabs (크롬 또는 사파리 뷰) 열기
     try {
       await launchUrl(
-        Uri.parse(_kakaoLoginUrl),
+        Uri.parse(kakaoLoginUrl),
         customTabsOptions: CustomTabsOptions(
           showTitle: true,
         ),
