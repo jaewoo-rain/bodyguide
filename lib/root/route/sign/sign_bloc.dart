@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import '../system/app_preferences.dart';
 import '../system/secure_storage_manager.dart';
 import '../system/token_manager.dart';
@@ -40,10 +41,27 @@ class SignBloc extends Bloc<SignEvent, SignState> {
             } else {
               // accessToken Token이 존재
               if (!await storageManager.isTokenExpired("refresh")) {
+                var token = storageManager.getAccessToken().toString();
+                // final decoded = JwtDecoder.decode(accessToken);
+                // print("decoded: ${decoded['role']}");
+                final parts = token.split('.');
+                print(parts);
+                final payload = json.decode(
+                  utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))),
+                );
+                final role = payload['role'];
+                print("roleeee: $role");ss
                 // 기한이 만료 확인
                 // 기한이 만료되지 않음
                 // await tokenManager.refreshAccessToken();
-                return App.instance.navigator.go(Routes.home.path);
+                // 여기가문제
+                // if (decoded['role'] == 'ROLE_GUEST') {
+                //   App.instance.navigator.go(Routes.onboard.path);
+                // } else if (decoded['role'] == 'ROLE_USER') {
+                //   App.instance.navigator.go(Routes.home.path);
+                // } else {
+                //   App.instance.navigator.go(Routes.sign.path);
+                // }
               }
               print('기한이 만료됨');
             }
