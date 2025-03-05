@@ -36,11 +36,11 @@ class HomeRoute extends StatelessWidget {
           BlocProvider(
             create: (context) => HomeBloc(),
           ),
-          BlocProvider(
-            create: (context) => IdleBloc(),
-          ),
-          BlocProvider(create: (context) => PracticeHistoryBloc()),
-          BlocProvider(create: (context) => MyBloc()),
+          // BlocProvider(
+          //   create: (context) => IdleBloc(),
+          // ),
+          // BlocProvider(create: (context) => PracticeHistoryBloc()),
+          // BlocProvider(create: (context) => MyBloc()),
         ],
         child: Builder(
           builder: (context) => Scaffold(
@@ -59,19 +59,19 @@ class HomeRoute extends StatelessWidget {
                     .read<HomeBloc>()
                     .add(HomeEvent.onPageChanged(value: page));
 
-                // 만약 PracticeHistory 탭이 전환되었다면, 해당 Bloc에 refresh 이벤트를 보냄
-                if (page == HomePage.exercise) {
-                  context
-                      .read<PracticeHistoryBloc>()
-                      .add(const PracticeHistoryEvent.loadPracticeRecord());
-                  print("운동탭 클릭됨");
-                } else if (page == HomePage.my) {
-                  context.read<MyBloc>().add(const MyEvent.mock());
-                  print("마이페이지탭 클릭됨");
-                } else if (page == HomePage.idle) {
-                  context.read<IdleBloc>().add(const IdleEvent.loadState());
-                  print("홈탭 클릭됨");
-                }
+                // // 만약 PracticeHistory 탭이 전환되었다면, 해당 Bloc에 refresh 이벤트를 보냄
+                // if (page == HomePage.exercise) {
+                //   context
+                //       .read<PracticeHistoryBloc>()
+                //       .add(const PracticeHistoryEvent.loadPracticeRecord());
+                //   print("운동탭 클릭됨");
+                // } else if (page == HomePage.my) {
+                //   context.read<MyBloc>().add(const MyEvent.mock());
+                //   print("마이페이지탭 클릭됨");
+                // } else if (page == HomePage.idle) {
+                //   context.read<IdleBloc>().add(const IdleEvent.loadState());
+                //   print("홈탭 클릭됨");
+                // }
               },
 
               children: const [

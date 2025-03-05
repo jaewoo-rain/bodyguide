@@ -250,9 +250,9 @@ class IdlePage extends StatelessWidget {
                                               (previous.weight !=
                                                   current.weight),
                                           builder: (context, state) {
-                                            context.read<IdleBloc>().add(
-                                                IdleEvent.updateWeight(state
-                                                    .weight)); // 체중 75.5kg로 변경
+                                            // context.read<IdleBloc>().add(
+                                            //     IdleEvent.updateWeight(state
+                                            //         .weight)); // 체중 75.5kg로 변경
                                             return Text(
                                               '${state.weight}kg',
                                               textAlign: TextAlign.start,
@@ -338,9 +338,13 @@ class IdlePage extends StatelessWidget {
                               ],
                             ),
                             child: BysonCupertinoButton.solid(
-                              onPressed: () => App.instance.navigator.push(
-                                Routes.recommendation.path,
-                              ),
+                              onPressed: () {
+                                context
+                                    .read<IdleBloc>()
+                                    .add(IdleEvent.updateWeight(11));
+                                App.instance.navigatorasd
+                                    .push(Routes.recommendation.path);
+                              },
                               child: Stack(
                                 children: [
                                   PositionedDirectional(

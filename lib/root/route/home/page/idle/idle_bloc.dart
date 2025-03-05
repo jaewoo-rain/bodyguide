@@ -25,9 +25,8 @@ class IdleBloc extends Bloc<IdleEvent, IdleState> {
             print('체중 업데이트 감지: ${event.weight}kg');
 
             // 기존 weight 값과 다를 때만 변경
-            if (state.weight != event.weight) {
-              emit(state.copyWith(weight: event.weight));
-            }
+            emit(state.copyWith(weight: event.weight));
+            print(state.weight);
           });
     });
   }
