@@ -1,6 +1,6 @@
 import 'package:app/app/app.dart';
 import 'package:app/app/constant/system.dart';
-import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/modal/dashed_line_painter.dart';
+import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/models/dashed_line_painter.dart';
 import 'package:byson_aspect_ratio/byson_aspect_ratio.dart';
 import 'package:flutter/material.dart';
 

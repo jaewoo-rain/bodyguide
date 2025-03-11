@@ -175,6 +175,9 @@ abstract class _initialize implements PracticeAnalyticsReportEvent {
 
 /// @nodoc
 mixin _$PracticeAnalyticsReportState {
+  ExerciseAnalysisReport? get report =>
+      throw _privateConstructorUsedError; // API 응답 결과를 저장하는 필드
+  BigThree? get bigThree => throw _privateConstructorUsedError;
   Set<String> get goals => throw _privateConstructorUsedError;
 
   /// Create a copy of PracticeAnalyticsReportState
@@ -192,7 +195,11 @@ abstract class $PracticeAnalyticsReportStateCopyWith<$Res> {
       _$PracticeAnalyticsReportStateCopyWithImpl<$Res,
           PracticeAnalyticsReportState>;
   @useResult
-  $Res call({Set<String> goals});
+  $Res call(
+      {ExerciseAnalysisReport? report, BigThree? bigThree, Set<String> goals});
+
+  $ExerciseAnalysisReportCopyWith<$Res>? get report;
+  $BigThreeCopyWith<$Res>? get bigThree;
 }
 
 /// @nodoc
@@ -211,14 +218,52 @@ class _$PracticeAnalyticsReportStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? report = freezed,
+    Object? bigThree = freezed,
     Object? goals = null,
   }) {
     return _then(_value.copyWith(
+      report: freezed == report
+          ? _value.report
+          : report // ignore: cast_nullable_to_non_nullable
+              as ExerciseAnalysisReport?,
+      bigThree: freezed == bigThree
+          ? _value.bigThree
+          : bigThree // ignore: cast_nullable_to_non_nullable
+              as BigThree?,
       goals: null == goals
           ? _value.goals
           : goals // ignore: cast_nullable_to_non_nullable
               as Set<String>,
     ) as $Val);
+  }
+
+  /// Create a copy of PracticeAnalyticsReportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ExerciseAnalysisReportCopyWith<$Res>? get report {
+    if (_value.report == null) {
+      return null;
+    }
+
+    return $ExerciseAnalysisReportCopyWith<$Res>(_value.report!, (value) {
+      return _then(_value.copyWith(report: value) as $Val);
+    });
+  }
+
+  /// Create a copy of PracticeAnalyticsReportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BigThreeCopyWith<$Res>? get bigThree {
+    if (_value.bigThree == null) {
+      return null;
+    }
+
+    return $BigThreeCopyWith<$Res>(_value.bigThree!, (value) {
+      return _then(_value.copyWith(bigThree: value) as $Val);
+    });
   }
 }
 
@@ -231,7 +276,13 @@ abstract class _$$PracticeAnalyticsReportStateImplCopyWith<$Res>
       __$$PracticeAnalyticsReportStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Set<String> goals});
+  $Res call(
+      {ExerciseAnalysisReport? report, BigThree? bigThree, Set<String> goals});
+
+  @override
+  $ExerciseAnalysisReportCopyWith<$Res>? get report;
+  @override
+  $BigThreeCopyWith<$Res>? get bigThree;
 }
 
 /// @nodoc
@@ -249,9 +300,19 @@ class __$$PracticeAnalyticsReportStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? report = freezed,
+    Object? bigThree = freezed,
     Object? goals = null,
   }) {
     return _then(_$PracticeAnalyticsReportStateImpl(
+      report: freezed == report
+          ? _value.report
+          : report // ignore: cast_nullable_to_non_nullable
+              as ExerciseAnalysisReport?,
+      bigThree: freezed == bigThree
+          ? _value.bigThree
+          : bigThree // ignore: cast_nullable_to_non_nullable
+              as BigThree?,
       goals: null == goals
           ? _value._goals
           : goals // ignore: cast_nullable_to_non_nullable
@@ -264,9 +325,15 @@ class __$$PracticeAnalyticsReportStateImplCopyWithImpl<$Res>
 
 class _$PracticeAnalyticsReportStateImpl
     implements _PracticeAnalyticsReportState {
-  const _$PracticeAnalyticsReportStateImpl({final Set<String> goals = const {}})
+  const _$PracticeAnalyticsReportStateImpl(
+      {this.report, this.bigThree, final Set<String> goals = const {}})
       : _goals = goals;
 
+  @override
+  final ExerciseAnalysisReport? report;
+// API 응답 결과를 저장하는 필드
+  @override
+  final BigThree? bigThree;
   final Set<String> _goals;
   @override
   @JsonKey()
@@ -278,7 +345,7 @@ class _$PracticeAnalyticsReportStateImpl
 
   @override
   String toString() {
-    return 'PracticeAnalyticsReportState(goals: $goals)';
+    return 'PracticeAnalyticsReportState(report: $report, bigThree: $bigThree, goals: $goals)';
   }
 
   @override
@@ -286,12 +353,15 @@ class _$PracticeAnalyticsReportStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PracticeAnalyticsReportStateImpl &&
+            (identical(other.report, report) || other.report == report) &&
+            (identical(other.bigThree, bigThree) ||
+                other.bigThree == bigThree) &&
             const DeepCollectionEquality().equals(other._goals, _goals));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_goals));
+  int get hashCode => Object.hash(runtimeType, report, bigThree,
+      const DeepCollectionEquality().hash(_goals));
 
   /// Create a copy of PracticeAnalyticsReportState
   /// with the given fields replaced by the non-null parameter values.
@@ -306,9 +376,15 @@ class _$PracticeAnalyticsReportStateImpl
 
 abstract class _PracticeAnalyticsReportState
     implements PracticeAnalyticsReportState {
-  const factory _PracticeAnalyticsReportState({final Set<String> goals}) =
-      _$PracticeAnalyticsReportStateImpl;
+  const factory _PracticeAnalyticsReportState(
+      {final ExerciseAnalysisReport? report,
+      final BigThree? bigThree,
+      final Set<String> goals}) = _$PracticeAnalyticsReportStateImpl;
 
+  @override
+  ExerciseAnalysisReport? get report; // API 응답 결과를 저장하는 필드
+  @override
+  BigThree? get bigThree;
   @override
   Set<String> get goals;
 

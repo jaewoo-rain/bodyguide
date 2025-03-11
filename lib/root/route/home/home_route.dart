@@ -11,6 +11,7 @@ import 'package:app/root/route/home/page/idle/idle_page.dart';
 import 'package:app/root/route/home/page/my/my_bloc.dart';
 import 'package:app/root/route/home/page/my/my_page.dart';
 import 'package:app/root/route/home/page/nutrient/nutrient_page.dart';
+import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/practice_analytics_report_bloc.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/practice_analytics_report_route.dart';
 import 'package:app/root/route/home/page/practice/page/history/practice_history_bloc.dart';
 import 'package:app/root/route/home/page/practice/practice_page.dart';
@@ -36,11 +37,14 @@ class HomeRoute extends StatelessWidget {
           BlocProvider(
             create: (context) => HomeBloc(),
           ),
-          // BlocProvider(
-          //   create: (context) => IdleBloc(),
-          // ),
+          BlocProvider(
+            create: (context) => IdleBloc()..add(const IdleEvent.loadState()),
+          ),
           // BlocProvider(create: (context) => PracticeHistoryBloc()),
           // BlocProvider(create: (context) => MyBloc()),
+          BlocProvider(
+              create: (context) => PracticeAnalyticsReportBloc()
+                ..add(const PracticeAnalyticsReportEvent.initialize()))
         ],
         child: Builder(
           builder: (context) => Scaffold(

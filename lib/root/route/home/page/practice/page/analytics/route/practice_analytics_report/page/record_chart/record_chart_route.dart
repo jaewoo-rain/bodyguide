@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/models/exercise_analysis_report.dart';
 import 'package:flutter/material.dart';
 
 /// 레이더 차트를 그리는 CustomPainter
@@ -156,12 +157,26 @@ class RadarChartCustomPainter extends CustomPainter {
 
 /// 실제로 위의 CustomPainter를 사용해 레이더 차트를 그리는 위젯
 class CustomRadarChartWidget extends StatelessWidget {
-  const CustomRadarChartWidget({Key? key}) : super(key: key);
+  final ExerciseAnalysisReport report; // 필드 추가!
+
+  const CustomRadarChartWidget({
+    super.key,
+    required this.report, // 이거랑 연결!
+  });
 
   @override
   Widget build(BuildContext context) {
     // 예시 데이터: 최대값 5 기준
-    final data = [4.0, 3.0, 4.0, 2.0, 5.0, 3.0];
+    final ability = report.ability;
+    final data = [70.0, 60.0, 80.0, 40.0, 100.0, 60.0];
+    // final data = [
+    //   ability["back"]!.score,
+    //   ability["lowerBody"]!.score,
+    //   ability["arm"]!.score,
+    //   ability["core"]!.score,
+    //   ability["shoulder"]!.score,
+    //   ability["chest"]!.score
+    // ];
     final labels = ['등', '하체', '팔', '코어', '어깨', '가슴'];
 
     return Scaffold(
@@ -188,7 +203,7 @@ class CustomRadarChartWidget extends StatelessWidget {
               data: data,
               labels: labels,
               tickCount: 5,
-              maxValue: 5.0,
+              maxValue: 100.0, // 최고 점수 변경
               chartBackgroundColor: const Color(0xFFF9F9F9),
               gridColor: const Color(0xFFE0E0E0),
               fillColor: const Color(0xFF4A79FA),

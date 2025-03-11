@@ -18,381 +18,243 @@ class IdlePage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-        create: (context) => IdleBloc()..add(const IdleEvent.loadState()),
-        child: Builder(builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: const Color(
-                0xFF344BC1,
-              ),
-              surfaceTintColor: const Color(
-                0xFF344BC1,
-              ),
-              automaticallyImplyLeading: false,
-              scrolledUnderElevation: 0,
-              elevation: 0,
-              systemOverlayStyle: systemUiOverlayStyleLight,
-              flexibleSpace: SafeArea(
-                child: BysonAspectRatio(
-                  designWidth: designWidth,
-                  designHeight: 56,
-                  builder: (converter) => Stack(
-                    children: [
-                      Center(
-                        child: Text(
-                          '바디가이드',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            height: 1.5,
-                            fontSize: converter.h(
-                              20,
-                            ),
-                            color: Colors.white,
-                            fontWeight: FontWeightAlias.extraBold,
-                            letterSpacing: converter.w(
-                              -0.5,
-                            ),
-                          ),
-                        ),
+  Widget build(BuildContext context) {
+    // => BlocProvider(
+    // create: (context) => IdleBloc()..add(const IdleEvent.loadState()),
+    // child: Builder(builder: (context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(
+          0xFF344BC1,
+        ),
+        surfaceTintColor: const Color(
+          0xFF344BC1,
+        ),
+        automaticallyImplyLeading: false,
+        scrolledUnderElevation: 0,
+        elevation: 0,
+        systemOverlayStyle: systemUiOverlayStyleLight,
+        flexibleSpace: SafeArea(
+          child: BysonAspectRatio(
+            designWidth: designWidth,
+            designHeight: 56,
+            builder: (converter) => Stack(
+              children: [
+                Center(
+                  child: Text(
+                    '바디가이드',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      height: 1.5,
+                      fontSize: converter.h(
+                        20,
                       ),
-                      PositionedDirectional(
-                        top: 0,
-                        end: converter.w(
-                          60 - 8,
-                        ),
-                        bottom: 0,
-                        width: converter.h(
-                          8 + 24 + 8,
-                        ),
-                        child: BysonCupertinoButton.solid(
-                          onPressed: () => App.instance.navigator.push(
-                            Routes.notification.path,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              IconsaxPlusLinear.notification,
-                              color: Colors.white,
-                              size: converter.h(
-                                24,
-                              ),
-                            ),
-                          ),
-                        ),
+                      color: Colors.white,
+                      fontWeight: FontWeightAlias.extraBold,
+                      letterSpacing: converter.w(
+                        -0.5,
                       ),
-                      PositionedDirectional(
-                        top: 0,
-                        end: converter.w(
-                          12,
-                        ),
-                        bottom: 0,
-                        width: converter.h(
-                          8 + 24 + 8,
-                        ),
-                        child: BysonCupertinoButton.solid(
-                          onPressed: () => App.instance.navigator.push(
-                            Routes.calendar.path,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              IconsaxPlusLinear.calendar,
-                              color: Colors.white,
-                              size: converter.h(
-                                24,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
+                PositionedDirectional(
+                  top: 0,
+                  end: converter.w(
+                    60 - 8,
+                  ),
+                  bottom: 0,
+                  width: converter.h(
+                    8 + 24 + 8,
+                  ),
+                  child: BysonCupertinoButton.solid(
+                    onPressed: () => App.instance.navigator.push(
+                      Routes.notification.path,
+                    ),
+                    child: Center(
+                      child: Icon(
+                        IconsaxPlusLinear.notification,
+                        color: Colors.white,
+                        size: converter.h(
+                          24,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                PositionedDirectional(
+                  top: 0,
+                  end: converter.w(
+                    12,
+                  ),
+                  bottom: 0,
+                  width: converter.h(
+                    8 + 24 + 8,
+                  ),
+                  child: BysonCupertinoButton.solid(
+                    onPressed: () => App.instance.navigator.push(
+                      Routes.calendar.path,
+                    ),
+                    child: Center(
+                      child: Icon(
+                        IconsaxPlusLinear.calendar,
+                        color: Colors.white,
+                        size: converter.h(
+                          24,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        padding: EdgeInsets.symmetric(
+          vertical: App.instance.overlay.relativeScreenHeight(
+            16,
+          ),
+        ),
+        child: Column(
+          children: [
+            const BysonSeparator(
+              designWidth: designWidth,
+              designHeight: 16,
+            ),
+            BysonAspectRatio.padding(
+              designWidth: designWidth,
+              designHeight: 180,
+              designPadding: const EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
+              builder: (converter) => Stack(
+                children: [
+                  PageView.builder(
+                    // 배너 사진
+                    itemCount: 99,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => Container(
+                      // color: Colors.red,
+                      child: Assets.image.imgBanner.image(
+                        alignment: Alignment.center,
+                        width: designWidth,
+                        fit: BoxFit.cover,
+                        // width: converter.realSize.width,
+                        // height: converter.realSize.height,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            body: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              padding: EdgeInsets.symmetric(
-                vertical: App.instance.overlay.relativeScreenHeight(
-                  16,
-                ),
+            const BysonSeparator(
+              designWidth: designWidth,
+              designHeight: 16,
+            ),
+            BysonAspectRatio.padding(
+              designWidth: designWidth,
+              designHeight: 172,
+              designPadding: const EdgeInsets.symmetric(
+                horizontal: 20,
               ),
-              child: Column(
+              builder: (converter) => Stack(
                 children: [
-                  const BysonSeparator(
-                    designWidth: designWidth,
-                    designHeight: 16,
-                  ),
-                  BysonAspectRatio.padding(
-                    designWidth: designWidth,
-                    designHeight: 180,
-                    designPadding: const EdgeInsets.symmetric(
-                      horizontal: 10,
+                  PositionedDirectional(
+                    start: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: converter.w(
+                      160,
                     ),
-                    builder: (converter) => Stack(
-                      children: [
-                        PageView.builder(
-                          // 배너 사진
-                          itemCount: 99,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => Container(
-                            // color: Colors.red,
-                            child: Assets.image.imgBanner.image(
-                              alignment: Alignment.center,
-                              width: designWidth,
-                              fit: BoxFit.cover,
-                              // width: converter.realSize.width,
-                              // height: converter.realSize.height,
-                            ),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          converter.radius(
+                            16,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  const BysonSeparator(
-                    designWidth: designWidth,
-                    designHeight: 16,
-                  ),
-                  BysonAspectRatio.padding(
-                    designWidth: designWidth,
-                    designHeight: 172,
-                    designPadding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ),
-                    builder: (converter) => Stack(
-                      children: [
-                        PositionedDirectional(
-                          start: 0,
-                          top: 0,
-                          bottom: 0,
-                          width: converter.w(
-                            160,
-                          ),
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                converter.radius(
-                                  16,
-                                ),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(
+                              converter.w(
+                                2,
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: Offset(
-                                    converter.w(
-                                      2,
-                                    ),
-                                    converter.h(
-                                      4,
-                                    ),
-                                  ),
-                                  spreadRadius: 0,
-                                  blurRadius: converter.average(
-                                    12,
-                                  ),
-                                  color: Colors.black.withOpacity(
-                                    0.04,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            child: BysonCupertinoButton.solid(
-                              onPressed: () => App.instance.navigator.push(
-                                Routes.myWeight.path,
-                              ),
-                              child: Stack(
-                                children: [
-                                  PositionedDirectional(
-                                    top: converter.h(
-                                      20,
-                                    ),
-                                    start: converter.w(
-                                      16,
-                                    ),
-                                    height: converter.h(
-                                      21,
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        '체중',
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                          height: 1.5,
-                                          fontSize: converter.h(
-                                            14,
-                                          ),
-                                          color: const Color(
-                                            0xFF888888,
-                                          ),
-                                          fontWeight: FontWeightAlias.medium,
-                                          letterSpacing: converter.lt(
-                                            fontSize: 14,
-                                            percent: -2,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  PositionedDirectional(
-                                    top: converter.h(
-                                      45,
-                                    ),
-                                    start: converter.w(
-                                      16,
-                                    ),
-                                    height: converter.h(
-                                      24,
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: BlocBuilder<IdleBloc, IdleState>(
-                                          buildWhen: (previous, current) =>
-                                              (previous.weight !=
-                                                  current.weight),
-                                          builder: (context, state) {
-                                            // context.read<IdleBloc>().add(
-                                            //     IdleEvent.updateWeight(state
-                                            //         .weight)); // 체중 75.5kg로 변경
-                                            return Text(
-                                              '${state.weight}kg',
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                height: 1.2,
-                                                fontSize: converter.h(
-                                                  20,
-                                                ),
-                                                color: const Color(
-                                                  0xFF111111,
-                                                ),
-                                                fontWeight:
-                                                    FontWeightAlias.semiBold,
-                                                letterSpacing: converter.lt(
-                                                  fontSize: 20,
-                                                  percent: -2,
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                    ),
-                                  ),
-                                  PositionedDirectional(
-                                    bottom: converter.h(
-                                      20,
-                                    ),
-                                    end: converter.w(
-                                      16,
-                                    ),
-                                    width: converter.w(
-                                      64,
-                                    ),
-                                    height: converter.h(
-                                      64,
-                                    ),
-                                    child: Assets.image.imgWeightScale.image(
-                                      width: converter.w(
-                                        64,
-                                      ),
-                                      height: converter.h(
-                                        64,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              converter.h(
+                                4,
                               ),
                             ),
+                            spreadRadius: 0,
+                            blurRadius: converter.average(
+                              12,
+                            ),
+                            color: Colors.black.withOpacity(
+                              0.04,
+                            ),
                           ),
+                        ],
+                      ),
+                      child: BysonCupertinoButton.solid(
+                        onPressed: () => App.instance.navigator.push(
+                          Routes.myWeight.path,
                         ),
-                        PositionedDirectional(
-                          end: 0,
-                          top: 0,
-                          bottom: 0,
-                          width: converter.w(
-                            160,
-                          ),
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                converter.radius(
-                                  16,
+                        child: Stack(
+                          children: [
+                            PositionedDirectional(
+                              top: converter.h(
+                                20,
+                              ),
+                              start: converter.w(
+                                16,
+                              ),
+                              height: converter.h(
+                                21,
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '체중',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    height: 1.5,
+                                    fontSize: converter.h(
+                                      14,
+                                    ),
+                                    color: const Color(
+                                      0xFF888888,
+                                    ),
+                                    fontWeight: FontWeightAlias.medium,
+                                    letterSpacing: converter.lt(
+                                      fontSize: 14,
+                                      percent: -2,
+                                    ),
+                                  ),
                                 ),
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: Offset(
-                                    converter.w(
-                                      2,
-                                    ),
-                                    converter.h(
-                                      4,
-                                    ),
-                                  ),
-                                  spreadRadius: 0,
-                                  blurRadius: converter.average(
-                                    12,
-                                  ),
-                                  color: Colors.black.withOpacity(
-                                    0.04,
-                                  ),
-                                ),
-                              ],
                             ),
-                            child: BysonCupertinoButton.solid(
-                              onPressed: () {
-                                context
-                                    .read<IdleBloc>()
-                                    .add(IdleEvent.updateWeight(11));
-                                App.instance.navigatorasd
-                                    .push(Routes.recommendation.path);
-                              },
-                              child: Stack(
-                                children: [
-                                  PositionedDirectional(
-                                    top: converter.h(
-                                      20,
-                                    ),
-                                    start: converter.w(
-                                      16,
-                                    ),
-                                    height: converter.h(
-                                      21,
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        '제품 추천',
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                          height: 1.5,
-                                          fontSize: converter.h(
-                                            14,
-                                          ),
-                                          color: const Color(
-                                            0xFF888888,
-                                          ),
-                                          fontWeight: FontWeightAlias.medium,
-                                          letterSpacing: converter.lt(
-                                            fontSize: 14,
-                                            percent: -2,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  PositionedDirectional(
-                                    top: converter.h(
-                                      45,
-                                    ),
-                                    start: converter.w(
-                                      16,
-                                    ),
-                                    height: converter.h(
-                                      24,
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        '보충제, 뭐 먹지?',
+                            PositionedDirectional(
+                              top: converter.h(
+                                45,
+                              ),
+                              start: converter.w(
+                                16,
+                              ),
+                              height: converter.h(
+                                24,
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: BlocBuilder<IdleBloc, IdleState>(
+                                    buildWhen: (previous, current) =>
+                                        (previous.weight != current.weight),
+                                    builder: (context, state) {
+                                      // context.read<IdleBloc>().add(
+                                      //     IdleEvent.updateWeight(state
+                                      //         .weight)); // 체중 75.5kg로 변경
+                                      return Text(
+                                        '${state.weight}kg',
                                         textAlign: TextAlign.start,
                                         style: TextStyle(
                                           height: 1.2,
@@ -408,653 +270,791 @@ class IdlePage extends StatelessWidget {
                                             percent: -2,
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                  PositionedDirectional(
-                                    bottom: converter.h(
-                                      20,
-                                    ),
-                                    end: converter.w(
-                                      16,
-                                    ),
-                                    width: converter.w(
-                                      64,
-                                    ),
-                                    height: converter.h(
-                                      64,
-                                    ),
-                                    child: Assets.image.imgProteins.image(
-                                      width: converter.w(
-                                        64,
-                                      ),
-                                      height: converter.h(
-                                        64,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                      );
+                                    }),
                               ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // const BysonSeparator(
-                  //   designWidth: designWidth,
-                  //   designHeight: 16,
-                  // ),
-                  // BysonAspectRatio.padding(
-                  //   designWidth: designWidth,
-                  //   designHeight: 138,
-                  //   innerDecoration: (converter) => BoxDecoration(
-                  //     color: Colors.white,
-                  //     borderRadius: BorderRadius.all(
-                  //       converter.radius(
-                  //         16,
-                  //       ),
-                  //     ),
-                  //     boxShadow: [
-                  //       BoxShadow(
-                  //         offset: Offset(
-                  //           converter.w(
-                  //             2,
-                  //           ),
-                  //           converter.h(
-                  //             4,
-                  //           ),
-                  //         ),
-                  //         spreadRadius: 0,
-                  //         blurRadius: converter.average(
-                  //           12,
-                  //         ),
-                  //         color: Colors.black.withOpacity(
-                  //           0.04,
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  //   designPadding: const EdgeInsets.symmetric(
-                  //     horizontal: 20,
-                  //   ),
-                  //   builder: (converter) => Stack(
-                  //     children: [
-                  //       PositionedDirectional(
-                  //         top: converter.h(
-                  //           16,
-                  //         ),
-                  //         start: converter.w(
-                  //           16,
-                  //         ),
-                  //         height: converter.h(
-                  //           25,
-                  //         ),
-                  //         child: DecoratedBox(
-                  //           decoration: BoxDecoration(
-                  //             color: const Color(
-                  //               0xFFF1F5FD,
-                  //             ),
-                  //             borderRadius: BorderRadius.all(
-                  //               converter.radius(
-                  //                 100,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           child: Padding(
-                  //             padding: EdgeInsets.symmetric(
-                  //               horizontal: converter.w(
-                  //                 12,
-                  //               ),
-                  //               vertical: converter.h(
-                  //                 4,
-                  //               ),
-                  //             ),
-                  //             child: Center(
-                  //               child: Text(
-                  //                 '섭취를 기록해보세요',
-                  //                 textAlign: TextAlign.start,
-                  //                 style: TextStyle(
-                  //                   height: 1.5,
-                  //                   fontSize: converter.h(
-                  //                     11,
-                  //                   ),
-                  //                   color: const Color(
-                  //                     0xFF303F9F,
-                  //                   ),
-                  //                   fontWeight: FontWeightAlias.regular,
-                  //                   letterSpacing: converter.lt(
-                  //                     fontSize: 11,
-                  //                     percent: -2,
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       PositionedDirectional(
-                  //         top: converter.h(
-                  //           72,
-                  //         ),
-                  //         start: converter.w(
-                  //           16,
-                  //         ),
-                  //         height: converter.h(
-                  //           21,
-                  //         ),
-                  //         child: Align(
-                  //           alignment: Alignment.centerLeft,
-                  //           child: Text(
-                  //             '섭취 기록',
-                  //             textAlign: TextAlign.start,
-                  //             style: TextStyle(
-                  //               height: 1.5,
-                  //               fontSize: converter.h(
-                  //                 14,
-                  //               ),
-                  //               color: const Color(
-                  //                 0xFF888888,
-                  //               ),
-                  //               fontWeight: FontWeightAlias.medium,
-                  //               letterSpacing: converter.lt(
-                  //                 fontSize: 14,
-                  //                 percent: -2,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       PositionedDirectional(
-                  //         top: converter.h(
-                  //           97,
-                  //         ),
-                  //         start: converter.w(
-                  //           16,
-                  //         ),
-                  //         height: converter.h(
-                  //           24,
-                  //         ),
-                  //         child: Align(
-                  //           alignment: Alignment.centerLeft,
-                  //           child: Text(
-                  //             '2,340kcal',
-                  //             textAlign: TextAlign.start,
-                  //             style: TextStyle(
-                  //               height: 1.2,
-                  //               fontSize: converter.h(
-                  //                 20,
-                  //               ),
-                  //               color: const Color(
-                  //                 0xFF111111,
-                  //               ),
-                  //               fontWeight: FontWeightAlias.semiBold,
-                  //               letterSpacing: converter.lt(
-                  //                 fontSize: 20,
-                  //                 percent: -2,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       PositionedDirectional(
-                  //         top: converter.h(
-                  //           30,
-                  //         ),
-                  //         start: converter.w(
-                  //           204,
-                  //         ),
-                  //         height: converter.h(
-                  //           21,
-                  //         ),
-                  //         child: Row(
-                  //           crossAxisAlignment: CrossAxisAlignment.center,
-                  //           mainAxisAlignment: MainAxisAlignment.start,
-                  //           children: [
-                  //             SizedBox(
-                  //               width: converter.w(
-                  //                 8,
-                  //               ),
-                  //               height: converter.h(
-                  //                 8,
-                  //               ),
-                  //               child: DecoratedBox(
-                  //                 decoration: BoxDecoration(
-                  //                   borderRadius: BorderRadius.all(
-                  //                     converter.radius(
-                  //                       2,
-                  //                     ),
-                  //                   ),
-                  //                   color: const Color(
-                  //                     0xFF9CFF83,
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             VerticalDivider(
-                  //               color: Colors.transparent,
-                  //               width: converter.w(
-                  //                 8,
-                  //               ),
-                  //               thickness: 0,
-                  //             ),
-                  //             Text(
-                  //               '탄수화물',
-                  //               textAlign: TextAlign.start,
-                  //               style: TextStyle(
-                  //                 height: 1.5,
-                  //                 fontSize: converter.h(
-                  //                   14,
-                  //                 ),
-                  //                 color: const Color(
-                  //                   0xFF888888,
-                  //                 ),
-                  //                 fontWeight: FontWeightAlias.medium,
-                  //                 letterSpacing: converter.lt(
-                  //                   fontSize: 14,
-                  //                   percent: -2,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             VerticalDivider(
-                  //               color: Colors.transparent,
-                  //               width: converter.w(
-                  //                 4,
-                  //               ),
-                  //               thickness: 0,
-                  //             ),
-                  //             Text(
-                  //               '50%',
-                  //               textAlign: TextAlign.start,
-                  //               style: TextStyle(
-                  //                 height: 1.5,
-                  //                 fontSize: converter.h(
-                  //                   14,
-                  //                 ),
-                  //                 color: const Color(
-                  //                   0xFF111111,
-                  //                 ),
-                  //                 fontWeight: FontWeightAlias.semiBold,
-                  //                 letterSpacing: converter.lt(
-                  //                   fontSize: 14,
-                  //                   percent: -2,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       PositionedDirectional(
-                  //         top: converter.h(
-                  //           59,
-                  //         ),
-                  //         start: converter.w(
-                  //           204,
-                  //         ),
-                  //         height: converter.h(
-                  //           21,
-                  //         ),
-                  //         child: Row(
-                  //           crossAxisAlignment: CrossAxisAlignment.center,
-                  //           mainAxisAlignment: MainAxisAlignment.start,
-                  //           children: [
-                  //             SizedBox(
-                  //               width: converter.w(
-                  //                 8,
-                  //               ),
-                  //               height: converter.h(
-                  //                 8,
-                  //               ),
-                  //               child: DecoratedBox(
-                  //                 decoration: BoxDecoration(
-                  //                   borderRadius: BorderRadius.all(
-                  //                     converter.radius(
-                  //                       2,
-                  //                     ),
-                  //                   ),
-                  //                   color: const Color(
-                  //                     0xFFFF6666,
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             VerticalDivider(
-                  //               color: Colors.transparent,
-                  //               width: converter.w(
-                  //                 8,
-                  //               ),
-                  //               thickness: 0,
-                  //             ),
-                  //             Text(
-                  //               '단백질',
-                  //               textAlign: TextAlign.start,
-                  //               style: TextStyle(
-                  //                 height: 1.5,
-                  //                 fontSize: converter.h(
-                  //                   14,
-                  //                 ),
-                  //                 color: const Color(
-                  //                   0xFF888888,
-                  //                 ),
-                  //                 fontWeight: FontWeightAlias.medium,
-                  //                 letterSpacing: converter.lt(
-                  //                   fontSize: 14,
-                  //                   percent: -2,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             VerticalDivider(
-                  //               color: Colors.transparent,
-                  //               width: converter.w(
-                  //                 4,
-                  //               ),
-                  //               thickness: 0,
-                  //             ),
-                  //             Text(
-                  //               '38%',
-                  //               textAlign: TextAlign.start,
-                  //               style: TextStyle(
-                  //                 height: 1.5,
-                  //                 fontSize: converter.h(
-                  //                   14,
-                  //                 ),
-                  //                 color: const Color(
-                  //                   0xFF111111,
-                  //                 ),
-                  //                 fontWeight: FontWeightAlias.semiBold,
-                  //                 letterSpacing: converter.lt(
-                  //                   fontSize: 14,
-                  //                   percent: -2,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       PositionedDirectional(
-                  //         top: converter.h(
-                  //           88,
-                  //         ),
-                  //         start: converter.w(
-                  //           204,
-                  //         ),
-                  //         height: converter.h(
-                  //           21,
-                  //         ),
-                  //         child: Row(
-                  //           crossAxisAlignment: CrossAxisAlignment.center,
-                  //           mainAxisAlignment: MainAxisAlignment.start,
-                  //           children: [
-                  //             SizedBox(
-                  //               width: converter.w(
-                  //                 8,
-                  //               ),
-                  //               height: converter.h(
-                  //                 8,
-                  //               ),
-                  //               child: DecoratedBox(
-                  //                 decoration: BoxDecoration(
-                  //                   borderRadius: BorderRadius.all(
-                  //                     converter.radius(
-                  //                       2,
-                  //                     ),
-                  //                   ),
-                  //                   color: const Color(
-                  //                     0xFFFFD460,
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             VerticalDivider(
-                  //               color: Colors.transparent,
-                  //               width: converter.w(
-                  //                 8,
-                  //               ),
-                  //               thickness: 0,
-                  //             ),
-                  //             Text(
-                  //               '지방',
-                  //               textAlign: TextAlign.start,
-                  //               style: TextStyle(
-                  //                 height: 1.5,
-                  //                 fontSize: converter.h(
-                  //                   14,
-                  //                 ),
-                  //                 color: const Color(
-                  //                   0xFF888888,
-                  //                 ),
-                  //                 fontWeight: FontWeightAlias.medium,
-                  //                 letterSpacing: converter.lt(
-                  //                   fontSize: 14,
-                  //                   percent: -2,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //             VerticalDivider(
-                  //               color: Colors.transparent,
-                  //               width: converter.w(
-                  //                 4,
-                  //               ),
-                  //               thickness: 0,
-                  //             ),
-                  //             Text(
-                  //               '22%',
-                  //               textAlign: TextAlign.start,
-                  //               style: TextStyle(
-                  //                 height: 1.5,
-                  //                 fontSize: converter.h(
-                  //                   14,
-                  //                 ),
-                  //                 color: const Color(
-                  //                   0xFF111111,
-                  //                 ),
-                  //                 fontWeight: FontWeightAlias.semiBold,
-                  //                 letterSpacing: converter.lt(
-                  //                   fontSize: 14,
-                  //                   percent: -2,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  const BysonSeparator(
-                    designWidth: designWidth,
-                    designHeight: 16,
-                  ),
-                  BysonAspectRatio.padding(
-                    designWidth: designWidth,
-                    designHeight: 141,
-                    innerDecoration: (converter) => BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        converter.radius(
-                          16,
+                            PositionedDirectional(
+                              bottom: converter.h(
+                                20,
+                              ),
+                              end: converter.w(
+                                16,
+                              ),
+                              width: converter.w(
+                                64,
+                              ),
+                              height: converter.h(
+                                64,
+                              ),
+                              child: Assets.image.imgWeightScale.image(
+                                width: converter.w(
+                                  64,
+                                ),
+                                height: converter.h(
+                                  64,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(
-                            converter.w(
-                              2,
-                            ),
-                            converter.h(
-                              4,
-                            ),
-                          ),
-                          spreadRadius: 0,
-                          blurRadius: converter.average(
-                            12,
-                          ),
-                          color: Colors.black.withOpacity(
-                            0.04,
+                    ),
+                  ),
+                  PositionedDirectional(
+                    end: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: converter.w(
+                      160,
+                    ),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          converter.radius(
+                            16,
                           ),
                         ),
-                      ],
-                    ),
-                    designPadding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ),
-                    builder: (converter) => Stack(
-                      children: [
-                        PositionedDirectional(
-                          top: converter.h(
-                            16,
-                          ),
-                          start: converter.w(
-                            16,
-                          ),
-                          height: converter.h(
-                            25,
-                          ),
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: const Color(
-                                0xFFF1F5FD,
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(
+                              converter.w(
+                                2,
                               ),
-                              borderRadius: BorderRadius.all(
-                                converter.radius(
-                                  100,
-                                ),
+                              converter.h(
+                                4,
                               ),
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: converter.w(
-                                  12,
-                                ),
-                                vertical: converter.h(
-                                  4,
-                                ),
+                            spreadRadius: 0,
+                            blurRadius: converter.average(
+                              12,
+                            ),
+                            color: Colors.black.withOpacity(
+                              0.04,
+                            ),
+                          ),
+                        ],
+                      ),
+                      child: BysonCupertinoButton.solid(
+                        onPressed: () {
+                          // context
+                          //     .read<IdleBloc>()
+                          //     .add(IdleEvent.updateWeight(11));
+                          App.instance.navigator
+                              .push(Routes.recommendation.path);
+                        },
+                        child: Stack(
+                          children: [
+                            PositionedDirectional(
+                              top: converter.h(
+                                20,
                               ),
-                              child: Center(
+                              start: converter.w(
+                                16,
+                              ),
+                              height: converter.h(
+                                21,
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
                                 child: Text(
-                                  '운동을 기록해보세요',
+                                  '제품 추천',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     height: 1.5,
                                     fontSize: converter.h(
-                                      11,
+                                      14,
                                     ),
                                     color: const Color(
-                                      0xFF303F9F,
+                                      0xFF888888,
                                     ),
-                                    fontWeight: FontWeightAlias.regular,
+                                    fontWeight: FontWeightAlias.medium,
                                     letterSpacing: converter.lt(
-                                      fontSize: 11,
+                                      fontSize: 14,
                                       percent: -2,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        PositionedDirectional(
-                          top: converter.h(
-                            72,
-                          ),
-                          start: converter.w(
-                            16,
-                          ),
-                          height: converter.h(
-                            21,
-                          ),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              '운동 기록',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                height: 1.5,
-                                fontSize: converter.h(
-                                  14,
-                                ),
-                                color: const Color(
-                                  0xFF888888,
-                                ),
-                                fontWeight: FontWeightAlias.medium,
-                                letterSpacing: converter.lt(
-                                  fontSize: 14,
-                                  percent: -2,
+                            PositionedDirectional(
+                              top: converter.h(
+                                45,
+                              ),
+                              start: converter.w(
+                                16,
+                              ),
+                              height: converter.h(
+                                24,
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '보충제, 뭐 먹지?',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    height: 1.2,
+                                    fontSize: converter.h(
+                                      20,
+                                    ),
+                                    color: const Color(
+                                      0xFF111111,
+                                    ),
+                                    fontWeight: FontWeightAlias.semiBold,
+                                    letterSpacing: converter.lt(
+                                      fontSize: 20,
+                                      percent: -2,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        PositionedDirectional(
-                          top: converter.h(
-                            97,
-                          ),
-                          start: converter.w(
-                            16,
-                          ),
-                          height: converter.h(
-                            24,
-                          ),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: BlocBuilder<IdleBloc, IdleState>(
-                                buildWhen: (previous, current) =>
-                                    (previous.volume != current.volume),
-                                builder: (context, state) {
-                                  return Text(
-                                    '${state.volume}kg',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      height: 1.2,
-                                      fontSize: converter.h(
-                                        20,
-                                      ),
-                                      color: const Color(
-                                        0xFF111111,
-                                      ),
-                                      fontWeight: FontWeightAlias.semiBold,
-                                      letterSpacing: converter.lt(
-                                        fontSize: 20,
-                                        percent: -2,
-                                      ),
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ),
-                        PositionedDirectional(
-                          bottom: converter.h(
-                            20,
-                          ),
-                          end: converter.w(
-                            16,
-                          ),
-                          width: converter.w(
-                            68,
-                          ),
-                          height: converter.h(
-                            68,
-                          ),
-                          child: Assets.image.imgProgram.image(
-                            width: converter.w(
-                              68,
+                            PositionedDirectional(
+                              bottom: converter.h(
+                                20,
+                              ),
+                              end: converter.w(
+                                16,
+                              ),
+                              width: converter.w(
+                                64,
+                              ),
+                              height: converter.h(
+                                64,
+                              ),
+                              child: Assets.image.imgProteins.image(
+                                width: converter.w(
+                                  64,
+                                ),
+                                height: converter.h(
+                                  64,
+                                ),
+                              ),
                             ),
-                            height: converter.h(
-                              68,
-                            ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                  const BysonSeparator(
-                    designWidth: designWidth,
-                    designHeight: 16,
                   ),
                 ],
               ),
             ),
-          );
-        }),
-      );
+            // const BysonSeparator(
+            //   designWidth: designWidth,
+            //   designHeight: 16,
+            // ),
+            // BysonAspectRatio.padding(
+            //   designWidth: designWidth,
+            //   designHeight: 138,
+            //   innerDecoration: (converter) => BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.all(
+            //       converter.radius(
+            //         16,
+            //       ),
+            //     ),
+            //     boxShadow: [
+            //       BoxShadow(
+            //         offset: Offset(
+            //           converter.w(
+            //             2,
+            //           ),
+            //           converter.h(
+            //             4,
+            //           ),
+            //         ),
+            //         spreadRadius: 0,
+            //         blurRadius: converter.average(
+            //           12,
+            //         ),
+            //         color: Colors.black.withOpacity(
+            //           0.04,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            //   designPadding: const EdgeInsets.symmetric(
+            //     horizontal: 20,
+            //   ),
+            //   builder: (converter) => Stack(
+            //     children: [
+            //       PositionedDirectional(
+            //         top: converter.h(
+            //           16,
+            //         ),
+            //         start: converter.w(
+            //           16,
+            //         ),
+            //         height: converter.h(
+            //           25,
+            //         ),
+            //         child: DecoratedBox(
+            //           decoration: BoxDecoration(
+            //             color: const Color(
+            //               0xFFF1F5FD,
+            //             ),
+            //             borderRadius: BorderRadius.all(
+            //               converter.radius(
+            //                 100,
+            //               ),
+            //             ),
+            //           ),
+            //           child: Padding(
+            //             padding: EdgeInsets.symmetric(
+            //               horizontal: converter.w(
+            //                 12,
+            //               ),
+            //               vertical: converter.h(
+            //                 4,
+            //               ),
+            //             ),
+            //             child: Center(
+            //               child: Text(
+            //                 '섭취를 기록해보세요',
+            //                 textAlign: TextAlign.start,
+            //                 style: TextStyle(
+            //                   height: 1.5,
+            //                   fontSize: converter.h(
+            //                     11,
+            //                   ),
+            //                   color: const Color(
+            //                     0xFF303F9F,
+            //                   ),
+            //                   fontWeight: FontWeightAlias.regular,
+            //                   letterSpacing: converter.lt(
+            //                     fontSize: 11,
+            //                     percent: -2,
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       PositionedDirectional(
+            //         top: converter.h(
+            //           72,
+            //         ),
+            //         start: converter.w(
+            //           16,
+            //         ),
+            //         height: converter.h(
+            //           21,
+            //         ),
+            //         child: Align(
+            //           alignment: Alignment.centerLeft,
+            //           child: Text(
+            //             '섭취 기록',
+            //             textAlign: TextAlign.start,
+            //             style: TextStyle(
+            //               height: 1.5,
+            //               fontSize: converter.h(
+            //                 14,
+            //               ),
+            //               color: const Color(
+            //                 0xFF888888,
+            //               ),
+            //               fontWeight: FontWeightAlias.medium,
+            //               letterSpacing: converter.lt(
+            //                 fontSize: 14,
+            //                 percent: -2,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       PositionedDirectional(
+            //         top: converter.h(
+            //           97,
+            //         ),
+            //         start: converter.w(
+            //           16,
+            //         ),
+            //         height: converter.h(
+            //           24,
+            //         ),
+            //         child: Align(
+            //           alignment: Alignment.centerLeft,
+            //           child: Text(
+            //             '2,340kcal',
+            //             textAlign: TextAlign.start,
+            //             style: TextStyle(
+            //               height: 1.2,
+            //               fontSize: converter.h(
+            //                 20,
+            //               ),
+            //               color: const Color(
+            //                 0xFF111111,
+            //               ),
+            //               fontWeight: FontWeightAlias.semiBold,
+            //               letterSpacing: converter.lt(
+            //                 fontSize: 20,
+            //                 percent: -2,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       PositionedDirectional(
+            //         top: converter.h(
+            //           30,
+            //         ),
+            //         start: converter.w(
+            //           204,
+            //         ),
+            //         height: converter.h(
+            //           21,
+            //         ),
+            //         child: Row(
+            //           crossAxisAlignment: CrossAxisAlignment.center,
+            //           mainAxisAlignment: MainAxisAlignment.start,
+            //           children: [
+            //             SizedBox(
+            //               width: converter.w(
+            //                 8,
+            //               ),
+            //               height: converter.h(
+            //                 8,
+            //               ),
+            //               child: DecoratedBox(
+            //                 decoration: BoxDecoration(
+            //                   borderRadius: BorderRadius.all(
+            //                     converter.radius(
+            //                       2,
+            //                     ),
+            //                   ),
+            //                   color: const Color(
+            //                     0xFF9CFF83,
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //             VerticalDivider(
+            //               color: Colors.transparent,
+            //               width: converter.w(
+            //                 8,
+            //               ),
+            //               thickness: 0,
+            //             ),
+            //             Text(
+            //               '탄수화물',
+            //               textAlign: TextAlign.start,
+            //               style: TextStyle(
+            //                 height: 1.5,
+            //                 fontSize: converter.h(
+            //                   14,
+            //                 ),
+            //                 color: const Color(
+            //                   0xFF888888,
+            //                 ),
+            //                 fontWeight: FontWeightAlias.medium,
+            //                 letterSpacing: converter.lt(
+            //                   fontSize: 14,
+            //                   percent: -2,
+            //                 ),
+            //               ),
+            //             ),
+            //             VerticalDivider(
+            //               color: Colors.transparent,
+            //               width: converter.w(
+            //                 4,
+            //               ),
+            //               thickness: 0,
+            //             ),
+            //             Text(
+            //               '50%',
+            //               textAlign: TextAlign.start,
+            //               style: TextStyle(
+            //                 height: 1.5,
+            //                 fontSize: converter.h(
+            //                   14,
+            //                 ),
+            //                 color: const Color(
+            //                   0xFF111111,
+            //                 ),
+            //                 fontWeight: FontWeightAlias.semiBold,
+            //                 letterSpacing: converter.lt(
+            //                   fontSize: 14,
+            //                   percent: -2,
+            //                 ),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //       PositionedDirectional(
+            //         top: converter.h(
+            //           59,
+            //         ),
+            //         start: converter.w(
+            //           204,
+            //         ),
+            //         height: converter.h(
+            //           21,
+            //         ),
+            //         child: Row(
+            //           crossAxisAlignment: CrossAxisAlignment.center,
+            //           mainAxisAlignment: MainAxisAlignment.start,
+            //           children: [
+            //             SizedBox(
+            //               width: converter.w(
+            //                 8,
+            //               ),
+            //               height: converter.h(
+            //                 8,
+            //               ),
+            //               child: DecoratedBox(
+            //                 decoration: BoxDecoration(
+            //                   borderRadius: BorderRadius.all(
+            //                     converter.radius(
+            //                       2,
+            //                     ),
+            //                   ),
+            //                   color: const Color(
+            //                     0xFFFF6666,
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //             VerticalDivider(
+            //               color: Colors.transparent,
+            //               width: converter.w(
+            //                 8,
+            //               ),
+            //               thickness: 0,
+            //             ),
+            //             Text(
+            //               '단백질',
+            //               textAlign: TextAlign.start,
+            //               style: TextStyle(
+            //                 height: 1.5,
+            //                 fontSize: converter.h(
+            //                   14,
+            //                 ),
+            //                 color: const Color(
+            //                   0xFF888888,
+            //                 ),
+            //                 fontWeight: FontWeightAlias.medium,
+            //                 letterSpacing: converter.lt(
+            //                   fontSize: 14,
+            //                   percent: -2,
+            //                 ),
+            //               ),
+            //             ),
+            //             VerticalDivider(
+            //               color: Colors.transparent,
+            //               width: converter.w(
+            //                 4,
+            //               ),
+            //               thickness: 0,
+            //             ),
+            //             Text(
+            //               '38%',
+            //               textAlign: TextAlign.start,
+            //               style: TextStyle(
+            //                 height: 1.5,
+            //                 fontSize: converter.h(
+            //                   14,
+            //                 ),
+            //                 color: const Color(
+            //                   0xFF111111,
+            //                 ),
+            //                 fontWeight: FontWeightAlias.semiBold,
+            //                 letterSpacing: converter.lt(
+            //                   fontSize: 14,
+            //                   percent: -2,
+            //                 ),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //       PositionedDirectional(
+            //         top: converter.h(
+            //           88,
+            //         ),
+            //         start: converter.w(
+            //           204,
+            //         ),
+            //         height: converter.h(
+            //           21,
+            //         ),
+            //         child: Row(
+            //           crossAxisAlignment: CrossAxisAlignment.center,
+            //           mainAxisAlignment: MainAxisAlignment.start,
+            //           children: [
+            //             SizedBox(
+            //               width: converter.w(
+            //                 8,
+            //               ),
+            //               height: converter.h(
+            //                 8,
+            //               ),
+            //               child: DecoratedBox(
+            //                 decoration: BoxDecoration(
+            //                   borderRadius: BorderRadius.all(
+            //                     converter.radius(
+            //                       2,
+            //                     ),
+            //                   ),
+            //                   color: const Color(
+            //                     0xFFFFD460,
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //             VerticalDivider(
+            //               color: Colors.transparent,
+            //               width: converter.w(
+            //                 8,
+            //               ),
+            //               thickness: 0,
+            //             ),
+            //             Text(
+            //               '지방',
+            //               textAlign: TextAlign.start,
+            //               style: TextStyle(
+            //                 height: 1.5,
+            //                 fontSize: converter.h(
+            //                   14,
+            //                 ),
+            //                 color: const Color(
+            //                   0xFF888888,
+            //                 ),
+            //                 fontWeight: FontWeightAlias.medium,
+            //                 letterSpacing: converter.lt(
+            //                   fontSize: 14,
+            //                   percent: -2,
+            //                 ),
+            //               ),
+            //             ),
+            //             VerticalDivider(
+            //               color: Colors.transparent,
+            //               width: converter.w(
+            //                 4,
+            //               ),
+            //               thickness: 0,
+            //             ),
+            //             Text(
+            //               '22%',
+            //               textAlign: TextAlign.start,
+            //               style: TextStyle(
+            //                 height: 1.5,
+            //                 fontSize: converter.h(
+            //                   14,
+            //                 ),
+            //                 color: const Color(
+            //                   0xFF111111,
+            //                 ),
+            //                 fontWeight: FontWeightAlias.semiBold,
+            //                 letterSpacing: converter.lt(
+            //                   fontSize: 14,
+            //                   percent: -2,
+            //                 ),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            const BysonSeparator(
+              designWidth: designWidth,
+              designHeight: 16,
+            ),
+            BysonAspectRatio.padding(
+              designWidth: designWidth,
+              designHeight: 141,
+              innerDecoration: (converter) => BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  converter.radius(
+                    16,
+                  ),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(
+                      converter.w(
+                        2,
+                      ),
+                      converter.h(
+                        4,
+                      ),
+                    ),
+                    spreadRadius: 0,
+                    blurRadius: converter.average(
+                      12,
+                    ),
+                    color: Colors.black.withOpacity(
+                      0.04,
+                    ),
+                  ),
+                ],
+              ),
+              designPadding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
+              builder: (converter) => Stack(
+                children: [
+                  PositionedDirectional(
+                    top: converter.h(
+                      16,
+                    ),
+                    start: converter.w(
+                      16,
+                    ),
+                    height: converter.h(
+                      25,
+                    ),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: const Color(
+                          0xFFF1F5FD,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          converter.radius(
+                            100,
+                          ),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: converter.w(
+                            12,
+                          ),
+                          vertical: converter.h(
+                            4,
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '운동을 기록해보세요',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              height: 1.5,
+                              fontSize: converter.h(
+                                11,
+                              ),
+                              color: const Color(
+                                0xFF303F9F,
+                              ),
+                              fontWeight: FontWeightAlias.regular,
+                              letterSpacing: converter.lt(
+                                fontSize: 11,
+                                percent: -2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  PositionedDirectional(
+                    top: converter.h(
+                      72,
+                    ),
+                    start: converter.w(
+                      16,
+                    ),
+                    height: converter.h(
+                      21,
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '운동 기록',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          height: 1.5,
+                          fontSize: converter.h(
+                            14,
+                          ),
+                          color: const Color(
+                            0xFF888888,
+                          ),
+                          fontWeight: FontWeightAlias.medium,
+                          letterSpacing: converter.lt(
+                            fontSize: 14,
+                            percent: -2,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  PositionedDirectional(
+                    top: converter.h(
+                      97,
+                    ),
+                    start: converter.w(
+                      16,
+                    ),
+                    height: converter.h(
+                      24,
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: BlocBuilder<IdleBloc, IdleState>(
+                          buildWhen: (previous, current) =>
+                              (previous.volume != current.volume),
+                          builder: (context, state) {
+                            return Text(
+                              '${state.volume}kg',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                height: 1.2,
+                                fontSize: converter.h(
+                                  20,
+                                ),
+                                color: const Color(
+                                  0xFF111111,
+                                ),
+                                fontWeight: FontWeightAlias.semiBold,
+                                letterSpacing: converter.lt(
+                                  fontSize: 20,
+                                  percent: -2,
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ),
+                  PositionedDirectional(
+                    bottom: converter.h(
+                      20,
+                    ),
+                    end: converter.w(
+                      16,
+                    ),
+                    width: converter.w(
+                      68,
+                    ),
+                    height: converter.h(
+                      68,
+                    ),
+                    child: Assets.image.imgProgram.image(
+                      width: converter.w(
+                        68,
+                      ),
+                      height: converter.h(
+                        68,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const BysonSeparator(
+              designWidth: designWidth,
+              designHeight: 16,
+            ),
+          ],
+        ),
+      ),
+    );
+    //   }),
+    // );
+  }
 }

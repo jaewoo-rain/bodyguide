@@ -31,9 +31,9 @@ class MyWeightRoute extends StatelessWidget {
           BlocProvider(
             create: (context) => MyWeightBloc(),
           ),
-          BlocProvider(
-            create: (context) => IdleBloc(),
-          )
+          // BlocProvider(
+          //   create: (context) => IdleBloc(),
+          // )
         ],
         child: Builder(
           builder: (context) => Scaffold(
@@ -347,8 +347,7 @@ class MyWeightRoute extends StatelessWidget {
                                               .maskTextInputFormatter
                                               .isFill()) {
                                             var value = double.parse(state.input
-                                                .replaceAll('kg',
-                                                    '')); // const value = state.input.repl
+                                                .replaceAll('kg', ''));
                                             context.read<IdleBloc>().add(
                                                 IdleEvent.updateWeight(value));
                                           }

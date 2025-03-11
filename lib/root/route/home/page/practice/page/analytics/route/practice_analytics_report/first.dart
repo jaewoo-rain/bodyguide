@@ -1,7 +1,7 @@
 import 'package:app/app/app.dart';
 import 'package:app/app/asset/assets.gen.dart';
 import 'package:app/app/constant/system.dart';
-import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/modal/practice_analytics_report_detail_sheet.dart';
+import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/models/practice_analytics_report_detail_sheet.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/practice_analytics_report_bloc.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/widgets/three_exercise.dart';
 import 'package:app/root/route/home/page/practice/widget/practice_chip.dart';
