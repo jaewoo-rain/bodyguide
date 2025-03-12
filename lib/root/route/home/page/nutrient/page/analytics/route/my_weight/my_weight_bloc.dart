@@ -19,7 +19,9 @@ part 'my_weight_state.dart';
 part 'my_weight_bloc.freezed.dart';
 
 class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
-  MyWeightBloc()
+  final IdleBloc idleBloc; // 생성자this.idleBloc에 주입
+
+  MyWeightBloc(this.idleBloc)
       : textEditingController = TextEditingController(),
         maskTextInputFormatter = MaskTextInputFormatter(
           mask: '##.#kg',
@@ -104,6 +106,8 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
 
               if (result.isNotEmpty) {
                 print('몸무게 API 요청 성공');
+                print('이거');
+                idleBloc.add(IdleEvent.loadState());
               }
             } on DioException catch (e) {
               print('DioException 발생: ${e.message}');

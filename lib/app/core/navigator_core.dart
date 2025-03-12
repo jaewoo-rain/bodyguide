@@ -125,10 +125,10 @@ class Routes {
     parent: home,
     endpoint: 'my_edit',
   );
-  static const CustomRoute myWeight = CustomRoute(
-    parent: home,
-    endpoint: 'my_weight',
-  );
+  // static const CustomRoute myWeight = CustomRoute(
+  //   parent: home,
+  //   endpoint: 'my_weight',
+  // );
 
   static const CustomRoute nutrientAnalyticsChoice = CustomRoute(
     parent: home,
@@ -407,16 +407,16 @@ class NavigatorCore {
                 );
               },
             ),
-            GoRoute(
-              path: 'my_weight',
-              pageBuilder: (context, state) => CupertinoPage<void>(
-                name: 'my_weight',
-                key: state.pageKey,
-                child: MyWeightRoute(
-                  key: state.pageKey,
-                ),
-              ),
-            ),
+            // GoRoute(
+            //   path: 'my_weight',
+            //   pageBuilder: (context, state) => CupertinoPage<void>(
+            //     name: 'my_weight',
+            //     key: state.pageKey,
+            //     child: MyWeightRoute(
+            //       key: state.pageKey,
+            //     ),
+            //   ),
+            // ),
             GoRoute(
               path: 'nutrient_analytics_input',
               pageBuilder: (context, state) => CupertinoPage<void>(

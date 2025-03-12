@@ -21,20 +21,14 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class MyWeightRoute extends StatelessWidget {
-  const MyWeightRoute({
-    super.key,
-  });
+  final IdleBloc idleBloc;
+
+  const MyWeightRoute({super.key, required this.idleBloc});
 
   @override
-  Widget build(BuildContext context) => MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => MyWeightBloc(),
-          ),
-          // BlocProvider(
-          //   create: (context) => IdleBloc(),
-          // )
-        ],
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => MyWeightBloc(idleBloc),
         child: Builder(
           builder: (context) => Scaffold(
             appBar: AppBar(
@@ -342,15 +336,19 @@ class MyWeightRoute extends StatelessWidget {
                                           context.read<MyWeightBloc>().add(
                                                 const MyWeightEvent.submit(),
                                               );
-                                          if (context
-                                              .read<MyWeightBloc>()
-                                              .maskTextInputFormatter
-                                              .isFill()) {
-                                            var value = double.parse(state.input
-                                                .replaceAll('kg', ''));
-                                            context.read<IdleBloc>().add(
-                                                IdleEvent.updateWeight(value));
-                                          }
+                                          // BlocListener<MyWeightBloc,
+                                          //     MyWeightState>(
+                                          //   listener: (context, state) {
+                                          //     print('이거');
+                                          //     if (context
+                                          //         .read<MyWeightBloc>()
+                                          //         .maskTextInputFormatter
+                                          //         .isFill()) {
+                                          //       idleBloc
+                                          //           .add(IdleEvent.loadState());
+                                          //     }
+                                          //   },
+                                          // );
 
                                           // const double value = double.parse(
                                           //     state.input.replaceAll('kg', ''));
@@ -384,10 +382,10 @@ class MyWeightRoute extends StatelessWidget {
                           index -= 1;
 
                           return Dismissible(
-                            key: ValueKey(
-                                state.records[index].date), // 각 아이템을 구분할 고유 키
-                            direction:
-                                DismissDirection.endToStart, // 우측에서 좌측으로 드래그
+                            key: ValueKey(state.records[index].date),
+                            // 각 아이템을 구분할 고유 키
+                            direction: DismissDirection.endToStart,
+                            // 우측에서 좌측으로 드래그
                             onDismissed: (direction) {
                               // 삭제 로직 실행
                               context.read<MyWeightBloc>().add(
@@ -854,6 +852,6 @@ class MyWeightRoute extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      );
+        ));
+  }
 }

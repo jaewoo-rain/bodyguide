@@ -209,7 +209,7 @@ class NutrientAnalyticsPage extends StatelessWidget {
                   ),
                   builder: (converter) => BysonCupertinoButton.solid(
                     onPressed: () => App.instance.navigator.push(
-                      Routes.myWeight.path,
+                      Routes.sign.path,
                     ),
                     child: Stack(
                       children: [
@@ -361,17 +361,19 @@ class NutrientAnalyticsPage extends StatelessWidget {
                             ],
                           ),
                           child: BysonCupertinoButton.solid(
-                            onPressed: () => App.instance.navigator.push(
+                            onPressed: () => App.instance.navigator
+                                .push(
                               Routes.nutrientAnalyticsChoice.path,
-                            ).then(
-                                  (value) {
-
+                            )
+                                .then(
+                              (value) {
                                 if (value == true) {
-                                  App.instance.navigator.push(
+                                  App.instance.navigator
+                                      .push(
                                     Routes.nutrientAnalyticsInput.path,
-                                  ).then(
-                                        (value) {
-
+                                  )
+                                      .then(
+                                    (value) {
                                       if (value == true) {
                                         App.instance.navigator.push(
                                           Routes.nutrientAnalyticsReport.path,

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
+import '../nutrient/page/analytics/route/my_weight/my_weight_route.dart';
 import 'idle_bloc.dart';
 
 class IdlePage extends StatelessWidget {
@@ -19,6 +20,8 @@ class IdlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final idleBloc = context.read<IdleBloc>(); // IdleBloc 인스턴스 가져오기
+
     // => BlocProvider(
     // create: (context) => IdleBloc()..add(const IdleEvent.loadState()),
     // child: Builder(builder: (context) {
@@ -197,9 +200,17 @@ class IdlePage extends StatelessWidget {
                         ],
                       ),
                       child: BysonCupertinoButton.solid(
-                        onPressed: () => App.instance.navigator.push(
-                          Routes.myWeight.path,
-                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => MyWeightRoute(idleBloc: idleBloc),
+                            ),
+                          );
+                        },
+                        // App.instance.navigator.push(
+                        //   Routes.myWeight.path,
+                        // ),
                         child: Stack(
                           children: [
                             PositionedDirectional(
