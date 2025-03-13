@@ -59,6 +59,7 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
             if (result['error'] == true) {
               print('API 호출 실패: ${result['message']}');
             } else {
+              idleBloc.add(const IdleEvent.loadState());
               print('API 호출 성공: $result');
 
               // API 성공 시에만 리스트에서 삭제하도록 변경
@@ -106,8 +107,7 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
 
               if (result.isNotEmpty) {
                 print('몸무게 API 요청 성공');
-                print('이거');
-                idleBloc.add(IdleEvent.loadState());
+                idleBloc.add(const IdleEvent.loadState());
               }
             } on DioException catch (e) {
               print('DioException 발생: ${e.message}');

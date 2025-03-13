@@ -6,6 +6,7 @@ import 'package:app/app/constant/system.dart';
 import 'package:app/app/constant/values.dart';
 import 'package:app/app/core/navigator_core.dart';
 import 'package:app/model/local/practice.dart';
+import 'package:app/root/route/home/page/practice/page/history/practice_history_bloc.dart';
 import 'package:app/root/route/home/page/practice/page/history/route/practice_do/practice_do_bloc.dart';
 import 'package:byson_aspect_ratio/byson_aspect_ratio.dart';
 import 'package:byson_cupertino_button/byson_cupertino_button.dart';
@@ -20,16 +21,17 @@ import 'package:intl/intl.dart';
 class PracticeDoRoute extends StatelessWidget {
   const PracticeDoRoute({
     required this.practices,
+    required this.practiceHistoryBloc,
     super.key,
   });
 
   final List<Practice> practices;
+  final PracticeHistoryBloc practiceHistoryBloc;
 
   @override
   Widget build(BuildContext context) => BlocProvider(
         create: (context) => PracticeDoBloc(
-          practices: practices,
-        ),
+            practices: practices, practiceHistoryBloc: practiceHistoryBloc),
         child: Builder(
           builder: (context) => Scaffold(
             appBar: AppBar(

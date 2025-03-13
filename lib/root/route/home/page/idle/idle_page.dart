@@ -201,6 +201,8 @@ class IdlePage extends StatelessWidget {
                       ),
                       child: BysonCupertinoButton.solid(
                         onPressed: () {
+                          // App.instance.navigator
+                          //     .push(Routes.myWeight.path, extra: idleBloc);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -208,9 +210,6 @@ class IdlePage extends StatelessWidget {
                             ),
                           );
                         },
-                        // App.instance.navigator.push(
-                        //   Routes.myWeight.path,
-                        // ),
                         child: Stack(
                           children: [
                             PositionedDirectional(

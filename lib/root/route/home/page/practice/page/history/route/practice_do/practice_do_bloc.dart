@@ -19,9 +19,11 @@ part 'practice_do_state.dart';
 part 'practice_do_bloc.freezed.dart';
 
 class PracticeDoBloc extends Bloc<PracticeDoEvent, PracticeDoState> {
-  PracticeDoBloc({
-    required List<Practice> practices,
-  })  : textEditingControllers = List.generate(
+  final PracticeHistoryBloc practiceHistoryBloc;
+
+  PracticeDoBloc(
+      {required List<Practice> practices, required this.practiceHistoryBloc})
+      : textEditingControllers = List.generate(
           practices.length,
           (index) => List.generate(
             1,
@@ -106,6 +108,8 @@ class PracticeDoBloc extends Bloc<PracticeDoEvent, PracticeDoState> {
 
             if (result.isNotEmpty) {
               print('API 요청 성공');
+              practiceHistoryBloc
+                  .add(PracticeHistoryEvent.loadPracticeRecord());
               App.instance.navigator.go(Routes.home.path);
             }
           } on DioException catch (e) {

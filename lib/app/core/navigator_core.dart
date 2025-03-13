@@ -3,6 +3,7 @@ import 'package:app/model/local/practice.dart';
 import 'package:app/model/system/custom_route.dart';
 import 'package:app/root/root_route.dart';
 import 'package:app/root/route/home/home_route.dart';
+import 'package:app/root/route/home/page/idle/idle_bloc.dart';
 import 'package:app/root/route/home/page/my/route/app_setting/app_setting_route.dart';
 import 'package:app/root/route/home/page/my/route/my_edit/my_edit_bloc.dart';
 import 'package:app/root/route/home/page/my/route/my_edit/my_edit_route.dart';
@@ -32,6 +33,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../root/route/home/page/practice/page/history/practice_history_bloc.dart';
 
 class _NavigatorObserver extends NavigatorObserver {
   @override
@@ -125,10 +128,10 @@ class Routes {
     parent: home,
     endpoint: 'my_edit',
   );
-  // static const CustomRoute myWeight = CustomRoute(
-  //   parent: home,
-  //   endpoint: 'my_weight',
-  // );
+  static const CustomRoute myWeight = CustomRoute(
+    parent: home,
+    endpoint: 'my_weight',
+  );
 
   static const CustomRoute nutrientAnalyticsChoice = CustomRoute(
     parent: home,
@@ -280,12 +283,16 @@ class NavigatorCore {
               path: 'practice_do',
               pageBuilder: (context, state) {
                 try {
+                  final extras = state.extra as Map<String, dynamic>;
+
                   return CupertinoPage<void>(
                     name: 'practice_do',
                     key: state.pageKey,
                     child: PracticeDoRoute(
                       key: state.pageKey,
-                      practices: state.extra as List<Practice>,
+                      practices: extras['practices'] as List<Practice>,
+                      practiceHistoryBloc:
+                          extras['practiceHistoryBloc'] as PracticeHistoryBloc,
                     ),
                   );
                 } catch (exception) {
@@ -407,16 +414,17 @@ class NavigatorCore {
                 );
               },
             ),
-            // GoRoute(
-            //   path: 'my_weight',
-            //   pageBuilder: (context, state) => CupertinoPage<void>(
-            //     name: 'my_weight',
-            //     key: state.pageKey,
-            //     child: MyWeightRoute(
-            //       key: state.pageKey,
-            //     ),
-            //   ),
-            // ),
+            GoRoute(
+              path: 'my_weight',
+              pageBuilder: (context, state) => CupertinoPage<void>(
+                name: 'my_weight',
+                key: state.pageKey,
+                child: MyWeightRoute(
+                  key: state.pageKey,
+                  idleBloc: IdleBloc(),
+                ),
+              ),
+            ),
             GoRoute(
               path: 'nutrient_analytics_input',
               pageBuilder: (context, state) => CupertinoPage<void>(

@@ -5,6 +5,7 @@ import 'package:app/app/core/navigator_core.dart';
 import 'package:app/model/local/practice.dart';
 import 'package:app/root/route/home/page/practice/page/history/practice_history_bloc.dart';
 import 'package:app/root/route/home/page/practice/page/history/route/practice_do/practice_do_bloc.dart';
+import 'package:app/root/route/home/page/practice/page/history/route/practice_do/practice_do_route.dart';
 import 'package:app/root/route/home/page/practice/widget/summary_tile.dart';
 import 'package:byson_aspect_ratio/byson_aspect_ratio.dart';
 import 'package:byson_cupertino_button/byson_cupertino_button.dart';
@@ -446,10 +447,32 @@ class PracticeHistoryPage extends StatelessWidget {
                       .then(
                     (value) {
                       if ((value != null) && (value is Set<Practice>)) {
+                        // App.instance.navigator.push(
+                        //   Routes.practiceDo.path,
+                        //   extra: {
+                        //     'practices': value.toList(),
+                        //     'practiceHistoryBloc':
+                        //         context.read<PracticeHistoryBloc>(),
+                        //   },
+                        // );
                         App.instance.navigator.push(
                           Routes.practiceDo.path,
-                          extra: value.toList(),
+                          extra: {
+                            'practices': value.toList(),
+                            'practiceHistoryBloc':
+                                context.read<PracticeHistoryBloc>(),
+                          },
                         );
+
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (_) => PracticeDoRoute(
+                        //         practices: value.toList(),
+                        //         practiceHistoryBloc:
+                        //             context.read<PracticeHistoryBloc>(),
+                        //       ),
+                        //     ));
                       }
                     },
                   ),

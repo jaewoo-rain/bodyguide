@@ -336,26 +336,6 @@ class MyWeightRoute extends StatelessWidget {
                                           context.read<MyWeightBloc>().add(
                                                 const MyWeightEvent.submit(),
                                               );
-                                          // BlocListener<MyWeightBloc,
-                                          //     MyWeightState>(
-                                          //   listener: (context, state) {
-                                          //     print('이거');
-                                          //     if (context
-                                          //         .read<MyWeightBloc>()
-                                          //         .maskTextInputFormatter
-                                          //         .isFill()) {
-                                          //       idleBloc
-                                          //           .add(IdleEvent.loadState());
-                                          //     }
-                                          //   },
-                                          // );
-
-                                          // const double value = double.parse(
-                                          //     state.input.replaceAll('kg', ''));
-
-                                          // context.read<IdleBloc>().add(
-                                          //     const IdleEvent.updateWeight(
-                                          //         value));
                                         },
                                         child: Icon(
                                           Icons.check,

@@ -41,7 +41,8 @@ class HomeRoute extends StatelessWidget {
             create: (context) => IdleBloc()..add(const IdleEvent.loadState()),
           ),
           // BlocProvider(create: (context) => PracticeHistoryBloc()),
-          // BlocProvider(create: (context) => MyBloc()),
+          BlocProvider(
+              create: (context) => MyBloc()..add(const MyEvent.mock())),
           BlocProvider(
               create: (context) => PracticeAnalyticsReportBloc()
                 ..add(const PracticeAnalyticsReportEvent.initialize()))
