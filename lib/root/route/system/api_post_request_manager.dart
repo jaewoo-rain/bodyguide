@@ -44,14 +44,28 @@ class ApiRequestManager {
 
         if (response.statusCode == 200) {
           print('응답 데이터: ${response.data}');
-          print("post $path 성공");
+          print("delete $path 성공");
+
+          // 응답이 String이면 JSON 변환 시도
+          dynamic responseData = response.data;
+
+          if (responseData is String) {
+            try {
+              responseData = jsonDecode(responseData);
+            } catch (e) {
+              responseData = {'message': responseData};
+            }
+          }
+
+          print('응답 데이터: $responseData');
+          print("delete $path 성공?");
+          return responseData as Map<String, dynamic>;
+          // return response.data;
         } else {
           print('통신 오류: ${response.statusCode}');
           print('오류 메시지: ${response.data}');
+          return {'error': '통신오류', 'message': '${response.data}'};
         }
-
-        // 성공 시 경로로 이동
-        return response.data;
         // }
       } catch (e) {
         if (e is DioError) {
@@ -98,16 +112,15 @@ class ApiRequestManager {
           queryParameters: params, // GET 요청의 쿼리 파라미터
         );
 
-        // 응답 처리
-        print('응답 데이터: ${response.data}');
-
-        // 성공 시 경로로 이동
-        // App.instance.navigator.go(successRoute);
-
-        print("get $path 성공?");
-
-        // 응답 데이터 반환
-        return response.data as Map<String, dynamic>;
+        if (response.statusCode == 200) {
+          print('응답 데이터: ${response.data}');
+          print("get $path 성공");
+          return response.data as Map<String, dynamic>;
+        } else {
+          print('통신 오류: ${response.statusCode}');
+          print('오류 메시지: ${response.data}');
+          return {'error': '통신오류', 'message': '${response.data}'};
+        }
       } catch (e) {
         if (e is DioError) {
           print('통신 오류: ${e.response?.statusCode}');
@@ -229,20 +242,29 @@ class ApiRequestManager {
           queryParameters: params,
         );
 
-        // 응답이 String이면 JSON 변환 시도
-        dynamic responseData = response.data;
+        if (response.statusCode == 200) {
+          print('응답 데이터: ${response.data}');
+          print("delete $path 성공");
 
-        if (responseData is String) {
-          try {
-            responseData = jsonDecode(responseData);
-          } catch (e) {
-            responseData = {'message': responseData};
+          // 응답이 String이면 JSON 변환 시도
+          dynamic responseData = response.data;
+
+          if (responseData is String) {
+            try {
+              responseData = jsonDecode(responseData);
+            } catch (e) {
+              responseData = {'message': responseData};
+            }
           }
-        }
 
-        print('응답 데이터: $responseData');
-        print("delete $path 성공?");
-        return responseData as Map<String, dynamic>;
+          print('응답 데이터: $responseData');
+          print("delete $path 성공?");
+          return responseData as Map<String, dynamic>;
+        } else {
+          print('통신 오류: ${response.statusCode}');
+          print('오류 메시지: ${response.data}');
+          return {'error': '통신오류', 'message': '${response.data}'};
+        }
       } on DioException catch (e) {
         print('API 요청 실패: ${e.message}');
 
@@ -268,6 +290,76 @@ class ApiRequestManager {
       print('로그인이 필요합니다.');
       App.instance.navigator.go(Routes.sign.path);
       return {'error': true, 'message': '로그인이 필요합니다.'};
+    }
+  }
+
+  // Patch
+  /// API post 요청 함수
+  Future<dynamic> patchRequest({
+    // required String url, // API URL
+    required Map<String, dynamic> body, // 요청 바디
+    required String path, // API 엔드포인트
+    // required String successRoute, // 성공 시 이동할 경로
+    required String failRoute, // 실패 시 이동할 경로
+  }) async {
+    // 토큰 검사
+    final validAccessToken = await tokenManager.getValidAccessToken();
+
+    if (validAccessToken != null) {
+      print('유효한 Access Token: $validAccessToken');
+
+      try {
+        print("post $path 시도하기");
+        final response = await dio.patch(
+          'https://$base_Url/$path',
+          options: Options(headers: {
+            'authorization': 'Bearer $validAccessToken',
+            'Content-Type': 'application/json',
+          }),
+          data: body,
+        );
+
+        if (response.statusCode == 200) {
+          print('응답 데이터: ${response.data}');
+          print("patch $path 성공");
+
+          // 응답이 String이면 JSON 변환 시도
+          dynamic responseData = response.data;
+
+          if (responseData is String) {
+            try {
+              responseData = jsonDecode(responseData);
+            } catch (e) {
+              responseData = {'message': responseData};
+            }
+          }
+
+          print('응답 데이터: $responseData');
+          print("delete $path 성공?");
+          return responseData as Map<String, dynamic>;
+          // return response.data;
+        } else {
+          print('통신 오류: ${response.statusCode}');
+          print('오류 메시지: ${response.data}');
+          return {'error': '통신오류', 'message': '${response.data}'};
+        }
+      } catch (e) {
+        if (e is DioError) {
+          print('통신 오류: ${e.response?.statusCode}');
+          print('오류 메시지: ${e.message}');
+        } else {
+          print('알 수 없는 오류: $e');
+        }
+
+        // 실패 시 경로로 이동
+        print('post $path 오류');
+        App.instance.navigator.go(failRoute);
+      }
+    } else {
+      print('로그인이 필요합니다.');
+
+      // 로그인이 필요한 경우 처리
+      App.instance.navigator.go(Routes.sign.path);
     }
   }
 }

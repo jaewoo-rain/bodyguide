@@ -209,6 +209,13 @@ class IdlePage extends StatelessWidget {
                               builder: (_) => MyWeightRoute(idleBloc: idleBloc),
                             ),
                           );
+
+                          // App.instance.navigator.push(
+                          //   Routes.myWeight.path,
+                          //   extra: {
+                          //     'practiceHistoryBloc': context.read<IdleBloc>(),
+                          //   },
+                          // );
                         },
                         child: Stack(
                           children: [

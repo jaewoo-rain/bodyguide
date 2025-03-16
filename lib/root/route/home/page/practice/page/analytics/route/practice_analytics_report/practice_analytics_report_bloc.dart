@@ -50,8 +50,20 @@ class PracticeAnalyticsReportBloc
       print("운동report 데이터 불러오기");
 
       final results = await apiManager.multiGetRequest(
-        paths: ['exercise/analysis/report', 'exercise/bigthree'],
-        params: [{}, {}],
+        paths: [
+          'exercise/analysis/report',
+          'exercise/bigthree',
+          'exercise/volume/weekly',
+          'exercise/volume/monthly',
+          'exercise/volume/daily',
+        ],
+        params: [
+          {},
+          {},
+          {"page": 0, "size": 7},
+          {"page": 0, "size": 7},
+          {"page": 0, "size": 7},
+        ],
         failRoute: Routes.home.path,
       );
 
@@ -65,6 +77,14 @@ class PracticeAnalyticsReportBloc
         final report = ExerciseAnalysisReport.fromJson(
             results['exercise/analysis/report']);
         final bigThree = BigThree.fromJson(results['exercise/bigthree']);
+        final dd1 = results['exercise/volume/weekly'];
+        print("wwwee: ${dd1}");
+        final dd2 = results['exercise/volume/monthly'];
+        print("wwwee: ${dd2}");
+        final dd3 = results['exercise/volume/daily'];
+        print("wwwee: ${dd3}");
+        // for(week in dd["volumes"].length)
+
         // bloc의 state 업데이트
         emit(state.copyWith(report: report));
         emit(state.copyWith(bigThree: bigThree));

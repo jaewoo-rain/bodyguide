@@ -4,6 +4,7 @@ import 'package:app/model/system/custom_route.dart';
 import 'package:app/root/root_route.dart';
 import 'package:app/root/route/home/home_route.dart';
 import 'package:app/root/route/home/page/idle/idle_bloc.dart';
+import 'package:app/root/route/home/page/my/my_bloc.dart';
 import 'package:app/root/route/home/page/my/route/app_setting/app_setting_route.dart';
 import 'package:app/root/route/home/page/my/route/my_edit/my_edit_bloc.dart';
 import 'package:app/root/route/home/page/my/route/my_edit/my_edit_route.dart';
@@ -392,6 +393,8 @@ class NavigatorCore {
             GoRoute(
               path: 'my_edit',
               pageBuilder: (context, state) {
+                final extras = state.extra as Map<String, dynamic>;
+
                 // extra 데이터를 받아옵니다.
                 final extraData = state.extra as Map<String, dynamic>? ?? {};
                 final initialNickName =
@@ -404,13 +407,19 @@ class NavigatorCore {
                 return CupertinoPage<void>(
                   name: 'my_edit',
                   key: state.pageKey,
-                  child: BlocProvider(
-                    create: (_) => MyEditBloc(
-                      initialNickName: initialNickName,
-                      initialIntroText: initialIntroText,
-                    ),
-                    child: MyEditRoute(key: state.pageKey),
+                  // child: BlocProvider(
+                  //   create: (_) => MyEditBloc(
+                  //     initialNickName: initialNickName,
+                  //     initialIntroText: initialIntroText,
+                  //     myBloc: MyBloc(),
+                  //   ),
+                  child: MyEditRoute(
+                    key: state.pageKey,
+                    initialNickName: initialNickName,
+                    initialIntroText: initialIntroText,
+                    myBloc: extras['myBloc'] as MyBloc,
                   ),
+                  // ),
                 );
               },
             ),

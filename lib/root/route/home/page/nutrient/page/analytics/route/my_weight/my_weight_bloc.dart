@@ -98,7 +98,7 @@ class MyWeightBloc extends Bloc<MyWeightEvent, MyWeightState> {
               print(jsonEncode(requestBody));
 
               // 요청 실행
-              String result = await apiManager.postRequest(
+              Map<String, dynamic>  result = await apiManager.postRequest(
                 body: requestBody,
                 path: 'weight/record',
                 // successRoute: "",

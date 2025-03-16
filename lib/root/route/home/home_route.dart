@@ -41,8 +41,8 @@ class HomeRoute extends StatelessWidget {
             create: (context) => IdleBloc()..add(const IdleEvent.loadState()),
           ),
           // BlocProvider(create: (context) => PracticeHistoryBloc()),
-          BlocProvider(
-              create: (context) => MyBloc()..add(const MyEvent.mock())),
+          // BlocProvider(
+          //     create: (context) => MyBloc()..add(const MyEvent.mock())),
           BlocProvider(
               create: (context) => PracticeAnalyticsReportBloc()
                 ..add(const PracticeAnalyticsReportEvent.initialize()))
@@ -64,13 +64,13 @@ class HomeRoute extends StatelessWidget {
                     .read<HomeBloc>()
                     .add(HomeEvent.onPageChanged(value: page));
 
-                // // 만약 PracticeHistory 탭이 전환되었다면, 해당 Bloc에 refresh 이벤트를 보냄
-                // if (page == HomePage.exercise) {
-                //   context
-                //       .read<PracticeHistoryBloc>()
-                //       .add(const PracticeHistoryEvent.loadPracticeRecord());
-                //   print("운동탭 클릭됨");
-                // } else if (page == HomePage.my) {
+                // 만약 PracticeHistory 탭이 전환되었다면, 해당 Bloc에 refresh 이벤트를 보냄
+                if (page == HomePage.nutrient) {
+                  context
+                      .read<PracticeAnalyticsReportBloc>()
+                      .add(const PracticeAnalyticsReportEvent.initialize());
+                  print("운동탭 클릭됨");
+                } //else if (page == HomePage.my) {
                 //   context.read<MyBloc>().add(const MyEvent.mock());
                 //   print("마이페이지탭 클릭됨");
                 // } else if (page == HomePage.idle) {

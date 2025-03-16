@@ -19,32 +19,38 @@ mixin _$MyEditEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() mock,
+    required TResult Function() submit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? mock,
+    TResult? Function()? submit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? mock,
+    TResult Function()? submit,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_mock value) mock,
+    required TResult Function(_submit value) submit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_mock value)? mock,
+    TResult? Function(_submit value)? submit,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_mock value)? mock,
+    TResult Function(_submit value)? submit,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -112,6 +118,7 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() mock,
+    required TResult Function() submit,
   }) {
     return mock();
   }
@@ -120,6 +127,7 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? mock,
+    TResult? Function()? submit,
   }) {
     return mock?.call();
   }
@@ -128,6 +136,7 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? mock,
+    TResult Function()? submit,
     required TResult orElse(),
   }) {
     if (mock != null) {
@@ -140,6 +149,7 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_mock value) mock,
+    required TResult Function(_submit value) submit,
   }) {
     return mock(this);
   }
@@ -148,6 +158,7 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_mock value)? mock,
+    TResult? Function(_submit value)? submit,
   }) {
     return mock?.call(this);
   }
@@ -156,6 +167,7 @@ class _$mockImpl implements _mock {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_mock value)? mock,
+    TResult Function(_submit value)? submit,
     required TResult orElse(),
   }) {
     if (mock != null) {
@@ -167,6 +179,111 @@ class _$mockImpl implements _mock {
 
 abstract class _mock implements MyEditEvent {
   const factory _mock() = _$mockImpl;
+}
+
+/// @nodoc
+abstract class _$$submitImplCopyWith<$Res> {
+  factory _$$submitImplCopyWith(
+          _$submitImpl value, $Res Function(_$submitImpl) then) =
+      __$$submitImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$submitImplCopyWithImpl<$Res>
+    extends _$MyEditEventCopyWithImpl<$Res, _$submitImpl>
+    implements _$$submitImplCopyWith<$Res> {
+  __$$submitImplCopyWithImpl(
+      _$submitImpl _value, $Res Function(_$submitImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MyEditEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$submitImpl implements _submit {
+  const _$submitImpl();
+
+  @override
+  String toString() {
+    return 'MyEditEvent.submit()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$submitImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() mock,
+    required TResult Function() submit,
+  }) {
+    return submit();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? mock,
+    TResult? Function()? submit,
+  }) {
+    return submit?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? mock,
+    TResult Function()? submit,
+    required TResult orElse(),
+  }) {
+    if (submit != null) {
+      return submit();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_mock value) mock,
+    required TResult Function(_submit value) submit,
+  }) {
+    return submit(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_mock value)? mock,
+    TResult? Function(_submit value)? submit,
+  }) {
+    return submit?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_mock value)? mock,
+    TResult Function(_submit value)? submit,
+    required TResult orElse(),
+  }) {
+    if (submit != null) {
+      return submit(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _submit implements MyEditEvent {
+  const factory _submit() = _$submitImpl;
 }
 
 /// @nodoc

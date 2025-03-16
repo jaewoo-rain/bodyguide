@@ -225,7 +225,56 @@ class PracticeAnalyticsReportRoute extends StatelessWidget {
           // ),
           BlocBuilder<PracticeAnalyticsReportBloc,
               PracticeAnalyticsReportState>(builder: (context, state) {
-            if (state.report == null) {}
+            if (state.report == null) {
+              return Center(
+                child: BysonAspectRatio(
+                  designWidth: designWidth,
+                  designHeight: 190,
+                  builder: (converter) => Stack(
+                    children: [
+                      PositionedDirectional(
+                        top: 0,
+                        start: converter.hcx(
+                          100,
+                        ),
+                        width: converter.w(
+                          100,
+                        ),
+                        height: converter.h(
+                          100,
+                        ),
+                        child: CircularProgressIndicator(
+                          strokeWidth: converter.h(
+                            8,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          '운동 정보를\n분석하고 있습니다.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            height: 1.2,
+                            fontSize: converter.h(
+                              24,
+                            ),
+                            color: const Color(
+                              0xFF5D5D5D,
+                            ),
+                            fontWeight: FontWeightAlias.semiBold,
+                            letterSpacing: converter.lt(
+                              fontSize: 24,
+                              percent: -2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
             final report = state.report!;
             final bigThree = state.bigThree!;
             // for(value in report.ability){
