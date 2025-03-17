@@ -6,10 +6,10 @@ part 'week_volumes.g.dart';
 @freezed
 class WeekVolumes with _$WeekVolumes {
   const factory WeekVolumes({
-    required String id,
-    required String year,
-    required String week,
-    required String volume,
+    required int id,
+    required int year,
+    required int week,
+    required double volume,
   }) = _WeekVolumes;
 
   factory WeekVolumes.fromJson(Map<String, dynamic> json) =>

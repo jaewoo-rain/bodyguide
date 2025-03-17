@@ -186,30 +186,37 @@ class __$$AbilityItemImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AbilityItemImpl implements _AbilityItem {
   const _$AbilityItemImpl(
-      {required this.exerId,
-      required this.muscleGroupType,
-      required this.thresholdType,
-      required this.score,
-      required this.level,
-      required this.strength,
-      required this.average});
+      {this.exerId = 0,
+      this.muscleGroupType = "",
+      this.thresholdType = "",
+      this.score = 0,
+      this.level = "",
+      this.strength = 0,
+      this.average = 0});
 
   factory _$AbilityItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$AbilityItemImplFromJson(json);
 
   @override
+  @JsonKey()
   final int exerId;
   @override
+  @JsonKey()
   final String muscleGroupType;
   @override
+  @JsonKey()
   final String thresholdType;
   @override
+  @JsonKey()
   final double score;
   @override
+  @JsonKey()
   final String level;
   @override
+  @JsonKey()
   final double strength;
   @override
+  @JsonKey()
   final double average;
 
   @override
@@ -257,13 +264,13 @@ class _$AbilityItemImpl implements _AbilityItem {
 
 abstract class _AbilityItem implements AbilityItem {
   const factory _AbilityItem(
-      {required final int exerId,
-      required final String muscleGroupType,
-      required final String thresholdType,
-      required final double score,
-      required final String level,
-      required final double strength,
-      required final double average}) = _$AbilityItemImpl;
+      {final int exerId,
+      final String muscleGroupType,
+      final String thresholdType,
+      final double score,
+      final String level,
+      final double strength,
+      final double average}) = _$AbilityItemImpl;
 
   factory _AbilityItem.fromJson(Map<String, dynamic> json) =
       _$AbilityItemImpl.fromJson;

@@ -6,13 +6,13 @@ part 'ability_item.g.dart';
 @freezed
 class AbilityItem with _$AbilityItem {
   const factory AbilityItem({
-    required int exerId,
-    required String muscleGroupType,
-    required String thresholdType,
-    required double score,
-    required String level,
-    required double strength,
-    required double average,
+    @Default(0) int exerId,
+    @Default("") String muscleGroupType,
+    @Default("") String thresholdType,
+    @Default(0) double score,
+    @Default("") String level,
+    @Default(0) double strength,
+    @Default(0) double average,
   }) = _AbilityItem;
 
   factory AbilityItem.fromJson(Map<String, dynamic> json) =>

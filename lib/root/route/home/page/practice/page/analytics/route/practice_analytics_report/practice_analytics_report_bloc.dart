@@ -2,6 +2,8 @@ import 'package:app/app/app.dart';
 import 'package:app/app/constant/system.dart';
 import 'package:app/model/local/practice.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/models/big_three.dart';
+import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/models/volumGraphModel/daily/daily_volumes_graph.dart';
+import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/models/volumGraphModel/monthly/month_volumes_graph.dart';
 import 'package:app/root/route/system/api_post_request_manager.dart';
 import 'package:app/root/route/system/token_manager.dart';
 import 'package:collection/collection.dart';
@@ -12,6 +14,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../../../../../app/core/navigator_core.dart';
 import 'models/exercise_analysis_report.dart';
+import 'models/volumGraphModel/week/week_volumes_graph.dart';
 
 part 'practice_analytics_report_event.dart';
 part 'practice_analytics_report_state.dart';
@@ -53,16 +56,16 @@ class PracticeAnalyticsReportBloc
         paths: [
           'exercise/analysis/report',
           'exercise/bigthree',
-          'exercise/volume/weekly',
-          'exercise/volume/monthly',
-          'exercise/volume/daily',
+          // 'exercise/volume/weekly',
+          // 'exercise/volume/monthly',
+          // 'exercise/volume/daily',
         ],
         params: [
           {},
           {},
-          {"page": 0, "size": 7},
-          {"page": 0, "size": 7},
-          {"page": 0, "size": 7},
+          // {"page": 0, "size": 7},
+          // {"page": 0, "size": 7},
+          // {"page": 0, "size": 7},
         ],
         failRoute: Routes.home.path,
       );
@@ -71,18 +74,22 @@ class PracticeAnalyticsReportBloc
         print("API 호출 실패: ${results['message']}");
       } else {
         debugPrint('운동report 불러오기: $results', wrapWidth: 1024);
+        print(results['exercise/analysis/report']);
 
         // 만약 results가 아래와 같이 구성되어 있다면,
         // { totalScore: 0, totalLevel: '입문자', topPercent: 100.0, ability: { ... }, weekMuscle: [...] }
         final report = ExerciseAnalysisReport.fromJson(
             results['exercise/analysis/report']);
         final bigThree = BigThree.fromJson(results['exercise/bigthree']);
-        final dd1 = results['exercise/volume/weekly'];
-        print("wwwee: ${dd1}");
-        final dd2 = results['exercise/volume/monthly'];
-        print("wwwee: ${dd2}");
-        final dd3 = results['exercise/volume/daily'];
-        print("wwwee: ${dd3}");
+        // final weekVolume =
+        //     WeekVolumeGraph.fromJson(results['exercise/volume/weekly']);
+        // print("wwwee: ${weekVolume}");
+        // final monthVolumes =
+        //     MonthVolumesGraph.fromJson(results['exercise/volume/monthly']);
+        // print("wwwee: ${monthVolumes}");
+        // final dailyVolumes =
+        //     DailyVolumesGraph.fromJson(results['exercise/volume/daily']);
+        // print("wwwee: ${dailyVolumes}");
         // for(week in dd["volumes"].length)
 
         // bloc의 state 업데이트

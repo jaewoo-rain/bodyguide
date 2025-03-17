@@ -8,13 +8,13 @@ part of 'ability_item.dart';
 
 _$AbilityItemImpl _$$AbilityItemImplFromJson(Map<String, dynamic> json) =>
     _$AbilityItemImpl(
-      exerId: (json['exerId'] as num).toInt(),
-      muscleGroupType: json['muscleGroupType'] as String,
-      thresholdType: json['thresholdType'] as String,
-      score: (json['score'] as num).toDouble(),
-      level: json['level'] as String,
-      strength: (json['strength'] as num).toDouble(),
-      average: (json['average'] as num).toDouble(),
+      exerId: (json['exerId'] as num?)?.toInt() ?? 0,
+      muscleGroupType: json['muscleGroupType'] as String? ?? "",
+      thresholdType: json['thresholdType'] as String? ?? "",
+      score: (json['score'] as num?)?.toDouble() ?? 0,
+      level: json['level'] as String? ?? "",
+      strength: (json['strength'] as num?)?.toDouble() ?? 0,
+      average: (json['average'] as num?)?.toDouble() ?? 0,
     );
 
 Map<String, dynamic> _$$AbilityItemImplToJson(_$AbilityItemImpl instance) =>
