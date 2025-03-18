@@ -38,7 +38,6 @@ class AppSettingBloc extends Bloc<AppSettingEvent, AppSettingState> {
               params: {},
               failRoute: Routes.sign.path,
             );
-
             if (result.containsKey('error')) {
               print('API 호출 실패: ${result['message']}');
             } else {

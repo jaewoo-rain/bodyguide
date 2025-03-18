@@ -178,6 +178,9 @@ mixin _$PracticeAnalyticsReportState {
   ExerciseAnalysisReport? get report =>
       throw _privateConstructorUsedError; // API 응답 결과를 저장하는 필드
   BigThree? get bigThree => throw _privateConstructorUsedError;
+  DailyVolumesGraph? get dailyVolume => throw _privateConstructorUsedError;
+  MonthVolumesGraph? get monthlyVolume => throw _privateConstructorUsedError;
+  WeekVolumeGraph? get weekVolume => throw _privateConstructorUsedError;
   Set<String> get goals => throw _privateConstructorUsedError;
 
   /// Create a copy of PracticeAnalyticsReportState
@@ -196,10 +199,18 @@ abstract class $PracticeAnalyticsReportStateCopyWith<$Res> {
           PracticeAnalyticsReportState>;
   @useResult
   $Res call(
-      {ExerciseAnalysisReport? report, BigThree? bigThree, Set<String> goals});
+      {ExerciseAnalysisReport? report,
+      BigThree? bigThree,
+      DailyVolumesGraph? dailyVolume,
+      MonthVolumesGraph? monthlyVolume,
+      WeekVolumeGraph? weekVolume,
+      Set<String> goals});
 
   $ExerciseAnalysisReportCopyWith<$Res>? get report;
   $BigThreeCopyWith<$Res>? get bigThree;
+  $DailyVolumesGraphCopyWith<$Res>? get dailyVolume;
+  $MonthVolumesGraphCopyWith<$Res>? get monthlyVolume;
+  $WeekVolumeGraphCopyWith<$Res>? get weekVolume;
 }
 
 /// @nodoc
@@ -220,6 +231,9 @@ class _$PracticeAnalyticsReportStateCopyWithImpl<$Res,
   $Res call({
     Object? report = freezed,
     Object? bigThree = freezed,
+    Object? dailyVolume = freezed,
+    Object? monthlyVolume = freezed,
+    Object? weekVolume = freezed,
     Object? goals = null,
   }) {
     return _then(_value.copyWith(
@@ -231,6 +245,18 @@ class _$PracticeAnalyticsReportStateCopyWithImpl<$Res,
           ? _value.bigThree
           : bigThree // ignore: cast_nullable_to_non_nullable
               as BigThree?,
+      dailyVolume: freezed == dailyVolume
+          ? _value.dailyVolume
+          : dailyVolume // ignore: cast_nullable_to_non_nullable
+              as DailyVolumesGraph?,
+      monthlyVolume: freezed == monthlyVolume
+          ? _value.monthlyVolume
+          : monthlyVolume // ignore: cast_nullable_to_non_nullable
+              as MonthVolumesGraph?,
+      weekVolume: freezed == weekVolume
+          ? _value.weekVolume
+          : weekVolume // ignore: cast_nullable_to_non_nullable
+              as WeekVolumeGraph?,
       goals: null == goals
           ? _value.goals
           : goals // ignore: cast_nullable_to_non_nullable
@@ -265,6 +291,48 @@ class _$PracticeAnalyticsReportStateCopyWithImpl<$Res,
       return _then(_value.copyWith(bigThree: value) as $Val);
     });
   }
+
+  /// Create a copy of PracticeAnalyticsReportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DailyVolumesGraphCopyWith<$Res>? get dailyVolume {
+    if (_value.dailyVolume == null) {
+      return null;
+    }
+
+    return $DailyVolumesGraphCopyWith<$Res>(_value.dailyVolume!, (value) {
+      return _then(_value.copyWith(dailyVolume: value) as $Val);
+    });
+  }
+
+  /// Create a copy of PracticeAnalyticsReportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MonthVolumesGraphCopyWith<$Res>? get monthlyVolume {
+    if (_value.monthlyVolume == null) {
+      return null;
+    }
+
+    return $MonthVolumesGraphCopyWith<$Res>(_value.monthlyVolume!, (value) {
+      return _then(_value.copyWith(monthlyVolume: value) as $Val);
+    });
+  }
+
+  /// Create a copy of PracticeAnalyticsReportState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $WeekVolumeGraphCopyWith<$Res>? get weekVolume {
+    if (_value.weekVolume == null) {
+      return null;
+    }
+
+    return $WeekVolumeGraphCopyWith<$Res>(_value.weekVolume!, (value) {
+      return _then(_value.copyWith(weekVolume: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -277,12 +345,23 @@ abstract class _$$PracticeAnalyticsReportStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ExerciseAnalysisReport? report, BigThree? bigThree, Set<String> goals});
+      {ExerciseAnalysisReport? report,
+      BigThree? bigThree,
+      DailyVolumesGraph? dailyVolume,
+      MonthVolumesGraph? monthlyVolume,
+      WeekVolumeGraph? weekVolume,
+      Set<String> goals});
 
   @override
   $ExerciseAnalysisReportCopyWith<$Res>? get report;
   @override
   $BigThreeCopyWith<$Res>? get bigThree;
+  @override
+  $DailyVolumesGraphCopyWith<$Res>? get dailyVolume;
+  @override
+  $MonthVolumesGraphCopyWith<$Res>? get monthlyVolume;
+  @override
+  $WeekVolumeGraphCopyWith<$Res>? get weekVolume;
 }
 
 /// @nodoc
@@ -302,6 +381,9 @@ class __$$PracticeAnalyticsReportStateImplCopyWithImpl<$Res>
   $Res call({
     Object? report = freezed,
     Object? bigThree = freezed,
+    Object? dailyVolume = freezed,
+    Object? monthlyVolume = freezed,
+    Object? weekVolume = freezed,
     Object? goals = null,
   }) {
     return _then(_$PracticeAnalyticsReportStateImpl(
@@ -313,6 +395,18 @@ class __$$PracticeAnalyticsReportStateImplCopyWithImpl<$Res>
           ? _value.bigThree
           : bigThree // ignore: cast_nullable_to_non_nullable
               as BigThree?,
+      dailyVolume: freezed == dailyVolume
+          ? _value.dailyVolume
+          : dailyVolume // ignore: cast_nullable_to_non_nullable
+              as DailyVolumesGraph?,
+      monthlyVolume: freezed == monthlyVolume
+          ? _value.monthlyVolume
+          : monthlyVolume // ignore: cast_nullable_to_non_nullable
+              as MonthVolumesGraph?,
+      weekVolume: freezed == weekVolume
+          ? _value.weekVolume
+          : weekVolume // ignore: cast_nullable_to_non_nullable
+              as WeekVolumeGraph?,
       goals: null == goals
           ? _value._goals
           : goals // ignore: cast_nullable_to_non_nullable
@@ -326,7 +420,12 @@ class __$$PracticeAnalyticsReportStateImplCopyWithImpl<$Res>
 class _$PracticeAnalyticsReportStateImpl
     implements _PracticeAnalyticsReportState {
   const _$PracticeAnalyticsReportStateImpl(
-      {this.report, this.bigThree, final Set<String> goals = const {}})
+      {this.report,
+      this.bigThree,
+      this.dailyVolume,
+      this.monthlyVolume,
+      this.weekVolume,
+      final Set<String> goals = const {}})
       : _goals = goals;
 
   @override
@@ -334,6 +433,12 @@ class _$PracticeAnalyticsReportStateImpl
 // API 응답 결과를 저장하는 필드
   @override
   final BigThree? bigThree;
+  @override
+  final DailyVolumesGraph? dailyVolume;
+  @override
+  final MonthVolumesGraph? monthlyVolume;
+  @override
+  final WeekVolumeGraph? weekVolume;
   final Set<String> _goals;
   @override
   @JsonKey()
@@ -345,7 +450,7 @@ class _$PracticeAnalyticsReportStateImpl
 
   @override
   String toString() {
-    return 'PracticeAnalyticsReportState(report: $report, bigThree: $bigThree, goals: $goals)';
+    return 'PracticeAnalyticsReportState(report: $report, bigThree: $bigThree, dailyVolume: $dailyVolume, monthlyVolume: $monthlyVolume, weekVolume: $weekVolume, goals: $goals)';
   }
 
   @override
@@ -356,12 +461,18 @@ class _$PracticeAnalyticsReportStateImpl
             (identical(other.report, report) || other.report == report) &&
             (identical(other.bigThree, bigThree) ||
                 other.bigThree == bigThree) &&
+            (identical(other.dailyVolume, dailyVolume) ||
+                other.dailyVolume == dailyVolume) &&
+            (identical(other.monthlyVolume, monthlyVolume) ||
+                other.monthlyVolume == monthlyVolume) &&
+            (identical(other.weekVolume, weekVolume) ||
+                other.weekVolume == weekVolume) &&
             const DeepCollectionEquality().equals(other._goals, _goals));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, report, bigThree,
-      const DeepCollectionEquality().hash(_goals));
+  int get hashCode => Object.hash(runtimeType, report, bigThree, dailyVolume,
+      monthlyVolume, weekVolume, const DeepCollectionEquality().hash(_goals));
 
   /// Create a copy of PracticeAnalyticsReportState
   /// with the given fields replaced by the non-null parameter values.
@@ -379,12 +490,21 @@ abstract class _PracticeAnalyticsReportState
   const factory _PracticeAnalyticsReportState(
       {final ExerciseAnalysisReport? report,
       final BigThree? bigThree,
+      final DailyVolumesGraph? dailyVolume,
+      final MonthVolumesGraph? monthlyVolume,
+      final WeekVolumeGraph? weekVolume,
       final Set<String> goals}) = _$PracticeAnalyticsReportStateImpl;
 
   @override
   ExerciseAnalysisReport? get report; // API 응답 결과를 저장하는 필드
   @override
   BigThree? get bigThree;
+  @override
+  DailyVolumesGraph? get dailyVolume;
+  @override
+  MonthVolumesGraph? get monthlyVolume;
+  @override
+  WeekVolumeGraph? get weekVolume;
   @override
   Set<String> get goals;
 

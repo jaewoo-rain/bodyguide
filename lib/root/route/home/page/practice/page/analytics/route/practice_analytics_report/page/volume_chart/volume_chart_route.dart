@@ -1,25 +1,33 @@
 import 'package:app/app/constant/system.dart';
+import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/practice_analytics_report_bloc.dart';
 import 'package:byson_aspect_ratio/byson_aspect_ratio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'volume_chart_bloc.dart';
-import 'volume_chart_state.dart';
 
-// class VolumeChartRoute extends StatelessWidget {
-//   const VolumeChartRoute({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider(
-//       create: (context) =>
-//           VolumeChartBloc()..add(const VolumeChartEvent.load()),
-//       child: Scaffold(
-//         appBar: AppBar(title: const Text("운동 볼륨 그래프")),
-//         body: const VolumeChartView(),
-//       ),
-//     );
-//   }
-// }
+/// 원본 데이터가 [mostRecent, second, third, ...] 순서로 되어 있을 때,
+/// 그래프는 왼쪽부터 오른쪽까지 시간순(오래된 값 → 최신 값)으로 배치되어야 하므로
+/// 가장 최근 값(원본 index 0)이 오른쪽 끝에 오도록 리스트를 반전시킵니다.
+/// 만약 리스트 길이가 7개 미만이면 왼쪽(오래된 부분)을 0으로 채워 총 7개가 되게 합니다.
+List<int> processData(List<int> data) {
+  if (data.length >= 7) {
+    // 최근 7개를 취하고(원본의 앞부분 7개) 뒤집어서 (오래된 값부터 최신 순으로) 반환
+    final recent7 = data.sublist(0, 7);
+    return recent7.reversed.toList();
+  } else {
+    return List<int>.filled(7 - data.length, 0) + data.reversed.toList();
+  }
+}
+
+/// 라벨도 동일하게 처리 (값이 없는 부분은 빈 문자열)
+List<String> processLabels(List<String> labels) {
+  if (labels.length >= 7) {
+    final recent7 = labels.sublist(0, 7);
+    return recent7.reversed.toList();
+  } else {
+    return List<String>.filled(7 - labels.length, "") +
+        labels.reversed.toList();
+  }
+}
 
 class VolumeChartView extends StatefulWidget {
   const VolumeChartView({Key? key}) : super(key: key);
@@ -47,110 +55,135 @@ class _VolumeChartViewState extends State<VolumeChartView>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VolumeChartBloc, VolumeChartState>(
-      builder: (context, state) {
-        if (state.status == VolumeChartStateStatus.loading ||
-            state.status == VolumeChartStateStatus.initial) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state.status == VolumeChartStateStatus.error) {
-          return Center(child: Text("Error: ${state.errorMessage}"));
-        }
-        // 상태가 loaded인 경우
-        return BysonAspectRatio(
-            designWidth: 295,
-            designHeight: 520,
-            builder: (converter) {
-              return Container(
-                height: converter.h(520),
-                width: designWidth,
-                // color: Colors.red,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  // mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    /// ────── TabBar ──────
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: TabBar(
-                        controller: _tabController,
-                        dividerColor: Colors.transparent,
-                        indicatorColor: Colors.transparent,
-                        indicator: BoxDecoration(
-                          color: Color(0xFF3D5DD3),
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        labelColor: Colors.white,
-                        unselectedLabelColor: Colors.grey,
-                        tabs: const [
-                          Tab(text: '요약 기록'),
-                          Tab(text: '매주 단위'),
-                          Tab(text: '매월 단위'),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-
-                    /// ────── 그래프 Container ──────
-                    Center(
-                      child: Container(
-                        width: converter.w(295),
-                        height: converter.h(342),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFF9F9F9),
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
-                              blurRadius: 5,
-                              spreadRadius: 2,
-                            )
-                          ],
-                        ),
-                        child: SizedBox(
-                          height: converter.h(342),
-                          child: TabBarView(
-                            controller: _tabController,
-                            children: [
-                              // 탭 1: 요약 기록
-                              CustomGraph(
-                                data: state.summaryData,
-                                labels: state.summaryLabels,
-                              ),
-                              // 탭 2: 매주 단위
-                              CustomGraph(
-                                data: state.weeklyData,
-                                labels: state.weeklyLabels,
-                              ),
-                              // 탭 3: 매월 단위
-                              CustomGraph(
-                                data: state.monthlyData,
-                                labels: state.monthlyLabels,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+    return BysonAspectRatio(
+      designWidth: designWidth,
+      designHeight: 520,
+      builder: (converter) {
+        return Container(
+          height: converter.h(520),
+          width: designWidth,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              /// ────── TabBar ──────
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: TabBar(
+                  controller: _tabController,
+                  dividerColor: Colors.transparent,
+                  indicatorColor: Colors.transparent,
+                  indicator: BoxDecoration(
+                    color: const Color(0xFF3D5DD3),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.grey,
+                  tabs: const [
+                    Tab(text: '요약 기록'),
+                    Tab(text: '매주 단위'),
+                    Tab(text: '매월 단위'),
                   ],
                 ),
-              );
-            });
+              ),
+              const SizedBox(height: 15),
+
+              /// ────── 그래프 Container ──────
+              Center(
+                child: Container(
+                  width: converter.w(400),
+                  height: converter.h(402),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF9F9F9),
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 5,
+                        spreadRadius: 2,
+                      )
+                    ],
+                  ),
+                  child: BlocBuilder<PracticeAnalyticsReportBloc,
+                      PracticeAnalyticsReportState>(
+                    builder: (context, state) {
+                      if (state.dailyVolume == null ||
+                          state.weekVolume == null ||
+                          state.monthlyVolume == null) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return SizedBox(
+                        height: converter.h(342),
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            // 1일씩
+                            CustomGraph(
+                              volumes: processData(
+                                state.dailyVolume!.volumes
+                                    .map((volume) => volume.volume.toInt())
+                                    .toList(),
+                              ),
+                              labels: processLabels(
+                                state.dailyVolume!.volumes
+                                    .map((volume) => "${volume.date}"
+                                        .toString()
+                                        .substring(5, 10))
+                                    .toList(),
+                              ),
+                            ),
+                            // 1주씩
+                            CustomGraph(
+                              volumes: processData(
+                                state.weekVolume!.volumes
+                                    .map((volume) => volume.volume.toInt())
+                                    .toList(),
+                              ),
+                              labels: processLabels(
+                                state.weekVolume!.volumes
+                                    .map(
+                                        (volume) => "${volume.week}".toString())
+                                    .toList(),
+                              ),
+                            ),
+                            // 한달씩
+                            CustomGraph(
+                              volumes: processData(
+                                state.monthlyVolume!.volumes
+                                    .map((volume) => volume.volume.toInt())
+                                    .toList(),
+                              ),
+                              labels: processLabels(
+                                state.monthlyVolume!.volumes
+                                    .map((volume) => volume.month.toString())
+                                    .toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
 }
 
-/// CustomGraph 위젯 (원본 코드와 동일)
+/// CustomGraph 위젯
 class CustomGraph extends StatefulWidget {
-  final List<int> data;
+  final List<int> volumes;
   final List<String> labels;
 
-  const CustomGraph({Key? key, required this.data, required this.labels})
+  const CustomGraph({Key? key, required this.volumes, required this.labels})
       : super(key: key);
 
   @override
@@ -164,7 +197,7 @@ class _CustomGraphState extends State<CustomGraph> {
   @override
   void initState() {
     super.initState();
-    // 위젯 빌드 완료 후, 스크롤을 오른쪽 끝으로 이동
+    // 위젯 빌드 완료 후, 스크롤을 오른쪽 끝(최신 값이 있는 위치)으로 이동
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
@@ -181,7 +214,7 @@ class _CustomGraphState extends State<CustomGraph> {
   Widget build(BuildContext context) {
     // 데이터 하나당 75픽셀로 가정
     final double chartWidth =
-        (widget.data.length * 75).toDouble().clamp(300.0, 2000.0);
+        (widget.volumes.length * 75).toDouble().clamp(300.0, 2000.0);
 
     return SingleChildScrollView(
       controller: _scrollController,
@@ -193,7 +226,7 @@ class _CustomGraphState extends State<CustomGraph> {
         child: CustomPaint(
           size: Size(chartWidth, 250),
           painter: GraphPainter(
-            data: widget.data,
+            volumes: widget.volumes,
             labels: widget.labels,
           ),
         ),
@@ -203,16 +236,16 @@ class _CustomGraphState extends State<CustomGraph> {
 }
 
 class GraphPainter extends CustomPainter {
-  final List<int> data;
+  final List<int> volumes;
   final List<String> labels;
 
-  GraphPainter({required this.data, required this.labels});
+  GraphPainter({required this.volumes, required this.labels});
 
   @override
   void paint(Canvas canvas, Size size) {
     // 파란색 그래프 선
     final Paint linePaint = Paint()
-      ..color = Color(0xFF3D5DD3)
+      ..color = const Color(0xFF3D5DD3)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
@@ -223,7 +256,7 @@ class GraphPainter extends CustomPainter {
 
     // 데이터 점 (파란색 테두리)
     final Paint dotOutlinePaint = Paint()
-      ..color = Color(0xFF3D5DD3)
+      ..color = const Color(0xFF3D5DD3)
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 
@@ -241,33 +274,30 @@ class GraphPainter extends CustomPainter {
     final double graphWidth = size.width - padding * 2;
     final double graphHeight = size.height - padding * 2;
 
-    double minX = 0;
-    double maxX = data.length - 1;
-    double minY = data.reduce((a, b) => a < b ? a : b).toDouble();
-    double maxY = data.reduce((a, b) => a > b ? a : b).toDouble();
-
+    double minY = volumes.reduce((a, b) => a < b ? a : b).toDouble();
+    double maxY = volumes.reduce((a, b) => a > b ? a : b).toDouble();
     if (minY == maxY) {
       minY -= 1;
       maxY += 1;
     }
-
-    // 상하 10%의 여유 추가
+    // 상하 10% 여유
     final range = maxY - minY;
     final extraMargin = range * 0.1;
     minY -= extraMargin;
     maxY += extraMargin;
 
-    // 데이터 포인트 좌표 계산
+    // 데이터 포인트 좌표 계산 (왼쪽부터 오른쪽으로 배치)
     List<Offset> points = [];
-    for (int i = 0; i < data.length; i++) {
-      final x = padding + (i / maxX) * graphWidth;
-      final y = size.height -
+    for (int i = 0; i < volumes.length; i++) {
+      final double t = volumes.length > 1 ? (i / (volumes.length - 1)) : 0.5;
+      final double x = padding + t * graphWidth;
+      final double y = size.height -
           padding -
-          ((data[i] - minY) / (maxY - minY)) * graphHeight;
+          ((volumes[i] - minY) / (maxY - minY)) * graphHeight;
       points.add(Offset(x, y));
     }
 
-    // (1) 세로 점선
+    // (1) 세로 점선 그리기
     for (final point in points) {
       _drawDashedVerticalLine(
         canvas: canvas,
@@ -289,7 +319,7 @@ class GraphPainter extends CustomPainter {
     );
 
     // (3) 그래프 선 그리기
-    final path = Path();
+    final Path path = Path();
     for (int i = 0; i < points.length; i++) {
       if (i == 0) {
         path.moveTo(points[i].dx, points[i].dy);
@@ -299,7 +329,7 @@ class GraphPainter extends CustomPainter {
     }
     canvas.drawPath(path, linePaint);
 
-    // (4) 데이터 점 (원)
+    // (4) 데이터 점 그리기
     for (final point in points) {
       canvas.drawCircle(point, 5, dotFillPaint);
       canvas.drawCircle(point, 5, dotOutlinePaint);
@@ -308,9 +338,9 @@ class GraphPainter extends CustomPainter {
     // (5) 데이터 값 텍스트
     for (int i = 0; i < points.length; i++) {
       final point = points[i];
-      final value = data[i];
+      final int value = volumes[i];
 
-      final textPainter = TextPainter(
+      final TextPainter textPainter = TextPainter(
         textAlign: TextAlign.center,
         textDirection: TextDirection.ltr,
       );
@@ -329,8 +359,8 @@ class GraphPainter extends CustomPainter {
       );
     }
 
-    // (6) X축 라벨
-    final labelPainter = TextPainter(
+    // (6) X축 라벨 그리기
+    final TextPainter labelPainter = TextPainter(
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     );
@@ -350,7 +380,7 @@ class GraphPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(GraphPainter oldDelegate) {
-    return oldDelegate.data != data || oldDelegate.labels != labels;
+    return oldDelegate.volumes != volumes || oldDelegate.labels != labels;
   }
 
   void _drawDashedVerticalLine({
@@ -364,8 +394,8 @@ class GraphPainter extends CustomPainter {
   }) {
     double currentY = top;
     while (currentY < bottom) {
-      final nextY = currentY + dashLength;
-      final drawEndY = nextY < bottom ? nextY : bottom;
+      final double nextY = currentY + dashLength;
+      final double drawEndY = nextY < bottom ? nextY : bottom;
       canvas.drawLine(
         Offset(xPosition, currentY),
         Offset(xPosition, drawEndY),

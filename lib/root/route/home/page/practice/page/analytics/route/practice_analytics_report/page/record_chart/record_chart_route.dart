@@ -13,7 +13,6 @@ class RadarChartCustomPainter extends CustomPainter {
   /// 내부 그리드(원형)를 몇 단계로 나눌지
   final int tickCount;
 
-  /// 데이터 값의 최대치 (예: 5)
   final double maxValue;
 
   /// 차트 배경(연한 원) 색상
@@ -166,17 +165,16 @@ class CustomRadarChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 예시 데이터: 최대값 5 기준
     final ability = report.ability;
-    final data = [70.0, 60.0, 80.0, 40.0, 100.0, 60.0];
-    // final data = [
-    //   ability["back"]!.score,
-    //   ability["lowerBody"]!.score,
-    //   ability["arm"]!.score,
-    //   ability["core"]!.score,
-    //   ability["shoulder"]!.score,
-    //   ability["chest"]!.score
-    // ];
+    // final data = [70.0, 60.0, 80.0, 40.0, 100.0, 60.0];
+    final data = [
+      ability["back"]!.score,
+      ability["lowerBody"]!.score,
+      ability["arm"]!.score,
+      ability["core"]!.score,
+      ability["shoulder"]!.score,
+      ability["chest"]!.score
+    ];
     final labels = ['등', '하체', '팔', '코어', '어깨', '가슴'];
 
     return Scaffold(
@@ -203,7 +201,7 @@ class CustomRadarChartWidget extends StatelessWidget {
               data: data,
               labels: labels,
               tickCount: 5,
-              maxValue: 100.0, // 최고 점수 변경
+              maxValue: 120.0, // 최고 점수 변경
               chartBackgroundColor: const Color(0xFFF9F9F9),
               gridColor: const Color(0xFFE0E0E0),
               fillColor: const Color(0xFF4A79FA),

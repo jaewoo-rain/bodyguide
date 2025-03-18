@@ -1,16 +1,12 @@
 import 'package:app/app/app.dart';
-import 'package:app/app/asset/assets.gen.dart';
 import 'package:app/app/constant/system.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/models/practice_analytics_report_detail_sheet.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/practice_analytics_report_bloc.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/page/record_chart/record_chart_route.dart';
-import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/page/volume_chart/volume_chart_bloc.dart';
-import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/page/volume_chart/volume_chart_event.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/page/volume_chart/volume_chart_route.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/widgets/exercise_info_widget.dart';
-import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/widgets/performance_chart.dart';
+import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/widgets/performance_bar.dart';
 import 'package:app/root/route/home/page/practice/page/analytics/route/practice_analytics_report/widgets/three_exercise.dart';
-import 'package:app/root/route/home/page/practice/widget/practice_chip.dart';
 import 'package:byson_aspect_ratio/byson_aspect_ratio.dart';
 import 'package:byson_cupertino_button/byson_cupertino_button.dart';
 import 'package:flutter/material.dart';
@@ -277,9 +273,7 @@ class PracticeAnalyticsReportRoute extends StatelessWidget {
             }
             final report = state.report!;
             final bigThree = state.bigThree!;
-            // for(value in report.ability){
-            //
-            // }
+
             Practice? findExerciseById(int exerciseId) {
               for (var entry in practices.entries) {
                 for (var practice in entry.value) {
@@ -291,43 +285,15 @@ class PracticeAnalyticsReportRoute extends StatelessWidget {
               return null;
             }
 
-            // color: Color(0xFFDA5DA8),
-            // type: "고급자",
-            // count: '85회',
-            // ),
-            // const BysonSeparator(
-            // designWidth: designWidth,
-            // designHeight: 8),
-            // const ExerciseInfoWidget(
-            // exercise: "스쿼트",
-            // color: Color(0xFFE3CD09),
-            // type: "중급자",
-            // count: '85kg',
-            // ),
-            // const BysonSeparator(
-            // designWidth: designWidth,
-            // designHeight: 8),
-            // const ExerciseInfoWidget(
-            // exercise: "바벨 컬",
-            // color: Color(0xFF93C131),
-            // type: "숙련자",
-
             Color findColor(String level) {
               if (level == "고급자") {
                 return const Color(0xFFDA5DA8);
               } else if (level == "중급자") {
                 return const Color(0xFFE3CD09);
-              } else if (level == "EXPERT") {
+              } else if (level == "숙련자") {
                 return const Color(0xFF93C131);
               }
               return const Color(0xFF000000);
-            }
-
-            String changeLevel(String level) {
-              if (level == "EXPERT") {
-                return "숙련자";
-              }
-              return "초보";
             }
 
             Map<String, dynamic> abilityReport(String vv) {
@@ -336,13 +302,13 @@ class PracticeAnalyticsReportRoute extends StatelessWidget {
                     findExerciseById(report.ability[vv]!.exerId)?.name ?? vv,
                 "ability": report.ability[vv] != null
                     ? (report.ability[vv]?.thresholdType == "WEIGHT_TRAINING"
-                        ? "${report.ability[vv]?.strength ?? '없음'}"
+                        ? "${report.ability[vv]?.strength.toInt() ?? '없음'}kg"
                         // : "${report.ability[vv]?.rep ?? '없음'}")
                         : "횟수")
                     : '없음',
                 "level": (report.ability[vv]?.level ?? "").isEmpty
                     ? "[미정]"
-                    : "[${changeLevel(report.ability[vv]!.level)}]",
+                    : "[${report.ability[vv]!.level}]",
                 "color": findColor(report.ability[vv]!.level)
               };
             }
@@ -893,21 +859,17 @@ class PracticeAnalyticsReportRoute extends StatelessWidget {
                                   children: [
                                     BysonAspectRatio(
                                       designWidth: designWidth,
-                                      designHeight: converter.h(660),
-                                      builder: (converter) => BlocProvider(
-                                        // ExerciseStatsBloc을 생성하고 필요한 이벤트를 추가
-                                        create: (context) => VolumeChartBloc()
-                                          ..add(const VolumeChartEvent.load()),
-                                        child: const Stack(children: [
-                                          PositionedDirectional(
-                                            // top: 0,
-                                            // height: 660,
-                                            // width: designWidth,
-                                            child: VolumeChartView(),
-                                          ),
-                                        ]),
-                                      ),
-                                    ),
+                                      designHeight: converter.h(560),
+                                      builder: (converter) =>
+                                          const Stack(children: [
+                                        PositionedDirectional(
+                                          // top: 0,
+                                          // height: 660,
+                                          // width: designWidth,
+                                          child: VolumeChartView(),
+                                        ),
+                                      ]),
+                                    )
                                   ],
                                 )),
                         const BysonSeparator(
@@ -1340,369 +1302,481 @@ class PracticeAnalyticsReportRoute extends StatelessWidget {
                                     BysonAspectRatio(
                                         designWidth: 295,
                                         designHeight: 259,
-                                        builder: (converter) =>
-                                            Stack(children: [
-                                              DecoratedBox(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFF9F9F9),
-                                                    border: Border.all(
-                                                      color: const Color(
-                                                        0xFFE5E5EC,
-                                                      ),
-                                                      width: App
-                                                          .instance.overlay
-                                                          .relativeScreenHeight(
-                                                        1,
-                                                      ),
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                      App.instance.overlay
-                                                          .relativeScreenHeight(
-                                                        12,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                      top: App.instance.overlay
-                                                          .relativeScreenHeight(
-                                                        0,
-                                                      ),
-                                                      bottom: App
-                                                          .instance.overlay
-                                                          .relativeScreenHeight(
-                                                        0,
-                                                      ),
-                                                      left: App.instance.overlay
-                                                          .relativeScreenWidth(
-                                                        16,
-                                                      ),
-                                                      right: App
-                                                          .instance.overlay
-                                                          .relativeScreenWidth(
-                                                        16,
-                                                      ),
-                                                    ),
-                                                    child: Column(
-                                                      children: [
-                                                        BysonAspectRatio(
-                                                            designWidth: 295,
-                                                            designHeight: 34,
-                                                            builder:
-                                                                (converter) =>
-                                                                    Stack(
-                                                                      children: [
-                                                                        PositionedDirectional(
-                                                                            top:
-                                                                                converter.h(19),
-                                                                            // start: converter.w(16),
-                                                                            child: Row(
-                                                                              children: [
-                                                                                Container(
-                                                                                  width: converter.w(12),
-                                                                                  height: converter.w(12),
-                                                                                  color: Color(0xFFDE6E6A),
-                                                                                ),
-                                                                                VerticalDivider(
-                                                                                    color: Colors.transparent,
-                                                                                    width: converter.w(
-                                                                                      4,
-                                                                                    )),
-                                                                                Text(
-                                                                                  'User',
-                                                                                  textAlign: TextAlign.start,
-                                                                                  style: TextStyle(
-                                                                                    // height: 18,
-                                                                                    fontSize: App.instance.overlay.relativeScreenHeight(
-                                                                                      12,
-                                                                                    ),
-                                                                                    color: const Color(
-                                                                                      0xFF111111,
-                                                                                    ),
-                                                                                    fontWeight: FontWeightAlias.regular,
-                                                                                    letterSpacing: 0,
-                                                                                  ),
-                                                                                ),
-                                                                                VerticalDivider(
-                                                                                    color: Colors.transparent,
-                                                                                    width: converter.w(
-                                                                                      8,
-                                                                                    )),
-                                                                                Container(
-                                                                                  width: converter.w(12),
-                                                                                  height: converter.w(12),
-                                                                                  color: Color(0xFF9EA3B2),
-                                                                                ),
-                                                                                VerticalDivider(
-                                                                                    color: Colors.transparent,
-                                                                                    width: converter.w(
-                                                                                      4,
-                                                                                    )),
-                                                                                Text(
-                                                                                  'Average',
-                                                                                  textAlign: TextAlign.start,
-                                                                                  style: TextStyle(
-                                                                                    // height: 18,
-                                                                                    fontSize: App.instance.overlay.relativeScreenHeight(
-                                                                                      12,
-                                                                                    ),
-                                                                                    color: const Color(
-                                                                                      0xFF111111,
-                                                                                    ),
-                                                                                    fontWeight: FontWeightAlias.regular,
-                                                                                    letterSpacing: 0,
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            )),
-                                                                        // PositionedDirectional(top: converter.h(50), start: converter.w(16), height: converter.h(168), width: converter.w(263), child: Text('data'))
-                                                                      ],
-                                                                    )),
-                                                        BysonSeparator(
-                                                            designWidth:
-                                                                designWidth,
-                                                            designHeight: 16),
-                                                        // BysonAspectRatio(
-                                                        //     designWidth:
-                                                        //         295,
-                                                        //     designHeight:
-                                                        //         36,
-                                                        //     builder:
-                                                        //         (converter) =>
-                                                        //             Stack(
-                                                        //               children: [
-                                                        //                 Container(
-                                                        //                     // color: Colors.red,
-                                                        //                     ),
-                                                        //                 PositionedDirectional(
-                                                        //                   top: converter.h(9),
-                                                        //                   child: Text(
-                                                        //                     '벤치프레스',
-                                                        //                     textAlign: TextAlign.start,
-                                                        //                     style: TextStyle(
-                                                        //                       // height: 18,
-                                                        //                       fontSize: App.instance.overlay.relativeScreenHeight(
-                                                        //                         12,
-                                                        //                       ),
-                                                        //                       color: const Color(
-                                                        //                         0xFF111111,
-                                                        //                       ),
-                                                        //                       fontWeight: FontWeightAlias.regular,
-                                                        //                       letterSpacing: 0,
-                                                        //                     ),
-                                                        //                   ),
-                                                        //                 ),
-                                                        //                 PositionedDirectional(
-                                                        //                   top: converter.h(4),
-                                                        //                   start: converter.w(88),
-                                                        //                   width: ((295 - converter.w(88 + 32)) / 100) * 100,
-                                                        //                   height: converter.h(
-                                                        //                     10,
-                                                        //                   ),
-                                                        //                   child: Container(
-                                                        //                     decoration: BoxDecoration(
-                                                        //                       borderRadius: BorderRadius.all(
-                                                        //                         converter.radius(
-                                                        //                           4,
-                                                        //                         ),
-                                                        //                       ),
-                                                        //                       color: const Color(
-                                                        //                         0xFF9EA3B2,
-                                                        //                       ),
-                                                        //                     ),
-                                                        //                   ),
-                                                        //                 ),
-                                                        //                 Align(
-                                                        //                   alignment: Alignment.center,
-                                                        //                   child: DashedDivider(
-                                                        //                     indent: converter.w(88),
-                                                        //                     endIndent: converter.w(3),
-                                                        //                     color: const Color(0xFFE5E5EC),
-                                                        //                     thickness: converter.h(2),
-                                                        //                     dashWidth: converter.w(4),
-                                                        //                     dashGap: converter.w(2),
-                                                        //                   ),
-                                                        //                 ),
-                                                        //                 PositionedDirectional(
-                                                        //                   top: converter.h(22),
-                                                        //                   start: converter.w(88),
-                                                        //                   width: ((295 - converter.w(88 + 32)) / 100) * 90,
-                                                        //                   height: converter.h(
-                                                        //                     10,
-                                                        //                   ),
-                                                        //                   child: Container(
-                                                        //                     decoration: BoxDecoration(
-                                                        //                       borderRadius: BorderRadius.all(
-                                                        //                         converter.radius(
-                                                        //                           4,
-                                                        //                         ),
-                                                        //                       ),
-                                                        //                       color: const Color(
-                                                        //                         0xFFDE6E6A,
-                                                        //                       ),
-                                                        //                     ),
-                                                        //                   ),
-                                                        //                 ),
-                                                        //               ],
-                                                        //             )),
-                                                        const PerformanceChart(
-                                                          exerciseName: '벤치프레스',
-                                                          graphPercentage:
-                                                              75, // 예: 75% 길이
-                                                          standard: 90,
+                                        builder:
+                                            (converter) => Stack(children: [
+                                                  DecoratedBox(
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0xFFF9F9F9),
+                                                        border: Border.all(
+                                                          color: const Color(
+                                                            0xFFE5E5EC,
+                                                          ),
+                                                          width: App
+                                                              .instance.overlay
+                                                              .relativeScreenHeight(
+                                                            1,
+                                                          ),
                                                         ),
-                                                        const BysonSeparator(
-                                                            designWidth:
-                                                                designWidth,
-                                                            designHeight: 8),
-                                                        const PerformanceChart(
-                                                          exerciseName: '스쿼트',
-                                                          graphPercentage:
-                                                              75, // 예: 75% 길이
-                                                          standard: 90,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          App.instance.overlay
+                                                              .relativeScreenHeight(
+                                                            12,
+                                                          ),
                                                         ),
-                                                        const BysonSeparator(
-                                                            designWidth:
-                                                                designWidth,
-                                                            designHeight: 8),
-                                                        const PerformanceChart(
-                                                          exerciseName: '데드리프트',
-                                                          graphPercentage:
-                                                              75, // 예: 75% 길이
-                                                          standard: 90,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          top: App
+                                                              .instance.overlay
+                                                              .relativeScreenHeight(
+                                                            0,
+                                                          ),
+                                                          bottom: App
+                                                              .instance.overlay
+                                                              .relativeScreenHeight(
+                                                            0,
+                                                          ),
+                                                          left: App
+                                                              .instance.overlay
+                                                              .relativeScreenWidth(
+                                                            16,
+                                                          ),
+                                                          right: App
+                                                              .instance.overlay
+                                                              .relativeScreenWidth(
+                                                            16,
+                                                          ),
                                                         ),
-                                                        const BysonSeparator(
-                                                            designWidth:
-                                                                designWidth,
-                                                            designHeight: 8),
-                                                        const PerformanceChart(
-                                                          exerciseName:
-                                                              '오버헤드프레스',
-                                                          graphPercentage:
-                                                              75, // 예: 75% 길이
-                                                          standard: 90,
-                                                        ),
-                                                        BysonAspectRatio(
-                                                            designWidth: 295,
-                                                            designHeight: 30,
-                                                            builder:
-                                                                (converter) =>
-                                                                    Stack(
-                                                                      children: [
-                                                                        PositionedDirectional(
-                                                                            start:
-                                                                                converter.w(88),
-                                                                            top: converter.h(8),
-                                                                            child: Row(
-                                                                              children: [
-                                                                                SizedBox(
-                                                                                  width: 19,
-                                                                                  height: 17,
-                                                                                  child: Text(
-                                                                                    '0kg',
-                                                                                    textAlign: TextAlign.start,
-                                                                                    style: TextStyle(
-                                                                                      // height: converter.h(17),
-                                                                                      fontSize: App.instance.overlay.relativeScreenHeight(
-                                                                                        11,
+                                                        child: BlocBuilder<
+                                                                PracticeAnalyticsReportBloc,
+                                                                PracticeAnalyticsReportState>(
+                                                            builder: (context,
+                                                                state) {
+                                                          return Column(
+                                                            children: [
+                                                              BysonAspectRatio(
+                                                                  designWidth:
+                                                                      295,
+                                                                  designHeight:
+                                                                      34,
+                                                                  builder:
+                                                                      (converter) =>
+                                                                          Stack(
+                                                                            children: [
+                                                                              PositionedDirectional(
+                                                                                  top: converter.h(19),
+                                                                                  // start: converter.w(16),
+                                                                                  child: Row(
+                                                                                    children: [
+                                                                                      Container(
+                                                                                        width: converter.w(12),
+                                                                                        height: converter.w(12),
+                                                                                        color: Color(0xFFDE6E6A),
                                                                                       ),
-                                                                                      color: const Color(
-                                                                                        0xFF111111,
+                                                                                      VerticalDivider(
+                                                                                          color: Colors.transparent,
+                                                                                          width: converter.w(
+                                                                                            4,
+                                                                                          )),
+                                                                                      Text(
+                                                                                        'User',
+                                                                                        textAlign: TextAlign.start,
+                                                                                        style: TextStyle(
+                                                                                          // height: 18,
+                                                                                          fontSize: App.instance.overlay.relativeScreenHeight(
+                                                                                            12,
+                                                                                          ),
+                                                                                          color: const Color(
+                                                                                            0xFF111111,
+                                                                                          ),
+                                                                                          fontWeight: FontWeightAlias.regular,
+                                                                                          letterSpacing: 0,
+                                                                                        ),
                                                                                       ),
-                                                                                      fontWeight: FontWeightAlias.regular,
-                                                                                      letterSpacing: 0,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                VerticalDivider(color: Colors.transparent, width: 7.75),
-                                                                                SizedBox(
-                                                                                  width: 27,
-                                                                                  height: 17,
-                                                                                  child: Text(
-                                                                                    '50kg',
-                                                                                    textAlign: TextAlign.start,
-                                                                                    style: TextStyle(
-                                                                                      // height: 18,
-                                                                                      fontSize: App.instance.overlay.relativeScreenHeight(
-                                                                                        11,
+                                                                                      VerticalDivider(
+                                                                                          color: Colors.transparent,
+                                                                                          width: converter.w(
+                                                                                            8,
+                                                                                          )),
+                                                                                      Container(
+                                                                                        width: converter.w(12),
+                                                                                        height: converter.w(12),
+                                                                                        color: Color(0xFF9EA3B2),
                                                                                       ),
-                                                                                      color: const Color(
-                                                                                        0xFF111111,
+                                                                                      VerticalDivider(
+                                                                                          color: Colors.transparent,
+                                                                                          width: converter.w(
+                                                                                            4,
+                                                                                          )),
+                                                                                      Text(
+                                                                                        'Average',
+                                                                                        textAlign: TextAlign.start,
+                                                                                        style: TextStyle(
+                                                                                          // height: 18,
+                                                                                          fontSize: App.instance.overlay.relativeScreenHeight(
+                                                                                            12,
+                                                                                          ),
+                                                                                          color: const Color(
+                                                                                            0xFF111111,
+                                                                                          ),
+                                                                                          fontWeight: FontWeightAlias.regular,
+                                                                                          letterSpacing: 0,
+                                                                                        ),
                                                                                       ),
-                                                                                      fontWeight: FontWeightAlias.regular,
-                                                                                      letterSpacing: 0,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                VerticalDivider(color: Colors.transparent, width: 7.75),
-                                                                                SizedBox(
-                                                                                  width: 32,
-                                                                                  height: 17,
-                                                                                  child: Text(
-                                                                                    '100kg',
-                                                                                    textAlign: TextAlign.start,
-                                                                                    style: TextStyle(
-                                                                                      // height: 18,
-                                                                                      fontSize: App.instance.overlay.relativeScreenHeight(
-                                                                                        11,
+                                                                                    ],
+                                                                                  )),
+                                                                              // PositionedDirectional(top: converter.h(50), start: converter.w(16), height: converter.h(168), width: converter.w(263), child: Text('data'))
+                                                                            ],
+                                                                          )),
+                                                              BysonSeparator(
+                                                                  designWidth:
+                                                                      designWidth,
+                                                                  designHeight:
+                                                                      16),
+                                                              // BysonAspectRatio(
+                                                              //     designWidth:
+                                                              //         295,
+                                                              //     designHeight:
+                                                              //         36,
+                                                              //     builder:
+                                                              //         (converter) =>
+                                                              //             Stack(
+                                                              //               children: [
+                                                              //                 Container(
+                                                              //                     // color: Colors.red,
+                                                              //                     ),
+                                                              //                 PositionedDirectional(
+                                                              //                   top: converter.h(9),
+                                                              //                   child: Text(
+                                                              //                     '벤치프레스',
+                                                              //                     textAlign: TextAlign.start,
+                                                              //                     style: TextStyle(
+                                                              //                       // height: 18,
+                                                              //                       fontSize: App.instance.overlay.relativeScreenHeight(
+                                                              //                         12,
+                                                              //                       ),
+                                                              //                       color: const Color(
+                                                              //                         0xFF111111,
+                                                              //                       ),
+                                                              //                       fontWeight: FontWeightAlias.regular,
+                                                              //                       letterSpacing: 0,
+                                                              //                     ),
+                                                              //                   ),
+                                                              //                 ),
+                                                              //                 PositionedDirectional(
+                                                              //                   top: converter.h(4),
+                                                              //                   start: converter.w(88),
+                                                              //                   width: ((295 - converter.w(88 + 32)) / 100) * 100,
+                                                              //                   height: converter.h(
+                                                              //                     10,
+                                                              //                   ),
+                                                              //                   child: Container(
+                                                              //                     decoration: BoxDecoration(
+                                                              //                       borderRadius: BorderRadius.all(
+                                                              //                         converter.radius(
+                                                              //                           4,
+                                                              //                         ),
+                                                              //                       ),
+                                                              //                       color: const Color(
+                                                              //                         0xFF9EA3B2,
+                                                              //                       ),
+                                                              //                     ),
+                                                              //                   ),
+                                                              //                 ),
+                                                              //                 Align(
+                                                              //                   alignment: Alignment.center,
+                                                              //                   child: DashedDivider(
+                                                              //                     indent: converter.w(88),
+                                                              //                     endIndent: converter.w(3),
+                                                              //                     color: const Color(0xFFE5E5EC),
+                                                              //                     thickness: converter.h(2),
+                                                              //                     dashWidth: converter.w(4),
+                                                              //                     dashGap: converter.w(2),
+                                                              //                   ),
+                                                              //                 ),
+                                                              //                 PositionedDirectional(
+                                                              //                   top: converter.h(22),
+                                                              //                   start: converter.w(88),
+                                                              //                   width: ((295 - converter.w(88 + 32)) / 100) * 90,
+                                                              //                   height: converter.h(
+                                                              //                     10,
+                                                              //                   ),
+                                                              //                   child: Container(
+                                                              //                     decoration: BoxDecoration(
+                                                              //                       borderRadius: BorderRadius.all(
+                                                              //                         converter.radius(
+                                                              //                           4,
+                                                              //                         ),
+                                                              //                       ),
+                                                              //                       color: const Color(
+                                                              //                         0xFFDE6E6A,
+                                                              //                       ),
+                                                              //                     ),
+                                                              //                   ),
+                                                              //                 ),
+                                                              //               ],
+                                                              //             )),
+                                                              PerformanceBar(
+                                                                exerciseName: findExerciseById(report
+                                                                            .ability['core']!
+                                                                            .exerId)
+                                                                        ?.name ??
+                                                                    "코어 운동",
+                                                                graphPercentage: (report
+                                                                            .ability[
+                                                                                'core']!
+                                                                            .strength) ==
+                                                                        0
+                                                                    ? 100
+                                                                    : (report
+                                                                            .ability['core']!
+                                                                            .strength) /
+                                                                        250 *
+                                                                        100, // 퍼센트
+                                                                standard: (report
+                                                                            .ability[
+                                                                                'core']!
+                                                                            .average) ==
+                                                                        0
+                                                                    ? 100
+                                                                    : (state
+                                                                            .report!
+                                                                            .ability['core']!
+                                                                            .average) /
+                                                                        250 *
+                                                                        100,
+                                                              ),
+                                                              const BysonSeparator(
+                                                                  designWidth:
+                                                                      designWidth,
+                                                                  designHeight:
+                                                                      8),
+                                                              PerformanceBar(
+                                                                exerciseName: findExerciseById(report
+                                                                            .ability['back']!
+                                                                            .exerId)
+                                                                        ?.name ??
+                                                                    "등 운동",
+                                                                graphPercentage: (report
+                                                                            .ability[
+                                                                                'back']!
+                                                                            .strength) ==
+                                                                        0
+                                                                    ? 100
+                                                                    : (report
+                                                                            .ability['back']!
+                                                                            .strength) /
+                                                                        250 *
+                                                                        100, // 퍼센트
+                                                                standard: (report
+                                                                            .ability[
+                                                                                'back']!
+                                                                            .average) ==
+                                                                        0
+                                                                    ? 100
+                                                                    : (state
+                                                                            .report!
+                                                                            .ability['back']!
+                                                                            .average) /
+                                                                        250 *
+                                                                        100,
+                                                              ),
+                                                              const BysonSeparator(
+                                                                  designWidth:
+                                                                      designWidth,
+                                                                  designHeight:
+                                                                      8),
+                                                              PerformanceBar(
+                                                                exerciseName: findExerciseById(report
+                                                                            .ability['chest']!
+                                                                            .exerId)
+                                                                        ?.name ??
+                                                                    "가슴 운동",
+                                                                graphPercentage: (report
+                                                                            .ability[
+                                                                                'chest']!
+                                                                            .strength) ==
+                                                                        0
+                                                                    ? 100
+                                                                    : (report
+                                                                            .ability['chest']!
+                                                                            .strength) /
+                                                                        250 *
+                                                                        100, // 퍼센트
+                                                                standard: (report
+                                                                            .ability[
+                                                                                'chest']!
+                                                                            .average) ==
+                                                                        0
+                                                                    ? 100
+                                                                    : (state
+                                                                            .report!
+                                                                            .ability['chest']!
+                                                                            .average) /
+                                                                        250 *
+                                                                        100,
+                                                              ),
+                                                              const BysonSeparator(
+                                                                  designWidth:
+                                                                      designWidth,
+                                                                  designHeight:
+                                                                      8),
+                                                              PerformanceBar(
+                                                                exerciseName: findExerciseById(report
+                                                                            .ability['shoulder']!
+                                                                            .exerId)
+                                                                        ?.name ??
+                                                                    "어깨 운동",
+                                                                graphPercentage: (report
+                                                                            .ability[
+                                                                                'shoulder']!
+                                                                            .strength) ==
+                                                                        0
+                                                                    ? 100
+                                                                    : (report
+                                                                            .ability['shoulder']!
+                                                                            .strength) /
+                                                                        250 *
+                                                                        100, // 퍼센트
+                                                                standard: (report
+                                                                            .ability[
+                                                                                'shoulder']!
+                                                                            .average) ==
+                                                                        0
+                                                                    ? 100
+                                                                    : (state
+                                                                            .report!
+                                                                            .ability['shoulder']!
+                                                                            .average) /
+                                                                        250 *
+                                                                        100,
+                                                              ),
+                                                              BysonAspectRatio(
+                                                                  designWidth:
+                                                                      295,
+                                                                  designHeight:
+                                                                      30,
+                                                                  builder:
+                                                                      (converter) =>
+                                                                          Stack(
+                                                                            children: [
+                                                                              PositionedDirectional(
+                                                                                  start: converter.w(88),
+                                                                                  top: converter.h(8),
+                                                                                  child: Row(
+                                                                                    children: [
+                                                                                      SizedBox(
+                                                                                        width: 19,
+                                                                                        height: 17,
+                                                                                        child: Text(
+                                                                                          '0kg',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: TextStyle(
+                                                                                            // height: converter.h(17),
+                                                                                            fontSize: App.instance.overlay.relativeScreenHeight(
+                                                                                              11,
+                                                                                            ),
+                                                                                            color: const Color(
+                                                                                              0xFF111111,
+                                                                                            ),
+                                                                                            fontWeight: FontWeightAlias.regular,
+                                                                                            letterSpacing: 0,
+                                                                                          ),
+                                                                                        ),
                                                                                       ),
-                                                                                      color: const Color(
-                                                                                        0xFF111111,
+                                                                                      VerticalDivider(color: Colors.transparent, width: 7.75),
+                                                                                      SizedBox(
+                                                                                        width: 27,
+                                                                                        height: 17,
+                                                                                        child: Text(
+                                                                                          '50kg',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: TextStyle(
+                                                                                            // height: 18,
+                                                                                            fontSize: App.instance.overlay.relativeScreenHeight(
+                                                                                              11,
+                                                                                            ),
+                                                                                            color: const Color(
+                                                                                              0xFF111111,
+                                                                                            ),
+                                                                                            fontWeight: FontWeightAlias.regular,
+                                                                                            letterSpacing: 0,
+                                                                                          ),
+                                                                                        ),
                                                                                       ),
-                                                                                      fontWeight: FontWeightAlias.regular,
-                                                                                      letterSpacing: 0,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                VerticalDivider(color: Colors.transparent, width: 7.75),
-                                                                                SizedBox(
-                                                                                  width: 32,
-                                                                                  height: 17,
-                                                                                  child: Text(
-                                                                                    '150kg',
-                                                                                    textAlign: TextAlign.start,
-                                                                                    style: TextStyle(
-                                                                                      // height: 18,
-                                                                                      fontSize: App.instance.overlay.relativeScreenHeight(
-                                                                                        11,
+                                                                                      VerticalDivider(color: Colors.transparent, width: 7.75),
+                                                                                      SizedBox(
+                                                                                        width: 32,
+                                                                                        height: 17,
+                                                                                        child: Text(
+                                                                                          '100kg',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: TextStyle(
+                                                                                            // height: 18,
+                                                                                            fontSize: App.instance.overlay.relativeScreenHeight(
+                                                                                              11,
+                                                                                            ),
+                                                                                            color: const Color(
+                                                                                              0xFF111111,
+                                                                                            ),
+                                                                                            fontWeight: FontWeightAlias.regular,
+                                                                                            letterSpacing: 0,
+                                                                                          ),
+                                                                                        ),
                                                                                       ),
-                                                                                      color: const Color(
-                                                                                        0xFF111111,
+                                                                                      VerticalDivider(color: Colors.transparent, width: 7.75),
+                                                                                      SizedBox(
+                                                                                        width: 32,
+                                                                                        height: 17,
+                                                                                        child: Text(
+                                                                                          '150kg',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: TextStyle(
+                                                                                            // height: 18,
+                                                                                            fontSize: App.instance.overlay.relativeScreenHeight(
+                                                                                              11,
+                                                                                            ),
+                                                                                            color: const Color(
+                                                                                              0xFF111111,
+                                                                                            ),
+                                                                                            fontWeight: FontWeightAlias.regular,
+                                                                                            letterSpacing: 0,
+                                                                                          ),
+                                                                                        ),
                                                                                       ),
-                                                                                      fontWeight: FontWeightAlias.regular,
-                                                                                      letterSpacing: 0,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                VerticalDivider(color: Colors.transparent, width: 7.75),
-                                                                                SizedBox(
-                                                                                  width: 34,
-                                                                                  height: 17,
-                                                                                  child: Text(
-                                                                                    '200kg',
-                                                                                    textAlign: TextAlign.start,
-                                                                                    style: TextStyle(
-                                                                                      // height: 18,
-                                                                                      fontSize: App.instance.overlay.relativeScreenHeight(
-                                                                                        11,
+                                                                                      VerticalDivider(color: Colors.transparent, width: 7.75),
+                                                                                      SizedBox(
+                                                                                        width: 34,
+                                                                                        height: 17,
+                                                                                        child: Text(
+                                                                                          '200kg',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: TextStyle(
+                                                                                            // height: 18,
+                                                                                            fontSize: App.instance.overlay.relativeScreenHeight(
+                                                                                              11,
+                                                                                            ),
+                                                                                            color: const Color(
+                                                                                              0xFF111111,
+                                                                                            ),
+                                                                                            fontWeight: FontWeightAlias.regular,
+                                                                                            letterSpacing: 0,
+                                                                                          ),
+                                                                                        ),
                                                                                       ),
-                                                                                      color: const Color(
-                                                                                        0xFF111111,
-                                                                                      ),
-                                                                                      fontWeight: FontWeightAlias.regular,
-                                                                                      letterSpacing: 0,
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            ))
-                                                                      ],
-                                                                    ))
-                                                      ],
-                                                    ),
-                                                  )),
-                                            ]))
+                                                                                    ],
+                                                                                  ))
+                                                                            ],
+                                                                          ))
+                                                            ],
+                                                          );
+                                                        }),
+                                                      )),
+                                                ]))
                                   ],
                                 )),
                       ],

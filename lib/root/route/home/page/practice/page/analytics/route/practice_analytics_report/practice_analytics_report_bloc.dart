@@ -27,10 +27,10 @@ class PracticeAnalyticsReportBloc
         super(
           const PracticeAnalyticsReportState(),
         ) {
-    loadData();
     on<PracticeAnalyticsReportEvent>((event, emit) async {
       await event.map(
         initialize: (event) async {
+          loadData();
           await Future.delayed(
             const Duration(
               seconds: 1,
@@ -92,6 +92,9 @@ class PracticeAnalyticsReportBloc
         // bloc의 state 업데이트
         emit(state.copyWith(report: report));
         emit(state.copyWith(bigThree: bigThree));
+        emit(state.copyWith(dailyVolume: dailyVolumes));
+        emit(state.copyWith(monthlyVolume: monthVolumes));
+        emit(state.copyWith(weekVolume: weekVolume));
       }
     } catch (e, stackTrace) {
       print('Error: $e');

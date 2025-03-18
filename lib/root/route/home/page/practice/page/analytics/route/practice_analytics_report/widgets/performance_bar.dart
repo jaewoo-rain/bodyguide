@@ -5,7 +5,7 @@ import 'package:byson_aspect_ratio/byson_aspect_ratio.dart';
 import 'package:flutter/material.dart';
 
 /// 수행능력 비교 그래프 위젯 (예: 벤치프레스 그래프)
-class PerformanceChart extends StatelessWidget {
+class PerformanceBar extends StatelessWidget {
   /// 운동명 (예: '벤치프레스')
   final String exerciseName;
 
@@ -13,7 +13,7 @@ class PerformanceChart extends StatelessWidget {
   final double graphPercentage;
   final double standard;
 
-  const PerformanceChart({
+  const PerformanceBar({
     Key? key,
     required this.exerciseName,
     required this.graphPercentage,

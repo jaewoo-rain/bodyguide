@@ -242,7 +242,7 @@ class ApiRequestManager {
           queryParameters: params,
         );
 
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200 || response.statusCode == 204) {
           print('응답 데이터: ${response.data}');
           print("delete $path 성공");
 

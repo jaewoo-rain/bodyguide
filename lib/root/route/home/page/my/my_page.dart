@@ -271,25 +271,6 @@ class MyPage extends StatelessWidget {
                                     'myBloc': context.read<MyBloc>(),
                                   },
                                 );
-
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => BlocProvider(
-                                //       create: (_) => MyEditBloc(
-                                //         initialNickName: state
-                                //                 .userProfile['nickname']
-                                //                 ?.toString() ??
-                                //             '',
-                                //         initialIntroText: state
-                                //                 .userProfile['introText']
-                                //                 ?.toString() ??
-                                //             '',
-                                //       ),
-                                //       child: MyEditRoute(), // 실제 편집 페이지 위젯
-                                //     ),
-                                //   ),
-                                // );
                               },
                               borderRadius: BorderRadius.all(
                                 converter.radius(

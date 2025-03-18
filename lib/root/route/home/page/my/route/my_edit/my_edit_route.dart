@@ -140,32 +140,45 @@ class MyEditRoute extends StatelessWidget {
                     builder: (converter) => Stack(
                       children: [
                         PositionedDirectional(
-                          top: converter.h(
-                            24,
-                          ),
-                          start: converter.hcx(
-                            120,
-                          ),
-                          width: converter.w(
-                            120,
-                          ),
-                          height: converter.h(
-                            120,
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  'https://i.namu.wiki/i/TYxKQDnuwFOcxdSaPR-L81SPQGf5aPEz13tINJ-Z508LKNtGmRmkZTKKEN82SrIZAYoLL8WSbXGzv2PiLgpRSg.webp',
-                                  // state.userProfile['profileImg']
-                                  //     .toString(),
-                                ),
-                                fit: BoxFit.cover,
-                              ),
+                            top: converter.h(
+                              24,
                             ),
-                          ),
-                        ),
+                            start: converter.hcx(
+                              120,
+                            ),
+                            width: converter.w(
+                              120,
+                            ),
+                            height: converter.h(
+                              120,
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color:
+                                    (myBloc.state.userProfile['profileImg'] !=
+                                                null &&
+                                            myBloc
+                                                .state
+                                                .userProfile['profileImg']
+                                                .isNotEmpty)
+                                        ? null
+                                        : Colors.grey,
+                                shape: BoxShape.circle,
+                                image:
+                                    (myBloc.state.userProfile['profileImg'] !=
+                                                null &&
+                                            myBloc
+                                                .state
+                                                .userProfile['profileImg']
+                                                .isNotEmpty)
+                                        ? DecorationImage(
+                                            image: NetworkImage(myBloc.state
+                                                .userProfile['profileImg']),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : null,
+                              ),
+                            )),
                         PositionedDirectional(
                           top: converter.h(
                             112,
