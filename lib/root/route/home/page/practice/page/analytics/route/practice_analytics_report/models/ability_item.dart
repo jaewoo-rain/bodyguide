@@ -10,7 +10,7 @@ class AbilityItem with _$AbilityItem {
     @Default("") String muscleGroupType,
     @Default("") String thresholdType,
     @Default(0) double score,
-    @Default("") String level,
+    @Default("기본") String level,
     @Default(0) double strength,
     @Default(0) double average,
   }) = _AbilityItem;

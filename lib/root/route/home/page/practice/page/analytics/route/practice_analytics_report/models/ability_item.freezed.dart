@@ -190,7 +190,7 @@ class _$AbilityItemImpl implements _AbilityItem {
       this.muscleGroupType = "",
       this.thresholdType = "",
       this.score = 0,
-      this.level = "",
+      this.level = "기본",
       this.strength = 0,
       this.average = 0});
 

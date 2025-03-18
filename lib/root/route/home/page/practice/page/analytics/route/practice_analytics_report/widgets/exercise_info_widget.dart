@@ -40,6 +40,7 @@ class ExerciseInfoWidget extends StatelessWidget {
                 start: 0,
                 height: converter.h(24),
                 child: Text(
+                  // 운동이름
                   exercise,
                   textAlign: TextAlign.start,
                   style: TextStyle(
@@ -57,7 +58,7 @@ class ExerciseInfoWidget extends StatelessWidget {
                 width: converter.w(54),
                 height: converter.h(24),
                 child: Text(
-                  '[$type]',
+                  '$type',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     height: 1.5,

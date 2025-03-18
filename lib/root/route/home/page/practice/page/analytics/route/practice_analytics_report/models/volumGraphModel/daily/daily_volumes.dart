@@ -7,8 +7,7 @@ part 'daily_volumes.g.dart';
 class DailyVolumes with _$DailyVolumes {
   const factory DailyVolumes({
     required int id,
-    required int year,
-    required int day,
+    required DateTime date,
     required double volume,
   }) = _DailyVolumes;
 

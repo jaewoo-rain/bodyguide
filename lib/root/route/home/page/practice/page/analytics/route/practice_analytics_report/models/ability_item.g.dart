@@ -12,7 +12,7 @@ _$AbilityItemImpl _$$AbilityItemImplFromJson(Map<String, dynamic> json) =>
       muscleGroupType: json['muscleGroupType'] as String? ?? "",
       thresholdType: json['thresholdType'] as String? ?? "",
       score: (json['score'] as num?)?.toDouble() ?? 0,
-      level: json['level'] as String? ?? "",
+      level: json['level'] as String? ?? "기본",
       strength: (json['strength'] as num?)?.toDouble() ?? 0,
       average: (json['average'] as num?)?.toDouble() ?? 0,
     );

@@ -13,7 +13,7 @@ _$ExerciseAnalysisReportImpl _$$ExerciseAnalysisReportImplFromJson(
       totalLevel: json['totalLevel'] as String,
       topPercent: (json['topPercent'] as num).toDouble(),
       ability: const AbilityItemMapConverter()
-          .fromJson(json['ability'] as Map<String, dynamic>),
+          .fromJson(json['ability'] as Map<String, dynamic>?),
       weekMuscle: (json['weekMuscle'] as List<dynamic>)
           .map((e) => WeekMuscle.fromJson(e as Map<String, dynamic>))
           .toList(),

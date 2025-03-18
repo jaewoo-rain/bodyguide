@@ -21,8 +21,7 @@ DailyVolumes _$DailyVolumesFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$DailyVolumes {
   int get id => throw _privateConstructorUsedError;
-  int get year => throw _privateConstructorUsedError;
-  int get day => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
   double get volume => throw _privateConstructorUsedError;
 
   /// Serializes this DailyVolumes to a JSON map.
@@ -41,7 +40,7 @@ abstract class $DailyVolumesCopyWith<$Res> {
           DailyVolumes value, $Res Function(DailyVolumes) then) =
       _$DailyVolumesCopyWithImpl<$Res, DailyVolumes>;
   @useResult
-  $Res call({int id, int year, int day, double volume});
+  $Res call({int id, DateTime date, double volume});
 }
 
 /// @nodoc
@@ -60,8 +59,7 @@ class _$DailyVolumesCopyWithImpl<$Res, $Val extends DailyVolumes>
   @override
   $Res call({
     Object? id = null,
-    Object? year = null,
-    Object? day = null,
+    Object? date = null,
     Object? volume = null,
   }) {
     return _then(_value.copyWith(
@@ -69,14 +67,10 @@ class _$DailyVolumesCopyWithImpl<$Res, $Val extends DailyVolumes>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      year: null == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as int,
-      day: null == day
-          ? _value.day
-          : day // ignore: cast_nullable_to_non_nullable
-              as int,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       volume: null == volume
           ? _value.volume
           : volume // ignore: cast_nullable_to_non_nullable
@@ -93,7 +87,7 @@ abstract class _$$DailyVolumesImplCopyWith<$Res>
       __$$DailyVolumesImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int year, int day, double volume});
+  $Res call({int id, DateTime date, double volume});
 }
 
 /// @nodoc
@@ -110,8 +104,7 @@ class __$$DailyVolumesImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? year = null,
-    Object? day = null,
+    Object? date = null,
     Object? volume = null,
   }) {
     return _then(_$DailyVolumesImpl(
@@ -119,14 +112,10 @@ class __$$DailyVolumesImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      year: null == year
-          ? _value.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as int,
-      day: null == day
-          ? _value.day
-          : day // ignore: cast_nullable_to_non_nullable
-              as int,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       volume: null == volume
           ? _value.volume
           : volume // ignore: cast_nullable_to_non_nullable
@@ -139,10 +128,7 @@ class __$$DailyVolumesImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$DailyVolumesImpl implements _DailyVolumes {
   const _$DailyVolumesImpl(
-      {required this.id,
-      required this.year,
-      required this.day,
-      required this.volume});
+      {required this.id, required this.date, required this.volume});
 
   factory _$DailyVolumesImpl.fromJson(Map<String, dynamic> json) =>
       _$$DailyVolumesImplFromJson(json);
@@ -150,15 +136,13 @@ class _$DailyVolumesImpl implements _DailyVolumes {
   @override
   final int id;
   @override
-  final int year;
-  @override
-  final int day;
+  final DateTime date;
   @override
   final double volume;
 
   @override
   String toString() {
-    return 'DailyVolumes(id: $id, year: $year, day: $day, volume: $volume)';
+    return 'DailyVolumes(id: $id, date: $date, volume: $volume)';
   }
 
   @override
@@ -167,14 +151,13 @@ class _$DailyVolumesImpl implements _DailyVolumes {
         (other.runtimeType == runtimeType &&
             other is _$DailyVolumesImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.year, year) || other.year == year) &&
-            (identical(other.day, day) || other.day == day) &&
+            (identical(other.date, date) || other.date == date) &&
             (identical(other.volume, volume) || other.volume == volume));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, year, day, volume);
+  int get hashCode => Object.hash(runtimeType, id, date, volume);
 
   /// Create a copy of DailyVolumes
   /// with the given fields replaced by the non-null parameter values.
@@ -195,8 +178,7 @@ class _$DailyVolumesImpl implements _DailyVolumes {
 abstract class _DailyVolumes implements DailyVolumes {
   const factory _DailyVolumes(
       {required final int id,
-      required final int year,
-      required final int day,
+      required final DateTime date,
       required final double volume}) = _$DailyVolumesImpl;
 
   factory _DailyVolumes.fromJson(Map<String, dynamic> json) =
@@ -205,9 +187,7 @@ abstract class _DailyVolumes implements DailyVolumes {
   @override
   int get id;
   @override
-  int get year;
-  @override
-  int get day;
+  DateTime get date;
   @override
   double get volume;
 

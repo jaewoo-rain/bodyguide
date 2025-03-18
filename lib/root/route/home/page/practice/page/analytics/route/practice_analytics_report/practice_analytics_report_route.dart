@@ -313,75 +313,46 @@ class PracticeAnalyticsReportRoute extends StatelessWidget {
             // type: "숙련자",
 
             Color findColor(String level) {
-              if (level == "BEGINNER") {
-                return const Color(0xFF93C131);
-              } else if (level == "고급자") {
+              if (level == "고급자") {
                 return const Color(0xFFDA5DA8);
               } else if (level == "중급자") {
                 return const Color(0xFFE3CD09);
-              } else if (level == "숙련자") {
+              } else if (level == "EXPERT") {
                 return const Color(0xFF93C131);
               }
-              return const Color(0xFFFFFFFF); // 완전한 흰색
+              return const Color(0xFF000000);
+            }
+
+            String changeLevel(String level) {
+              if (level == "EXPERT") {
+                return "숙련자";
+              }
+              return "초보";
+            }
+
+            Map<String, dynamic> abilityReport(String vv) {
+              return {
+                "name":
+                    findExerciseById(report.ability[vv]!.exerId)?.name ?? vv,
+                "ability": report.ability[vv] != null
+                    ? (report.ability[vv]?.thresholdType == "WEIGHT_TRAINING"
+                        ? "${report.ability[vv]?.strength ?? '없음'}"
+                        // : "${report.ability[vv]?.rep ?? '없음'}")
+                        : "횟수")
+                    : '없음',
+                "level": (report.ability[vv]?.level ?? "").isEmpty
+                    ? "[미정]"
+                    : "[${changeLevel(report.ability[vv]!.level)}]",
+                "color": findColor(report.ability[vv]!.level)
+              };
             }
 
             final result = [
-              {
-                "name": findExerciseById(report.ability["core"]!.exerId)?.name,
-                "ability":
-                    report.ability["core"]?.thresholdType == "WEIGHT_TRAINING"
-                        ? "${report.ability["core"]?.strength}"
-                        : "횟수",
-                "level": report.ability["core"]?.level,
-                "color": findColor(report.ability["core"]!.level)
-              },
-              {
-                "name":
-                    findExerciseById(report.ability["lowerBody"]!.exerId)?.name,
-                "ability": report.ability["lowerBody"]?.thresholdType ==
-                        "WEIGHT_TRAINING"
-                    ? "${report.ability["lowerBody"]?.strength}"
-                    : "횟수",
-                "level": report.ability["lowerBody"]?.level,
-                "color": findColor(report.ability["lowerBody"]!.level)
-              },
-              {
-                "name": findExerciseById(report.ability["back"]!.exerId)?.name,
-                "ability":
-                    report.ability["back"]?.thresholdType == "WEIGHT_TRAINING"
-                        ? "${report.ability["back"]?.strength}"
-                        : "횟수",
-                "level": report.ability["back"]?.level,
-                "color": findColor(report.ability["back"]!.level)
-              },
-              {
-                "name": findExerciseById(report.ability["chest"]!.exerId)?.name,
-                "ability":
-                    report.ability["chest"]?.thresholdType == "WEIGHT_TRAINING"
-                        ? "${report.ability["chest"]?.strength}"
-                        : "횟수",
-                "level": report.ability["chest"]?.level,
-                "color": findColor(report.ability["chest"]!.level)
-              },
-              {
-                "name": findExerciseById(report.ability["arm"]!.exerId)?.name,
-                "ability":
-                    report.ability["arm"]?.thresholdType == "WEIGHT_TRAINING"
-                        ? "${report.ability["arm"]?.strength}"
-                        : "횟수",
-                "level": report.ability["arm"]?.level,
-                "color": findColor(report.ability["arm"]!.level)
-              },
-              {
-                "name":
-                    findExerciseById(report.ability["shoulder"]!.exerId)?.name,
-                "ability": report.ability["shoulder"]?.thresholdType ==
-                        "WEIGHT_TRAINING"
-                    ? "${report.ability["shoulder"]?.strength}"
-                    : "횟수",
-                "level": report.ability["shoulder"]?.level,
-                "color": findColor(report.ability["shoulder"]!.level)
-              }
+              abilityReport('core'),
+              abilityReport('back'),
+              abilityReport('chest'),
+              abilityReport('arm'),
+              abilityReport('shoulder'),
             ];
             print(result);
 

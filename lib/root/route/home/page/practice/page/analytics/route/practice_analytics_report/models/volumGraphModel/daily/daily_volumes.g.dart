@@ -9,15 +9,13 @@ part of 'daily_volumes.dart';
 _$DailyVolumesImpl _$$DailyVolumesImplFromJson(Map<String, dynamic> json) =>
     _$DailyVolumesImpl(
       id: (json['id'] as num).toInt(),
-      year: (json['year'] as num).toInt(),
-      day: (json['day'] as num).toInt(),
+      date: DateTime.parse(json['date'] as String),
       volume: (json['volume'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$DailyVolumesImplToJson(_$DailyVolumesImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'year': instance.year,
-      'day': instance.day,
+      'date': instance.date.toIso8601String(),
       'volume': instance.volume,
     };
